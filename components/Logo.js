@@ -17,7 +17,7 @@ export default function Logo() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    marginTop: 20,
     flex: 1,
     justifyContent: 'center',
   },
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 40,
+
 
 
 

@@ -14,7 +14,6 @@ class App extends Component {
   state = {
     loggedIn: false
   }
-
   componentDidMount() {
     var firebaseConfig = {
       apiKey: "AIzaSyAPDoBTJsRwtkBpIX-jR7PSbmoxk7PG4Bc",
@@ -43,7 +42,6 @@ class App extends Component {
 
 
   }
-
 
   renderContent = () => {
     switch (this.state.loggedIn) {
