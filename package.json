@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@react-native-firebase/app": "^10.5.0",
+    "@react-native-firebase/database": "^10.5.1",
+    "@react-native-firebase/firestore": "^10.5.1",
     "firebase": "^8.2.5",
     "openfoodfac-ts": "^0.3.1",
     "react": "16.13.1",

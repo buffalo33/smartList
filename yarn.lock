@@ -1429,13 +1429,23 @@
   "resolved" "https://registry.npm.taobao.org/@react-native-community/eslint-plugin/download/@react-native-community/eslint-plugin-1.1.0.tgz"
   "version" "1.1.0"
 
-"@react-native-firebase/app@^10.5.0":
+"@react-native-firebase/app@^10.5.0", "@react-native-firebase/app@10.5.0":
   "integrity" "sha512-pEINud4A90RlwfTcE51m/5cOEGI4jiSi5Q4jsQ5UGGlsYqtbOw4Ja7b17x19o2OViJEQVjScpq4pH2bq9vie7Q=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-10.5.0.tgz"
   "version" "10.5.0"
   dependencies:
     "opencollective-postinstall" "^2.0.1"
     "superstruct" "^0.6.2"
+
+"@react-native-firebase/database@^10.5.1":
+  "integrity" "sha512-jhBUbunCO2HoXPO1mom214A9wdtjLfhNgcaN9Z3x3TmObGZNm7xQ9FYINAXqKmb1iLMMZxlmR0CBD/2uUv3Chw=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/database/-/database-10.5.1.tgz"
+  "version" "10.5.1"
+
+"@react-native-firebase/firestore@^10.5.1":
+  "integrity" "sha512-c51AynnkAm1ErnKKY5nIBFHUERkxD7nQE5G7zBo8t7T0P8YBofErxCjT7QTttILiyE/gFpAHsIsaX5a+CHCYDA=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-10.5.1.tgz"
+  "version" "10.5.1"
 
 "@sinonjs/commons@^1.7.0":
   "integrity" "sha1-hY9cS0jYB3j95LnVQfJ+3A1WSIs="

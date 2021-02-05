@@ -7,6 +7,7 @@ import Articles from './Articles';
 import BG from '../theme.png'
 import Loading from './Loading'
 
+//import firestore from '@react-native-firebase/firestore';
 
 // create a component
 class App extends Component {
@@ -27,7 +28,7 @@ class App extends Component {
     // Initialize Firebase
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-
+    // var db = firebase.firestore();
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
