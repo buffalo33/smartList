@@ -18,7 +18,10 @@
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-autoscroll-flatlist": "^1.9.3",
+    "react-native-camera": "^3.42.0",
     "react-native-elements": "^3.1.0",
+    "react-native-permissions": "^2.2.2",
+    "react-native-qrcode-scanner": "^1.5.3",
     "react-native-vector-icons": "^8.0.0"
   },
   "devDependencies": {

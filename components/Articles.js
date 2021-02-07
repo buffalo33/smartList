@@ -7,10 +7,10 @@ import { SearchBar } from 'react-native-elements';
 import { useState, useEffect } from "react";
 import { OpenFoodFactsApi } from 'openfoodfac-ts';
 //import BarcodeScan from './barecode';
-
+import ScannerPage from './ScannerPage'
 //import { userListApi } from './UserListApi';
 import firebase from 'firebase'
-
+import { Icon } from 'react-native-elements'
 
 const DATA = [
 
@@ -87,12 +87,26 @@ class Articles extends Component {
     }
     return (
       <View style={styles.container}>
-        <SearchBar round
-          searchIcon={{ size: 24 }}
-          onChangeText={this.handleSearch}
-          placeholder="Type Here..."
-          value={this.state.text}
-        />
+
+        <View>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 6 }}>
+              <SearchBar round
+                onChangeText={this.handleSearch}
+                placeholder="Type Here..."
+                value={this.state.text}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity style={{ padding: 20 }} onPress={() => <Tmp />} >
+                <Icon style={{ paddingTop: 20 }}
+                  name='camera'
+                  color='#00aced' />
+              </TouchableOpacity>
+
+            </View>
+          </View>
+        </View>
 
         <AutoScrollFlatList style={styles.scrollContainer}
           data={DATA}
