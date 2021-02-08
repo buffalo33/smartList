@@ -10,9 +10,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^10.5.0",
     "@react-native-firebase/database": "^10.5.1",
     "@react-native-firebase/firestore": "^10.5.1",
+    "@react-navigation/native": "^5.9.2",
+    "@react-navigation/stack": "^5.14.2",
     "firebase": "^8.2.5",
     "openfoodfac-ts": "^0.3.1",
     "react": "16.13.1",
@@ -20,8 +23,12 @@
     "react-native-autoscroll-flatlist": "^1.9.3",
     "react-native-camera": "^3.42.0",
     "react-native-elements": "^3.1.0",
+    "react-native-gesture-handler": "^1.9.0",
     "react-native-permissions": "^2.2.2",
     "react-native-qrcode-scanner": "^1.5.3",
+    "react-native-reanimated": "^1.13.2",
+    "react-native-safe-area-context": "^3.1.9",
+    "react-native-screens": "^2.17.1",
     "react-native-vector-icons": "^8.0.0"
   },
   "devDependencies": {

@@ -11,7 +11,12 @@ import ScannerPage from './ScannerPage'
 //import { userListApi } from './UserListApi';
 import firebase from 'firebase'
 import { Icon } from 'react-native-elements'
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+
+const Stack = createStackNavigator();
 const DATA = [
 
 ];
@@ -74,9 +79,16 @@ class Articles extends Component {
     //console.warn(this.userListApi());
     meth(text);
   }
+  renderContent = () => {
+    <View>
+      <ScannerPage />
+    </View>
 
+
+  }
   render() {
     const { loading, dataSource } = this.state;
+
 
     if (this.state.isLoading) {
       return (
@@ -86,6 +98,8 @@ class Articles extends Component {
       )
     }
     return (
+
+
       <View style={styles.container}>
 
         <View>
@@ -98,7 +112,8 @@ class Articles extends Component {
               />
             </View>
             <View style={{ flex: 1 }}>
-              <TouchableOpacity style={{ padding: 20 }} onPress={() => <Tmp />} >
+              <TouchableOpacity style={{ padding: 20 }} onPress={() => this.navigation.navigate('ScannerPage', { name: 'Jane' })
+              } >
                 <Icon style={{ paddingTop: 20 }}
                   name='camera'
                   color='#00aced' />
