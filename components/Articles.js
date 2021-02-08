@@ -1,19 +1,21 @@
 //import liraries
 import React, { Component } from 'react';
 import { ActivityIndicator, View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
-import { SafeAreaView, FlatList, StatusBar } from 'react-native';
+import { SafeAreaView, FlatList, StatusBar, Linking } from 'react-native';
 import { AutoScrollFlatList } from "react-native-autoscroll-flatlist";
 import { SearchBar } from 'react-native-elements';
 import { useState, useEffect } from "react";
 import { OpenFoodFactsApi } from 'openfoodfac-ts';
 //import BarcodeScan from './barecode';
-import ScannerPage from './ScannerPage'
+//import ScannerPage from './ScannerPage'
 //import { userListApi } from './UserListApi';
 import firebase from 'firebase'
 import { Icon } from 'react-native-elements'
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { RNCamera } from 'react-native-camera';
 
 
 const Stack = createStackNavigator();
@@ -54,7 +56,7 @@ const openFoodFactsApi = new OpenFoodFactsApi();
 const abortController = new AbortController();
 async function meth(t) {
   const product = await openFoodFactsApi.findProductByBarcode(t);
-  const produc = await openFoodFactsApi.findProductsBySearchTerm('Lait', 19041);
+  //const produc = await openFoodFactsApi.findProductsBySearchTerm('Lait', 19041);
   const tomatoeProducts = await openFoodFactsApi.findProductsBySearchTerm('Tomatoes');
   console.warn(product);
   DATA.push({ id: t, title: product.product_name_fr, place: product.stores, productImage: product.image_front_small_url, nutriscore_grade: product.nutriscore_grade })
@@ -64,13 +66,18 @@ const urlFood = " https://world.openfoodfacts.org/api/v0/product/3392460511200.j
 // create a component
 
 class Articles extends Component {
-
+  onSuccess = e => {
+    console.warn(e);
+    this.scanner.reactivate();
+    this.handleSearch(e.data);
+  };
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
       dataSource: [],
       text: '',//3250392041786
+      barcode: ''
     };
   }
 
@@ -78,6 +85,10 @@ class Articles extends Component {
     this.setState({ text });
     //console.warn(this.userListApi());
     meth(text);
+  }
+  handleScan = () => {
+
+
   }
   renderContent = () => {
     <View>
@@ -111,8 +122,15 @@ class Articles extends Component {
                 value={this.state.text}
               />
             </View>
+
             <View style={{ flex: 1 }}>
-              <TouchableOpacity style={{ padding: 20 }} onPress={() => this.navigation.navigate('ScannerPage', { name: 'Jane' })
+              <QRCodeScanner ref={(node) => { this.scanner = node }}
+                onRead={this.onSuccess}
+                fadeIn={false}
+                reactivateTimeout={5}
+                flashMode={RNCamera.Constants.FlashMode.auto}
+              />
+              <TouchableOpacity style={{ padding: 20 }} onPress={() => this.handleScan
               } >
                 <Icon style={{ paddingTop: 20 }}
                   name='camera'
@@ -120,6 +138,7 @@ class Articles extends Component {
               </TouchableOpacity>
 
             </View>
+
           </View>
         </View>
 
