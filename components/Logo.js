@@ -16,19 +16,16 @@ export default function Logo() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    flex: 1,
-    justifyContent: 'center',
-  },
   slogant: {
-    flex: 1,
     textAlign: 'center',
-    color: 'white',
+    color: 'black',
     fontSize: 40,
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center'
+  },
 
-
-
-
-  }
 })
