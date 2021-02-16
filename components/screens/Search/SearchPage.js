@@ -4,17 +4,17 @@ import { connect } from 'react-redux'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
-export class ScannerScreen extends Component {
+export class SearchPage extends Component {
   render() {
     return (
       <View>
-        <Text> Scanner </Text>
+        <Text> nullll </Text>
       </View>
     )
   }
 }
 
-export default connect(mapStateToProps)(ScannerScreen)
+export default connect(mapStateToProps)(SearchPage)
 
 
 function mapStateToProps(state) {

@@ -1,23 +1,27 @@
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import firebase from 'firebase'
+import React, { Component } from 'react'
+import { Text, View } from 'react-native'
+import { connect } from 'react-redux'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Searchbar } from 'react-native-paper';
 
-export default function HomeScreen() {
-  const [searchQuery, setSearchQuery] = React.useState('');
+const Tab = createBottomTabNavigator();
 
-  const onChangeSearch = query => setSearchQuery(query);
-  return (
-    <View style={{}}>
-      <Searchbar
-        placeholder="Search"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-
-
-      />
-    </View>
-  )
+class HomeScreen extends Component {
+  render() {
+    return (
+      <View>
+        <Text> Courses </Text>
+      </View>
+    )
+  }
 }
 
-const styles = StyleSheet.create({})
+export default connect(mapStateToProps)(HomeScreen)
+
+
+function mapStateToProps(state) {
+  return {
+    pagePointer: state.pagePointer
+  }
+}
+

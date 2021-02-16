@@ -11,6 +11,35 @@ import SignInScreen from './components/screens/SignInScreen'
 import firebase from 'firebase'
 import Tabs from './components/Tabs'
 import LoadingScreen from './components/screens/LoadingScreen'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+
+const initialState = {
+  pagePointer: ''
+}
+
+const reducer = (state = initialState, action) => {
+  //alert(action.type)
+  switch (action.type) {
+    case 'HOME_SCREEN':
+      return { pagePointer: 'Courses' }
+      break;
+    case 'LISTES_SCREEN':
+      return { pagePointer: 'Listes' }
+      break;
+    case 'STORE_SCREEN':
+      return { pagePointer: 'Garde-Manger' }
+      break;
+
+    default:
+      return { pagePointer: 'Courses' }
+
+      break;
+  }
+  return state
+
+}
+const store = createStore(reducer);
 import {
   AppRegistry,
   StyleSheet,
@@ -19,6 +48,7 @@ import {
   TextInput,
   TouchableHighlight,
 } from 'react-native';
+import SearchPage from './components/screens/Search/SearchPage';
 function HomeScreen({ navigation }) {
   return (
     <Tabs />
@@ -75,33 +105,36 @@ export default class App extends Component {
       case false:
         return <SignInScreen />
       case true:
-        return (<NavigationContainer>
-          <Stack.Navigator initialRouteName="Home" >
-            <Stack.Screen name="ShoppingList" component={HomeScreen}
-              options={({ navigation }) => ({
-                headerRight: ({ navigate }) => (
-                  <TouchableOpacity>
-                    <Ionicons
-                      name="reorder-four-outline"
-                      size={36}
-                      onPress={() => navigation.navigate("Settings")}
-                    />
-                  </TouchableOpacity>
+        return (
+          <Provider store={store}>
+            <NavigationContainer>
+              <Stack.Navigator initialRouteName="Home" >
+                <Stack.Screen name="ShoppingList" component={HomeScreen}
+                  options={({ navigation }) => ({
+                    headerRight: ({ navigate }) => (
+                      <TouchableOpacity>
+                        <Ionicons
+                          name="reorder-four-outline"
+                          size={36}
+                          onPress={() => navigation.navigate("Settings")}
+                        />
+                      </TouchableOpacity>
 
-                ),
-              })} />
-            <Stack.Screen name="SignInScreen"
-              component={SignInScreen}
-              options={({ navigation }) => ({
-              })} />
-            <Stack.Screen name="RegisterScreen"
-              component={RegisterScreen}
-              options={({ navigation }) => ({
-              })} />
-            <Stack.Screen name="Settings" component={SettingsScreen} />
-          </Stack.Navigator>
+                    ),
+                  })} />
+                <Stack.Screen name="SignInScreen"
+                  component={SignInScreen}
+                  options={({ navigation }) => ({
+                  })} />
+                <Stack.Screen name="RegisterScreen"
+                  component={RegisterScreen}
+                  options={({ navigation }) => ({
+                  })} />
+                <Stack.Screen name="Settings" component={SettingsScreen} />
+              </Stack.Navigator>
 
-        </NavigationContainer>);
+            </NavigationContainer>
+          </Provider>);
 
       default:
         return <LoadingScreen />
