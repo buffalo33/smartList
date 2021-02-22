@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import Logo from '../Logo'
+import Logo from '../components/Logo'
 class SignInScreen extends Component {
   state = {
     email: '',

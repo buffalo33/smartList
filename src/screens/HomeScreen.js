@@ -16,12 +16,21 @@ class HomeScreen extends Component {
   }
 }
 
-export default connect(mapStateToProps)(HomeScreen)
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
 
 function mapStateToProps(state) {
   return {
-    pagePointer: state.pagePointer
+    pagePointer: state.pagePointerReducer.pagePointer
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    addToCart: (item) => dispatch({
+      type: ADD_TO_CART,
+      payload: item
+    }),
+  }
+} 

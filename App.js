@@ -5,41 +5,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import SettingsScreen from './components/screens/SettingsScreen'
-import Register from './components/screens/SignUpScreen'
-import SignInScreen from './components/screens/SignInScreen'
+import SettingsScreen from './src/screens/SettingsScreen'
+import Register from './src/screens/SignUpScreen'
+import SignInScreen from './src/screens/SignInScreen'
 import firebase from 'firebase'
-import Tabs from './components/Tabs'
-import LoadingScreen from './components/screens/LoadingScreen'
+import Tabs from './src/components/Tabs'
+import LoadingScreen from './src/screens/LoadingScreen'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import reducer from './src/redux/reducers/index'
 
-const initialState = {
-  pagePointer: ''
-}
 
-const reducer = (state = initialState, action) => {
-  //alert(action.type)
-  switch (action.type) {
-    case 'HOME_SCREEN':
-      return { pagePointer: 'Courses' }
-      break;
-    case 'LISTES_SCREEN':
-      return { pagePointer: 'Listes' }
-      break;
-    case 'STORE_SCREEN':
-      return { pagePointer: 'Garde-Manger' }
-      break;
-
-    default:
-      return { pagePointer: 'Courses' }
-
-      break;
-  }
-  return state
-
-}
 const store = createStore(reducer);
+
+//console.log(store.getState())
 import {
   AppRegistry,
   StyleSheet,
@@ -48,7 +27,7 @@ import {
   TextInput,
   TouchableHighlight,
 } from 'react-native';
-import SearchPage from './components/screens/Search/SearchPage';
+import SearchPage from './src/screens/Search/SearchPage';
 function HomeScreen({ navigation }) {
   return (
     <Tabs />

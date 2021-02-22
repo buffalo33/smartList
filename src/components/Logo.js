@@ -9,7 +9,7 @@ export default function Logo() {
       </Text>
       <Image
         style={{ width: 200, height: 180 }}
-        source={require('../logo.png')}
+        source={require('../assets/logo.png')}
       />
     </View>
   )
