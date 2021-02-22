@@ -97,7 +97,7 @@ class componentName extends Component {
         this.setState({
           dataSource: responseJson.products,
         });
-        console.warn(responseJson.count)
+        // console.warn(responseJson.count)
       })
       .catch((error) => {
         console.log(error);
