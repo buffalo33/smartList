@@ -18,7 +18,7 @@ import reducer from './src/redux/reducers/index'
 
 const store = createStore(reducer);
 
-//console.log(store.getState())
+console.log(store.getState())
 import {
   AppRegistry,
   StyleSheet,

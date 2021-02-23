@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, FlatList, StatusBar } from 'react-native'
 import firebase from 'firebase'
 import { Button, Searchbar } from 'react-native-paper';
+import { connect } from 'react-redux'
 
 import { Component } from 'react';
 
@@ -83,7 +84,7 @@ class componentName extends Component {
     };
   }
 
-  renderItem = ({ item }) => (<TouchableOpacity onPress={() => this.props.navigation.navigate('Courses')} >
+  renderItem = ({ item }) => (<TouchableOpacity onPress={() => this.props.addToList(item)} >
     <Item product_name={item.product_name} />
   </TouchableOpacity >
 
@@ -106,6 +107,7 @@ class componentName extends Component {
 
 
   render() {
+    console.log(this.props.cart)
     return (
       <View style={{}}>
         <Searchbar
@@ -144,4 +146,22 @@ const styles = StyleSheet.create({
 });
 
 
-export default componentName;
+
+export default connect(mapStateToProps, mapDispatchToProps)(componentName)
+
+
+function mapStateToProps(state) {
+  return {
+    cart: state.listReducer.cart
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addToList: (newItem) => dispatch({
+      type: 'ADD_TO_LIST',
+      payload: newItem
+    }),
+
+  }
+} 
