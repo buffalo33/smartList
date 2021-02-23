@@ -1071,7 +1071,7 @@
     "@babel/preset-env" "^7.4.4"
     "@babel/preset-typescript" "^7.3.3"
 
-"@expo/config-plugins@1.0.18":
+"@expo/config-plugins@~1.0.13", "@expo/config-plugins@1.0.18":
   "integrity" "sha1-8PfTYxbWDqZ7TMY5S//vbWkENF0="
   "resolved" "https://registry.npm.taobao.org/@expo/config-plugins/download/@expo/config-plugins-1.0.18.tgz"
   "version" "1.0.18"
@@ -3479,6 +3479,14 @@
     "path-browserify" "^1.0.0"
     "url-parse" "^1.4.4"
 
+"expo-barcode-scanner@^10.0.0":
+  "integrity" "sha512-gAlo8be5C0nWccXllRQyoVWOkJtKqpKAiKS+LcsncjKo+LS8v0QkbXmsk8zhuZNS0FI3FhOy+f2H6VXtuayCkw=="
+  "resolved" "https://registry.npmjs.org/expo-barcode-scanner/-/expo-barcode-scanner-10.0.0.tgz"
+  "version" "10.0.0"
+  dependencies:
+    "@expo/config-plugins" "~1.0.13"
+    "lodash" "^4.6.0"
+
 "expo-constants@~9.3.3":
   "integrity" "sha1-eAhXY+jtEApfLffGgv2ZYxqgPV4="
   "resolved" "https://registry.npm.taobao.org/expo-constants/download/expo-constants-9.3.5.tgz"
@@ -5635,6 +5643,11 @@
   dependencies:
     "is-wsl" "^1.1.0"
 
+"openfoodfac-ts@^0.3.1":
+  "integrity" "sha512-33ltb990PH+X6dwAy0GzZCzrECqw/DEUqWLGh6iAiCxY6ZhHimsu1fTNIQ0iCXiU8oR9US7iR9Ay/4THNyenMw=="
+  "resolved" "https://registry.npmjs.org/openfoodfac-ts/-/openfoodfac-ts-0.3.1.tgz"
+  "version" "0.3.1"
+
 "options@>=0.0.5":
   "integrity" "sha1-7CLTEoBrtT5zF3Pnza788cZDEo8="
   "resolved" "https://registry.npm.taobao.org/options/download/options-0.0.6.tgz"
@@ -7129,7 +7142,7 @@
   "resolved" "https://registry.npm.taobao.org/unimodules-app-loader/download/unimodules-app-loader-1.4.0.tgz"
   "version" "1.4.0"
 
-"unimodules-barcode-scanner-interface@~5.4.0":
+"unimodules-barcode-scanner-interface@*", "unimodules-barcode-scanner-interface@~5.4.0":
   "integrity" "sha1-df8e+SctP2tgeHH2SzwIdXdFNnY="
   "resolved" "https://registry.npm.taobao.org/unimodules-barcode-scanner-interface/download/unimodules-barcode-scanner-interface-5.4.0.tgz"
   "version" "5.4.0"
