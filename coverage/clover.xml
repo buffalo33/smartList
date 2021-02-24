@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1614194078251" clover="3.2.0">
-  <project timestamp="1614194078251" name="All files">
-    <metrics statements="187" coveredstatements="5" conditionals="46" coveredconditionals="2" methods="95" coveredmethods="0" elements="328" coveredelements="7" complexity="0" loc="187" ncloc="187" packages="5" files="19" classes="19"/>
+<coverage generated="1614205971301" clover="3.2.0">
+  <project timestamp="1614205971301" name="All files">
+    <metrics statements="187" coveredstatements="15" conditionals="46" coveredconditionals="2" methods="95" coveredmethods="5" elements="328" coveredelements="22" complexity="0" loc="187" ncloc="187" packages="5" files="19" classes="19"/>
     <package name="free-PFAShoppingList">
       <metrics statements="26" coveredstatements="0" conditionals="7" coveredconditionals="0" methods="12" coveredmethods="0"/>
       <file name="App.js" path="/Users/imadboudroua/work/project/free-PFAShoppingList/App.js">
@@ -35,15 +35,15 @@
       </file>
     </package>
     <package name="free-PFAShoppingList.src.components">
-      <metrics statements="41" coveredstatements="0" conditionals="20" coveredconditionals="0" methods="18" coveredmethods="0"/>
+      <metrics statements="41" coveredstatements="2" conditionals="20" coveredconditionals="0" methods="18" coveredmethods="1"/>
       <file name="AddButton.js" path="/Users/imadboudroua/work/project/free-PFAShoppingList/src/components/AddButton.js">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
       </file>
       <file name="Logo.js" path="/Users/imadboudroua/work/project/free-PFAShoppingList/src/components/Logo.js">
-        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="161" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
       </file>
       <file name="Tabs.js" path="/Users/imadboudroua/work/project/free-PFAShoppingList/src/components/Tabs.js">
         <metrics statements="38" coveredstatements="0" conditionals="20" coveredconditionals="0" methods="16" coveredmethods="0"/>
@@ -117,7 +117,7 @@
       </file>
     </package>
     <package name="free-PFAShoppingList.src.screens">
-      <metrics statements="69" coveredstatements="5" conditionals="10" coveredconditionals="2" methods="40" coveredmethods="0"/>
+      <metrics statements="69" coveredstatements="13" conditionals="10" coveredconditionals="2" methods="40" coveredmethods="4"/>
       <file name="GardeMangerScreen.js" path="/Users/imadboudroua/work/project/free-PFAShoppingList/src/screens/GardeMangerScreen.js">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
@@ -185,17 +185,17 @@
         <line num="8" count="0" type="stmt"/>
       </file>
       <file name="SignInScreen.js" path="/Users/imadboudroua/work/project/free-PFAShoppingList/src/screens/SignInScreen.js">
-        <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
+        <metrics statements="10" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="4"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="80" type="stmt"/>
+        <line num="18" count="79" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="71" count="0" type="stmt"/>
+        <line num="34" count="161" type="stmt"/>
+        <line num="43" count="80" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="76" count="2" type="stmt"/>
       </file>
       <file name="SignUpScreen.js" path="/Users/imadboudroua/work/project/free-PFAShoppingList/src/screens/SignUpScreen.js">
         <metrics statements="11" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="0"/>

@@ -41,6 +41,7 @@ class SignInScreen extends Component {
             style={styles.input}
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
+            testID={"TEST_ID_EMAIL_INPUT"}
           />
 
           <TextInput
@@ -49,11 +50,15 @@ class SignInScreen extends Component {
             secureTextEntry
             value={this.state.password}
             onChangeText={password => this.setState({ password })}
+            testID={"TEST_ID_PASSWORD_INPUT"}
+
           />
 
 
 
-          <TouchableOpacity style={styles.buttonContainer} onPress={this.onBottomPress} >
+          <TouchableOpacity style={styles.buttonContainer}
+            onPress={this.onBottomPress}
+            testID={"TEST_ID_BUTTON_SUBMIT"}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
 
