@@ -7,6 +7,10 @@ export default function listReducer(state = initialState, action) {
       return {
         cart: [action.payload, ...state.cart],
       }
+    case 'DELETE_ITEM':
+      return {
+        cart: [...state.cart.filter(x=> x!=action.payload)],
+      }
     default:
       return state
   }

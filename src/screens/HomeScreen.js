@@ -39,25 +39,33 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => (
 const renderItem = ({ item }) => (
   <Item image_front_thumb_url={item.image_front_thumb_url} nutriscore_grade={item.nutriscore_grade} product_name={item.product_name} />
 );
-const renderHiddenItem = (data, rowMap) => (
-  <View style={styles.rowBack}>
-    <Text>Left</Text>
-    <TouchableOpacity
-      style={[styles.backRightBtn, styles.backRightBtnLeft]}
-      onPress={() => closeRow(rowMap, data.item.key)}
-    >
-      <Text style={styles.backTextWhite}>Check</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={[styles.backRightBtn, styles.backRightBtnRight]}
-      onPress={() => deleteRow(rowMap, data.item.key)}
-    >
-      <Text style={styles.backTextWhite}>Delete</Text>
-    </TouchableOpacity>
-  </View>
-);
+
 class HomeScreen extends Component {
- 
+  constructor(props) {
+    super(props);
+
+  }
+  renderHiddenItem = ({ item }) => {
+    //console.warn(this.props);
+
+    return (<View style={styles.rowBack}>
+      <Text>Left</Text>
+      <TouchableOpacity
+        style={[styles.backRightBtn, styles.backRightBtnLeft]}
+        onPress={() => this.props.checkItem(item)}
+      >
+        <Text style={styles.backTextWhite}>Check</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.backRightBtn, styles.backRightBtnRight]}
+        onPress={() => this.props.deleteItem(item)}
+      >
+        <Text style={styles.backTextWhite}>Delete</Text>
+      </TouchableOpacity>
+    </View>
+    )
+
+  }
   render() {
     console.log(this.props.cart)
     return (
@@ -66,13 +74,13 @@ class HomeScreen extends Component {
           data={this.props.cart}
           renderItem={renderItem}
           keyExtractor={item => item.id}
-          renderHiddenItem={renderHiddenItem}
+          renderHiddenItem={this.renderHiddenItem}
           leftOpenValue={75}
           rightOpenValue={-150}
           previewRowKey={'0'}
           previewOpenValue={-40}
           previewOpenDelay={3000}
-         // onRowDidOpen={onRowDidOpen}
+        // onRowDidOpen={onRowDidOpen}
 
         />
       </SafeAreaView>
@@ -166,6 +174,14 @@ function mapDispatchToProps(dispatch) {
     addToList: (newItem) => dispatch({
       type: 'ADD_TO_LIST',
       payload: newItem
+    }),
+    checkItem: (itemToCheck) => dispatch({
+      type: 'CHECK_ITEM',
+      payload: itemToCheck
+    }),
+    deleteItem: (itemToDelete) => dispatch({
+      type: 'DELETE_ITEM',
+      payload: itemToDelete
     }),
 
   }
