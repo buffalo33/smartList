@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import firebase from 'firebase'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Logo from '../components/Logo'
 class SignInScreen extends Component {
   state = {
@@ -15,9 +15,7 @@ class SignInScreen extends Component {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(this.onLoginSuccess)
       .catch(err => {
-        this.setState({
-          error: err.message
-        })
+        Alert.alert(err.message)
       })
 
 
