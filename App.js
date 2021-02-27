@@ -14,7 +14,7 @@ import LoadingScreen from './src/screens/LoadingScreen'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './src/redux/reducers/index'
-
+import MoreInfoProduct from './src/screens/MoreInfoProduct'
 
 const store = createStore(reducer);
 
@@ -43,7 +43,14 @@ function RegisterScreen({ navigation }) {
 
 const Stack = createStackNavigator();
 
-
+function MainStackScreen() {
+  return (
+    <MainStack.Navigator>
+      <MainStack.Screen name="Home" component={HomeScreen} />
+      <MainStack.Screen name="Details" component={DetailsScreen} />
+    </MainStack.Navigator>
+  );
+}  
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -79,6 +86,7 @@ export default class App extends Component {
     })
   }
 
+
   renderContent = () => {
     switch (this.state.loggedIn) {
       case false:
@@ -103,6 +111,10 @@ export default class App extends Component {
                   })} />
                 <Stack.Screen name="SignInScreen"
                   component={SignInScreen}
+                  options={({ navigation }) => ({
+                  })} />
+                <Stack.Screen name="MoreInfoScreen"
+                  component={MoreInfoProduct}
                   options={({ navigation }) => ({
                   })} />
                 <Stack.Screen name="RegisterScreen"
