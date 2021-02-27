@@ -1,43 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Searchbar } from 'react-native-paper';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import CheckBox from '@react-native-community/checkbox';
 
 const Tab = createBottomTabNavigator();
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    product_name: 'First Item',
-    image_front_thumb_url: "https://static.openfoodfacts.org/images/products/611/103/500/0027/ingredients_fr.27.400.jpg",
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    product_name: 'Second Item',
-    image_front_thumb_url: "https://static.openfoodfacts.org/images/products/611/103/500/0027/front.3.200.jpg"
 
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    product_name: 'Third Item',
-    image_front_thumb_url: "https://static.openfoodfacts.org/images/products/611/103/500/0027/front.3.200.jpg"
 
-  },
-];
-const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => (
-  <View style={styles.item}>
-    <Image style={styles.image_front_thumb_url}
-      source={{ uri: image_front_thumb_url }} />
-    <View style={styles.description}>
-      <Text style={styles.product_name}>{product_name}</Text>
-      <Text style={styles.nutriscore_grade}>
-        Nutriscore: {nutriscore_grade}</Text>
+
+const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
+  const [isSelected, setSelection] = useState(false);
+
+  return (
+    <View style={styles.item}>
+      <View style={styles.checkBoxContainer}>
+        <CheckBox
+          value={isSelected}
+          onValueChange={setSelection}
+          style={styles.checkbox}
+        />
+      </View>
+
+      <View style={styles.description}>
+        <Text style={styles.product_name}>{product_name}</Text>
+        <Text style={styles.nutriscore_grade}>
+          Nutriscore: {nutriscore_grade}</Text>
+      </View>
     </View>
-  </View>
-);
+  );
+  
+};
 const renderItem = ({ item }) => (
-  <Item image_front_thumb_url={item.image_front_thumb_url} nutriscore_grade={item.nutriscore_grade} product_name={item.product_name} />
+  <Item image_front_thumb_url={item.image_front_thumb_url}
+    nutriscore_grade={item.nutriscore_grade} product_name={item.product_name} />
 );
 
 class HomeScreen extends Component {
@@ -46,16 +43,8 @@ class HomeScreen extends Component {
 
   }
   renderHiddenItem = ({ item }) => {
-    //console.warn(this.props);
-
-    return (<View style={styles.rowBack}>
-      <Text>Left</Text>
-      <TouchableOpacity
-        style={[styles.backRightBtn, styles.backRightBtnLeft]}
-        onPress={() => this.props.checkItem(item)}
-      >
-        <Text style={styles.backTextWhite}>Check</Text>
-      </TouchableOpacity>
+    return (
+      <View style={styles.rowBack}>
       <TouchableOpacity
         style={[styles.backRightBtn, styles.backRightBtnRight]}
         onPress={() => this.props.deleteItem(item)}
@@ -64,8 +53,8 @@ class HomeScreen extends Component {
       </TouchableOpacity>
     </View>
     )
-
   }
+
   render() {
     console.log(this.props.cart)
     return (
@@ -75,18 +64,18 @@ class HomeScreen extends Component {
           renderItem={renderItem}
           keyExtractor={item => item.id}
           renderHiddenItem={this.renderHiddenItem}
-          leftOpenValue={75}
-          rightOpenValue={-150}
+          leftOpenValue={0}
+          rightOpenValue={-75}
           previewRowKey={'0'}
           previewOpenValue={-40}
           previewOpenDelay={3000}
         // onRowDidOpen={onRowDidOpen}
-
         />
       </SafeAreaView>
     )
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -94,7 +83,7 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    backgroundColor: '#777E84',
+    backgroundColor: 'white',
     // padding: 20,
     // marginVertical: 8,
     //marginHorizontal: 16,
@@ -113,6 +102,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+
+  },
+  checkBox: {
+    alignSelf: "center",
+    width: 50
+
+  },
+  checkBoxContainer: {
+    alignSelf: "center",
 
   },
   description: {
@@ -150,10 +148,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: 75,
-  },
-  backRightBtnLeft: {
-    backgroundColor: 'green',
-    right: 75,
   },
   backRightBtnRight: {
     backgroundColor: 'red',
