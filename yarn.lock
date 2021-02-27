@@ -8256,6 +8256,11 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.1.tgz"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
+react-native-auto-scale-image@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/react-native-auto-scale-image/download/react-native-auto-scale-image-1.0.1.tgz#a429e70284db2e1aad3b5b6a15bbb371418d0778"
+  integrity sha1-pCnnAoTbLhqtO1tqFbuzcUGNB3g=
+
 react-native-elements@^3.2.0:
   version "3.2.0"
   resolved "https://registry.npm.taobao.org/react-native-elements/download/react-native-elements-3.2.0.tgz#0880801ad5be6d1da9848b57659b0f62b8ebb9f4"

@@ -1,17 +1,21 @@
 import React, { Component, useState } from 'react'
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Searchbar } from 'react-native-paper';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import CheckBox from '@react-native-community/checkbox';
+import { useLinkProps, useNavigation } from '@react-navigation/native';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();
 
 
 
 const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
+  const info = { image_front_thumb_url, product_name, nutriscore_grade };
   const [isSelected, setSelection] = useState(false);
+  const navigation = useNavigation();
 
   return (
     <View style={styles.item}>
@@ -22,46 +26,51 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
           style={styles.checkbox}
         />
       </View>
+      <View style={styles.description}
 
-      <View style={styles.description}>
-        <Text style={styles.product_name}>{product_name}</Text>
-        <Text style={styles.nutriscore_grade}>
-          Nutriscore: {nutriscore_grade}</Text>
+      ><TouchableOpacity style={styles.description}
+        onPress={() => { navigation.navigate("MoreInfoScreen", info) }}>
+          <View style={styles.description}>
+            <Text style={styles.product_name}>{info.product_name}</Text>
+          </View>
+        </TouchableOpacity>
+
       </View>
+
     </View>
   );
-  
+
 };
-const renderItem = ({ item }) => (
-  <Item image_front_thumb_url={item.image_front_thumb_url}
-    nutriscore_grade={item.nutriscore_grade} product_name={item.product_name} />
-);
+
 
 class HomeScreen extends Component {
   constructor(props) {
     super(props);
-
   }
+  renderItem = ({ item }) => (
+    <Item image_front_thumb_url={item.image_front_thumb_url}
+      nutriscore_grade={item.nutriscore_grade} product_name={item.product_name} />
+
+  );
   renderHiddenItem = ({ item }) => {
     return (
       <View style={styles.rowBack}>
-      <TouchableOpacity
-        style={[styles.backRightBtn, styles.backRightBtnRight]}
-        onPress={() => this.props.deleteItem(item)}
-      >
-        <Text style={styles.backTextWhite}>Delete</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          style={[styles.backRightBtn, styles.backRightBtnRight]}
+          onPress={() => this.props.deleteItem(item)}>
+          <Text style={styles.backTextWhite}>Delete</Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 
   render() {
-    console.log(this.props.cart)
+    //console.log(this.props.cart)
     return (
       <SafeAreaView style={styles.container}>
         <SwipeListView
           data={this.props.cart}
-          renderItem={renderItem}
+          renderItem={this.renderItem}
           keyExtractor={item => item.id}
           renderHiddenItem={this.renderHiddenItem}
           leftOpenValue={0}
@@ -82,13 +91,14 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
+
   item: {
     backgroundColor: 'white',
-    // padding: 20,
+    padding: 20,
     // marginVertical: 8,
     //marginHorizontal: 16,
     borderWidth: 0.7,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   image_front_thumb_url: {
     height: 90,
@@ -97,15 +107,16 @@ const styles = StyleSheet.create({
 
   },
   product_name: {
-    flex: 1,
+   // flex: 10,
     fontSize: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    //flexDirection: 'row',
+    //alignItems: 'center',
+   // justifyContent: 'center',
 
   },
-  checkBox: {
-    alignSelf: "center",
+  checkbox: {
+    //flex:2,
+   alignSelf: "center",
     width: 50
 
   },
@@ -117,6 +128,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   nutriscore_grade: {
     flex: 1,
