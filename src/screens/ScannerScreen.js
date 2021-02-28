@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Alert, Text, View, StyleSheet, Button } from 'react-native';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { OpenFoodFactsApi } from 'openfoodfac-ts';
@@ -21,6 +21,8 @@ class BarcodeScannerExample extends React.Component {
   state = {
     hasCameraPermission: null,
     scanned: false,
+    notAdded: true,
+    product: ''
   };
 
   async componentDidMount() {
@@ -31,9 +33,9 @@ class BarcodeScannerExample extends React.Component {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
   }
- 
+
   render() {
-    const { hasCameraPermission, scanned } = this.state;
+    const { hasCameraPermission, scanned, notAdded } = this.state;
 
     if (hasCameraPermission === null) {
       return <Text>Requesting for camera permission</Text>;
@@ -53,21 +55,32 @@ class BarcodeScannerExample extends React.Component {
           style={StyleSheet.absoluteFillObject}
         />
 
-        {scanned && (
-          <Button
-            title={'Tap to Scan Again'}
-            onPress={() => this.setState({ scanned: false })}
-          />
-        )}
+
       </View>
     );
   }
 
+
+
   handleBarCodeScanned = async ({ type, data }) => {
     this.setState({ scanned: true });
     const product = await openFoodFactsApi.findProductByBarcode(data);
-    console.log(product.product_name);
+    this.setState({ product: product });
+    console.log(this.state.product);
     this.props.addToList(product);
+    Alert.alert(
+      "Product detected",
+      "Do yan want to go back to the list ?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => this.setState({ scanned: false }),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => this.props.navigation.goBack() }
+      ],
+      { cancelable: false }
+    )
 
   };
 }
