@@ -7,7 +7,7 @@ export class AddButton extends Component {
     return (
       <View style={{
         position: 'absolute',
-        bottom: 0, // space from bottombar
+        bottom: -15, // space from bottombar
         height: 68,
         width: 68,
         borderRadius: 68,
