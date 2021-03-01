@@ -69,7 +69,7 @@ class HomeScreen extends Component {
     //console.log(this.props.cart)
     return (
       <SafeAreaView style={styles.container}>
-        <SwipeListView
+        <SwipeListView style={styles.list}
           data={this.props.cart}
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
@@ -81,7 +81,7 @@ class HomeScreen extends Component {
           previewOpenDelay={3000}
         // onRowDidOpen={onRowDidOpen}
         />
-        <AddButton data={ this.props}/>
+        <AddButton data={this.props} />
       </SafeAreaView>
     )
   }
@@ -89,14 +89,20 @@ class HomeScreen extends Component {
 
 
 const styles = StyleSheet.create({
+  list: {
+  },
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+   // paddingBottom: 20
+
+    //marginTop: StatusBar.currentHeight || 0,
   },
 
   item: {
     backgroundColor: 'white',
     padding: 20,
+    //backgroundColor: 'white', 
+    //justifyContent: 'space-around',
     // marginVertical: 8,
     //marginHorizontal: 16,
     borderWidth: 0.7,
@@ -109,16 +115,16 @@ const styles = StyleSheet.create({
 
   },
   product_name: {
-   // flex: 10,
+    // flex: 10,
     fontSize: 20,
     //flexDirection: 'row',
     //alignItems: 'center',
-   // justifyContent: 'center',
+    // justifyContent: 'center',
 
   },
   checkbox: {
     //flex:2,
-   alignSelf: "center",
+    alignSelf: "center",
     width: 50
 
   },

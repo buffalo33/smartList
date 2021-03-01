@@ -46,14 +46,7 @@ function RegisterScreen({ navigation }) {
 
 const Stack = createStackNavigator();
 
-function MainStackScreen() {
-  return (
-    <MainStack.Navigator>
-      <MainStack.Screen name="Home" component={HomeScreen} />
-      <MainStack.Screen name="Details" component={DetailsScreen} />
-    </MainStack.Navigator>
-  );
-}  
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -97,7 +90,7 @@ export default class App extends Component {
       case true:
         return (
           <Provider store={store}>
-            <NavigationContainer>
+            <NavigationContainer>         
               <Stack.Navigator initialRouteName="Home" >
                 <Stack.Screen name="ShoppingList" component={HomeScreen}
                   options={({ navigation }) => ({
@@ -116,6 +109,7 @@ export default class App extends Component {
                   component={HomeSearchPage}
                   options={({ navigation }) => ({
                   })} />
+
                 <Stack.Screen name="SignInScreen"
                   component={SignInScreen}
                   options={({ navigation }) => ({

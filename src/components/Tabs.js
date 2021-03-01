@@ -76,20 +76,21 @@ export class Tabs extends Component {
         }}>
         <Tab.Screen name="Courses" component={HomeScreen} listeners={({ navigation, route }) => ({
           tabPress: e => {
-            this.props.homeScreen()
+            this.props.homeScreen() && this.props.showButton()
           },
         })} />
-      
+
         <Tab.Screen name="Garde-Manger" component={GardeMangerScreen}
           listeners={({ navigation, route }) => ({
             tabPress: e => {
               this.props.storeScreen()
             },
           })} />
+
         <Tab.Screen name="Listes" component={ListesScreen}
           listeners={({ navigation, route }) => ({
             tabPress: e => {
-              this.props.listesScreen()
+              this.props.listesScreen() && this.props.showButton()
             },
           })} />
 
@@ -104,7 +105,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Tabs)
 
 function mapStateToProps(state) {
   return {
-    pagePointer: state.pagePointerReducer.pagePointer
+    pagePointer: state.pagePointerReducer.pagePointer,
+    fabIsVisible: state.addButtonReducer.fabIsVisible,
   }
 }
 
@@ -118,6 +120,12 @@ function mapDispatchToProps(dispatch) {
     }),
     storeScreen: () => dispatch({
       type: 'STORE_SCREEN'
+    }),
+    showButton: () => dispatch({
+      type: 'SHOW'
+    }),
+    hideButton: () => dispatch({
+      type: 'HIDE'
     }),
   }
 } 
