@@ -1,5 +1,5 @@
 const initialState = {
-  fabIsVisible: false
+  fabIsVisible: true
 }
 export default function addButtonReducer(state = initialState, action) {
   switch (action.type) {

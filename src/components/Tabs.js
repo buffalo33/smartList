@@ -83,7 +83,7 @@ export class Tabs extends Component {
         <Tab.Screen name="Garde-Manger" component={GardeMangerScreen}
           listeners={({ navigation, route }) => ({
             tabPress: e => {
-              this.props.storeScreen()
+              this.props.storeScreen() && this.props.hideButton()
             },
           })} />
 
