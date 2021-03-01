@@ -77,7 +77,7 @@ class BarcodeScannerExample extends React.Component {
           onPress: () => this.setState({ scanned: false }),
           style: "cancel"
         },
-        { text: "OK", onPress: () => this.props.navigation.goBack() }
+        { text: "OK", onPress: () => this.props.navigation.navigate('Courses') }
       ],
       { cancelable: false }
     )

@@ -15,7 +15,9 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './src/redux/reducers/index'
 import MoreInfoProduct from './src/screens/MoreInfoProduct'
+import AddButton from './src/components/AddButton'
 
+import HomeSearchPage from './src/screens/Search/HomeSearchPage'
 const store = createStore(reducer);
 
 console.log(store.getState())
@@ -28,6 +30,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import SearchPage from './src/screens/Search/SearchPage';
+import ScannerScreen from './src/screens/ScannerScreen';
 function HomeScreen({ navigation }) {
   return (
     <Tabs />
@@ -109,6 +112,10 @@ export default class App extends Component {
 
                     ),
                   })} />
+                <Stack.Screen name="HomeSearch"
+                  component={HomeSearchPage}
+                  options={({ navigation }) => ({
+                  })} />
                 <Stack.Screen name="SignInScreen"
                   component={SignInScreen}
                   options={({ navigation }) => ({
@@ -121,6 +128,9 @@ export default class App extends Component {
                   component={RegisterScreen}
                   options={({ navigation }) => ({
                   })} />
+                <Stack.Screen name="Scanner" component={ScannerScreen} />
+                <Stack.Screen name="AddButton" component={AddButton} />
+
                 <Stack.Screen name="Settings" component={SettingsScreen} />
               </Stack.Navigator>
 

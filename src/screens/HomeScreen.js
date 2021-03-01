@@ -7,6 +7,7 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import CheckBox from '@react-native-community/checkbox';
 import { useLinkProps, useNavigation } from '@react-navigation/native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import AddButton from '../components/AddButton';
 
 const Tab = createBottomTabNavigator();
 
@@ -80,6 +81,7 @@ class HomeScreen extends Component {
           previewOpenDelay={3000}
         // onRowDidOpen={onRowDidOpen}
         />
+        <AddButton data={ this.props}/>
       </SafeAreaView>
     )
   }

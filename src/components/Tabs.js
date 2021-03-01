@@ -48,17 +48,8 @@ export class Tabs extends Component {
                   ? 'cart'
                   : 'cart-outline';
                 break;
-              case 'Scanner':
-                iconName = focused
-                  ? 'barcode'
-                  : 'barcode-outline';
-                break;
-              case 'Add':
-                iconName = focused
-                  ? 'add-circle'
-                  : 'add-circle-outline';
-                size = 50;
-                break;
+
+
               case 'Garde-Manger':
                 iconName = focused
                   ? 'fast-food'
@@ -88,14 +79,7 @@ export class Tabs extends Component {
             this.props.homeScreen()
           },
         })} />
-        <Tab.Screen name="Scanner" component={ScannerScreen} />
-        <Tab.Screen name="Add" options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ color }) => (
-            <AddButton />
-
-          )
-        }} component={this.searchPageRooting()} />
+      
         <Tab.Screen name="Garde-Manger" component={GardeMangerScreen}
           listeners={({ navigation, route }) => ({
             tabPress: e => {

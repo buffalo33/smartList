@@ -4,7 +4,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { FloatingAction } from "react-native-floating-action";
 import { FAB } from 'react-native-paper';
 import { LogBox } from 'react-native';
+import { connect } from 'react-redux'
 
+import HomeSearchPage from '../screens/Search/HomeSearchPage'
+import ListesSearchPage from '../screens/Search/ListesSearchPage'
+import ListesScreen from '../screens/ListesScreen'
+import GardeMangerScreen from '../screens/GardeMangerScreen'
+import GardeMangerSearch from '../screens/Search/GardeMangerSearch';
 export class AddButton extends Component {
   constructor(props) {
     super(props);
@@ -12,38 +18,20 @@ export class AddButton extends Component {
       fabIsVisible: true,
     };
   }
-  searchPageRooting() {
-    //alert(this.props.pagePointer)
-    switch (this.props.pagePointer) {
-      case 'Courses':
-        return HomeSearchPage;
-        break;
-      case 'Listes':
-        return ListesSearchPage;
-        break;
-      case 'Garde-Manger':
-        return GardeMangerSearch;
-        break;
 
-      default:
-        return SearchPage;
-        break;
-    }
-
-  }
 
   searchPageRooting() {
 
     //alert(this.props.pagePointer)
     switch (this.props.pagePointer) {
       case 'Courses':
-        return HomeSearchPage;
+        return 'HomeSearch';
         break;
       case 'Listes':
-        return ListesSearchPage;
+        return 'ListesSearch';
         break;
       case 'Garde-Manger':
-        return GardeMangerSearch;
+        return 'GardeMangerSe';
         break;
 
       default:
@@ -64,8 +52,8 @@ export class AddButton extends Component {
           icon="plus"
           visible={this.state.fabIsVisible}
           animated={true}
-          onPress={() => { this.setState({ fabIsVisible: !this.state.fabIsVisible }); }}
-          // onClickAction={() => { this.setState({ fabIsVisible: !this.state.fabIsVisible }); }}
+          onPress={() => { this.props.data.navigation.navigate(this.searchPageRooting()) }}
+          // onClickAction={() => { this.searchPageRooting() this.setState({ fabIsVisible: !this.state.fabIsVisible }); }}
           color='white'
         />
       </View>
@@ -83,6 +71,25 @@ const styles = StyleSheet.create({
 
   },
 })
-export default AddButton
+export default connect(mapStateToProps, mapDispatchToProps)(AddButton)
 
 
+function mapStateToProps(state) {
+  return {
+    pagePointer: state.pagePointerReducer.pagePointer
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    homeScreen: () => dispatch({
+      type: 'HOME_SCREEN'
+    }),
+    listesScreen: () => dispatch({
+      type: 'LISTES_SCREEN'
+    }),
+    storeScreen: () => dispatch({
+      type: 'STORE_SCREEN'
+    }),
+  }
+} 

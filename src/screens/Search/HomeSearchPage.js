@@ -1,10 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, FlatList, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, TouchableWithoutFeedback, FlatList, StatusBar } from 'react-native'
 import firebase from 'firebase'
 import { Button, Searchbar } from 'react-native-paper';
 import { connect } from 'react-redux'
-
+import { Icon } from 'react-native-elements'
+import { Container, Content, InputGroup, Input } from 'native-base';
+import { LogBox } from 'react-native';
 import { Component } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const DATA = [
@@ -107,31 +110,59 @@ class componentName extends Component {
 
 
   render() {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     console.log(this.props.cart)
     return (
-      <View style={{}}>
-        <Searchbar
-          placeholder="Search for a product"
-          onChangeText={(text) => {
-            this.fetchData(text);
-          }}
 
-        />
-        <FlatList
-          data={this.state.dataSource}
-          renderItem={this.renderItem}
-          keyExtractor={item => item._id}
-        //ItemSeparatorComponent={this.FlatListItemSeparator}
-        />
-      </View>
+      <Container>
+
+        <Content>
+          <InputGroup style={styles.container}>
+
+            <Searchbar
+              placeholder="Search for a product"
+              onChangeText={(text) => {
+                this.fetchData(text);
+              }} />
+            <TouchableOpacity>
+              <Icon
+                name='barcode-scan'
+                type='material-community'
+                color='black'
+                size={30}
+                onPress={() => this.props.navigation.navigate('Scanner')} />
+
+            </TouchableOpacity>
+
+
+          </InputGroup>
+          <SafeAreaView>
+
+
+
+          </SafeAreaView>
+
+
+          <FlatList
+            data={this.state.dataSource}
+            renderItem={this.renderItem}
+            keyExtractor={item => item._id}
+          //ItemSeparatorComponent={this.FlatListItemSeparator}
+          />
+
+        </Content>
+
+      </Container>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //  flex: 1,
     //marginTop: StatusBar.currentHeight || 0,
+    paddingRight: 40,
   },
   item: {
     backgroundColor: '#f9c2ff',
