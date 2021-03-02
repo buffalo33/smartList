@@ -48,8 +48,17 @@ export class Tabs extends Component {
                   ? 'cart'
                   : 'cart-outline';
                 break;
-
-
+              case 'Scanner':
+                iconName = focused
+                  ? 'barcode'
+                  : 'barcode-outline';
+                break;
+              case 'Add':
+                iconName = focused
+                  ? 'add-circle'
+                  : 'add-circle-outline';
+                size = 50;
+                break;
               case 'Garde-Manger':
                 iconName = focused
                   ? 'fast-food'
@@ -74,25 +83,26 @@ export class Tabs extends Component {
           activeTintColor: 'tomato',
           inactiveTintColor: 'gray',
         }}>
+
+        <Tab.Screen name="Listes" component={ListesScreen}
+          listeners={({ navigation, route }) => ({
+            tabPress: e => {
+              this.props.listesScreen()
+            },
+          })} />
         <Tab.Screen name="Courses" component={HomeScreen} listeners={({ navigation, route }) => ({
           tabPress: e => {
-            this.props.homeScreen() && this.props.showButton()
+            this.props.homeScreen()
           },
         })} />
 
         <Tab.Screen name="Garde-Manger" component={GardeMangerScreen}
           listeners={({ navigation, route }) => ({
             tabPress: e => {
-              this.props.storeScreen() && this.props.hideButton()
+              this.props.storeScreen()
             },
           })} />
 
-        <Tab.Screen name="Listes" component={ListesScreen}
-          listeners={({ navigation, route }) => ({
-            tabPress: e => {
-              this.props.listesScreen() && this.props.showButton()
-            },
-          })} />
 
       </Tab.Navigator>
     );
@@ -105,8 +115,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Tabs)
 
 function mapStateToProps(state) {
   return {
-    pagePointer: state.pagePointerReducer.pagePointer,
-    fabIsVisible: state.addButtonReducer.fabIsVisible,
+    pagePointer: state.pagePointerReducer.pagePointer
   }
 }
 
@@ -120,12 +129,6 @@ function mapDispatchToProps(dispatch) {
     }),
     storeScreen: () => dispatch({
       type: 'STORE_SCREEN'
-    }),
-    showButton: () => dispatch({
-      type: 'SHOW'
-    }),
-    hideButton: () => dispatch({
-      type: 'HIDE'
     }),
   }
 } 

@@ -1,15 +1,15 @@
 const initialState = {
-  cart: [],
+  lists: [],
 }
 export default function listReducer(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_TO_LIST':
+    case 'ADD_TO_LISTS':
       return {
-        cart: [action.payload, ...state.cart],
+        lists: [action.payload, ...state.lists],
       }
     case 'DELETE_ITEM':
       return {
-        cart: [...state.cart.filter(x=> x!=action.payload)],
+        lists: [...state.lists.filter(x => x != action.payload)],
       }
     default:
       return state

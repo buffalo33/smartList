@@ -3,7 +3,7 @@ const initialState = {
 }
 
 
-export default function pagePointerReducer(state = initialState, action){
+export default function pagePointerReducer(state = initialState, action) {
   //alert(action.type)
   switch (action.type) {
     case 'HOME_SCREEN':
@@ -17,7 +17,7 @@ export default function pagePointerReducer(state = initialState, action){
       break;
 
     default:
-      return { pagePointer: 'Courses' }
+      return { pagePointer: 'Listes' }
 
       break;
   }
