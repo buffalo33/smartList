@@ -4,27 +4,42 @@ import firebase from 'firebase'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Logo from '../components/Logo'
 class SignInScreen extends Component {
-  state = {
-    email: '',
-    password: '',
-    error: '',
-    loading: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      name: ''
+    }
+    this.onRegister = this.onRegister.bind(this)
   }
 
-  onBottomPress = () => {
+  onLoginPress = () => {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(this.onLoginSuccess)
       .catch(err => {
         Alert.alert(err.message)
       })
-
-
   }
+
   onLoginSuccess = () => {
     this.setState({
       error: '',
       loading: false
     })
+  }
+
+
+
+
+  onRegister() {
+    const { email, password, name } = this.state;
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        console.log(result)
+      }).catch((error) => {
+        console.log(error)
+      })
   }
 
 
@@ -52,12 +67,16 @@ class SignInScreen extends Component {
 
           />
 
-
-
-          <TouchableOpacity style={styles.buttonContainer}
-            onPress={this.onBottomPress}
+          <TouchableOpacity style={styles.loginContainer}
+            onPress={this.onLoginPress}
             testID={"TEST_ID_BUTTON_SUBMIT"}>
             <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.registerContainer}
+            onPress={this.onRegister}
+            testID={"TEST_ID_BUTTON_REGISTER"}>
+            <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
 
           <Text style={styles.errorText} >
@@ -89,12 +108,13 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    backgroundColor: 'rgba(255,255,255,.5)',
+    // backgroundColor: 'rgba(255,255,255,.5)',
     paddingLeft: 10,
 
     marginBottom: 15,
     borderRadius: 5,
     fontSize: 15,
+    backgroundColor: '#EBF5FB',
 
   },
   errorText: {
@@ -108,11 +128,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
+    //paddingBottom:19,
   },
-  buttonContainer: {
+  loginContainer: {
     backgroundColor: '#3B3B98',
-    padding: 15,
+    padding: 10,
+      //paddingBottom:50,
+    borderRadius: 8
+  },
+  registerContainer: {
+    backgroundColor: '#3B3B98',
+    padding: 10,
+    //  paddingBottom:10,
     borderRadius: 8
   }
 });
