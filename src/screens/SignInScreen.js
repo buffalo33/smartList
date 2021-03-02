@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import firebase from 'firebase'
+import firebase, { firestore } from 'firebase'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Logo from '../components/Logo'
 class SignInScreen extends Component {
@@ -36,6 +36,7 @@ class SignInScreen extends Component {
     const { email, password, name } = this.state;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
+        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({name,email})
         console.log(result)
       }).catch((error) => {
         console.log(error)
