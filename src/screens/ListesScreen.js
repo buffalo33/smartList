@@ -6,7 +6,9 @@ import { Button } from 'react-native'
 import DialogInput from 'react-native-dialog-input';
 import { connect } from 'react-redux'
 import * as Random from 'expo-random';
-
+import firebase from 'firebase';
+import 'firebase/firestore';
+//import MyApp from '../../App'
 import {
   MenuProvider,
   Menu,
@@ -15,6 +17,11 @@ import {
   MenuOption,
 } from 'react-native-popup-menu';
 
+
+
+
+
+//const dbh = firebase.firestore();
 
 
 
@@ -60,7 +67,6 @@ const Item = ({ item, onPress, style }) => (
 );
 
 const ListesScreen = (props) => {
-
   const [selectedId, setSelectedId] = useState(null);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   //console.log(props);

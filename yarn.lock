@@ -2328,6 +2328,11 @@
   resolved "https://registry.npm.taobao.org/@react-native-community/masked-view/download/@react-native-community/masked-view-0.1.10.tgz"
   integrity sha1-XdpkPhnlh3k7wgNN2b9zmK1D1AE=
 
+"@react-native-firebase/firestore@^10.8.1":
+  version "10.8.1"
+  resolved "https://registry.npm.taobao.org/@react-native-firebase/firestore/download/@react-native-firebase/firestore-10.8.1.tgz#0a48d68eb717e7841411bd1d48b734c794b0a9cf"
+  integrity sha1-CkjWjrcX54QUEb0dSLc0x5Swqc8=
+
 "@react-native-picker/picker@^1.9.7":
   version "1.9.11"
   resolved "https://registry.npm.taobao.org/@react-native-picker/picker/download/@react-native-picker/picker-1.9.11.tgz#490c752417c17d687e2941659b3c0bff9cb79b83"

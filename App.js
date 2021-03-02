@@ -17,8 +17,13 @@ import reducer from './src/redux/reducers/index'
 import MoreInfoProduct from './src/screens/MoreInfoProduct'
 import AddButton from './src/components/AddButton'
 import ListArticleScreen from './src/screens/ListArticleScreen'
-
+import { LogBox } from 'react-native';
+import Loading from './src/screens/LoadingScreen'
 import HomeSearchPage from './src/screens/Search/HomeSearchPage'
+
+LogBox.ignoreLogs(['Setting a timer']); //nessecary 
+
+
 const store = createStore(reducer);
 
 console.log(store.getState())
@@ -53,7 +58,8 @@ export default class App extends Component {
     super(props);
   }
   state = {
-    loggedIn: false
+    loggedIn: false,
+    loaded: false
   }
   componentDidMount() {
     const firebaseConfig = {
@@ -67,17 +73,20 @@ export default class App extends Component {
     };
 
     if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
+      var fire = firebase.initializeApp(firebaseConfig);
+      //module.exports.MyApp = MyApp.firestore();
     }
     // var db = firebase.firestore();
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
+      if (!user) {
         this.setState({
-          loggedIn: true
+          loggedIn: false,
+          loaded: true,
         })
       } else {
         this.setState({
-          loggedIn: false
+          loggedIn: true,
+          loaded: true,
         })
       }
     })
@@ -85,13 +94,17 @@ export default class App extends Component {
 
 
   renderContent = () => {
+    console.log(this.state.loaded)
+    if (!this.state.loaded) {
+      return <Loading />
+    }
     switch (this.state.loggedIn) {
       case false:
-        return <SignInScreen />
+        return <SignInScreen/>
       case true:
         return (
           <Provider store={store}>
-            <NavigationContainer>         
+            <NavigationContainer>
               <Stack.Navigator initialRouteName="Home" >
                 <Stack.Screen name="ShoppingList" component={HomeScreen}
                   options={({ navigation }) => ({
