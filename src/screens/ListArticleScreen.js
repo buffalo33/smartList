@@ -58,7 +58,7 @@ class HomeScreen extends Component {
       <View style={styles.rowBack}>
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnRight]}
-          onPress={() => this.props.deleteItem(item)}>
+          onPress={() => this.props.deleteItemCart(item)}>
           <Text style={styles.backTextWhite}>Delete</Text>
         </TouchableOpacity>
       </View>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-   // paddingBottom: 20
+    // paddingBottom: 20
 
     //marginTop: StatusBar.currentHeight || 0,
   },
@@ -179,22 +179,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
 function mapStateToProps(state) {
   return {
-    cart: state.listReducer.cart
+    cart: state.cartReducer.cart
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addToLists: (newItem) => dispatch({
-      type: 'ADD_TO_LIST',
+    addToCart: (newItem) => dispatch({
+      type: 'ADD_TO_CART',
       payload: newItem
     }),
-    checkItems: (itemToCheck) => dispatch({
-      type: 'CHECK_ITEM',
+    checkItemCart: (itemToCheck) => dispatch({
+      type: 'CHECK_ITEM_CART',
       payload: itemToCheck
     }),
-    deleteItems: (itemToDelete) => dispatch({
-      type: 'DELETE_ITEM',
+    deleteItemCart: (itemToDelete) => dispatch({
+      type: 'DELETE_ITEM_CART',
       payload: itemToDelete
     }),
 

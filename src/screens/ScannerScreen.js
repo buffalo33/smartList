@@ -67,7 +67,7 @@ class BarcodeScannerExample extends React.Component {
     const product = await openFoodFactsApi.findProductByBarcode(data);
     this.setState({ product: product });
     console.log(this.state.product);
-    this.props.addToList(product);
+    this.props.addToCart(product);
     Alert.alert(
       "Product detected",
       "Do yan want to go back to the list ?",
@@ -77,7 +77,7 @@ class BarcodeScannerExample extends React.Component {
           onPress: () => this.setState({ scanned: false }),
           style: "cancel"
         },
-        { text: "OK", onPress: () => this.props.navigation.navigate('Courses') }
+        { text: "OK", onPress: () => this.props.navigation.navigate('ListArticleScreen') }
       ],
       { cancelable: false }
     )
@@ -90,14 +90,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(BarcodeScannerExampl
 
 function mapStateToProps(state) {
   return {
-    cart: state.listReducer.cart
+    cart: state.cartReducer.cart
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addToList: (newItem) => dispatch({
-      type: 'ADD_TO_LIST',
+    addToCart: (newItem) => dispatch({
+      type: 'ADD_TO_CART',
       payload: newItem
     }),
 

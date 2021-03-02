@@ -16,6 +16,7 @@ import { Provider } from 'react-redux'
 import reducer from './src/redux/reducers/index'
 import MoreInfoProduct from './src/screens/MoreInfoProduct'
 import AddButton from './src/components/AddButton'
+import ListArticleScreen from './src/screens/ListArticleScreen'
 
 import HomeSearchPage from './src/screens/Search/HomeSearchPage'
 const store = createStore(reducer);
@@ -116,6 +117,10 @@ export default class App extends Component {
                   })} />
                 <Stack.Screen name="MoreInfoScreen"
                   component={MoreInfoProduct}
+                  options={({ navigation }) => ({
+                  })} />
+                <Stack.Screen name="ListArticleScreen"
+                  component={ListArticleScreen}
                   options={({ navigation }) => ({
                   })} />
                 <Stack.Screen name="RegisterScreen"

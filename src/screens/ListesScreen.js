@@ -67,12 +67,12 @@ const ListesScreen = (props) => {
 
   const renderItem = ({ item }) => {
     console.log(props);
-    const backgroundColor = item.id === selectedId ? "tomato" : "white";
+    const backgroundColor = item.id === selectedId ? "white" : "white";
 
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => props.navigation.navigate('ListArticleScreen')}
         style={{ backgroundColor }}
       />
     );

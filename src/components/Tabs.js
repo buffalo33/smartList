@@ -90,11 +90,7 @@ export class Tabs extends Component {
               this.props.listesScreen()
             },
           })} />
-        <Tab.Screen name="Courses" component={HomeScreen} listeners={({ navigation, route }) => ({
-          tabPress: e => {
-            this.props.homeScreen()
-          },
-        })} />
+        
 
         <Tab.Screen name="Garde-Manger" component={GardeMangerScreen}
           listeners={({ navigation, route }) => ({

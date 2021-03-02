@@ -50,7 +50,7 @@ export class AddButton extends Component {
           icon="plus"
           visible={this.props.fabIsVisible}
           animated={true}
-          onPress={() => { this.props.data.navigation.navigate(this.searchPageRooting()) }}
+          onPress={() => { this.props.data.navigation.navigate('HomeSearch') }}
           // onClickAction={() => { this.searchPageRooting() this.setState({ fabIsVisible: !this.state.fabIsVisible }); }}
           color='white'
         />
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 
   fab: {
     right: 0,
-    bottom: 0,
+    bottom: 2,
     backgroundColor: 'tomato',
     marginRight: '43%',
     marginLeft: '43.3%',

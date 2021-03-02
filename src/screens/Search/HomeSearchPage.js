@@ -87,7 +87,7 @@ class componentName extends Component {
     };
   }
 
-  renderItem = ({ item }) => (<TouchableOpacity onPress={() => this.props.addToList(item)} >
+  renderItem = ({ item }) => (<TouchableOpacity onPress={() => this.props.addToCart(item)} >
     <Item product_name={item.product_name} />
   </TouchableOpacity >
 
@@ -111,7 +111,7 @@ class componentName extends Component {
 
   render() {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-    console.log(this.props.cart)
+    console.log(this.props)
     return (
 
       <Container>
@@ -183,14 +183,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(componentName)
 
 function mapStateToProps(state) {
   return {
-    cart: state.listReducer.cart
+    cart: state.cartReducer.cart
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addToList: (newItem) => dispatch({
-      type: 'ADD_TO_LIST',
+    addToCart: (newItem) => dispatch({
+      type: 'ADD_TO_CART',
       payload: newItem
     }),
 
