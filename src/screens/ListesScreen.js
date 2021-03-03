@@ -78,7 +78,7 @@ const ListesScreen = (props) => {
     return (
       <Item
         item={item}
-        onPress={() => props.navigation.navigate('ListArticleScreen')}
+        onPress={() => props.navigation.navigate('ListArticleScreen',{id_list:item.id})}
         style={{ backgroundColor }}
       />
     );
@@ -105,6 +105,7 @@ const ListesScreen = (props) => {
               id: Random.getRandomBytes(2).toString()
               ,
               title: inputText,
+              cart:[]
             }) && setIsDialogVisible(false)
           }}
           closeDialog={() => setIsDialogVisible(false)}>

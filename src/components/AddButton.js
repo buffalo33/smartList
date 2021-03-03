@@ -40,7 +40,7 @@ export class AddButton extends Component {
   }
   render() {
     LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
-    console.log(this.props.fabIsVisible);
+    console.log(this.props.data.route.params.id_list);
     return (
       <View >
 
@@ -50,7 +50,7 @@ export class AddButton extends Component {
           icon="plus"
           visible={this.props.fabIsVisible}
           animated={true}
-          onPress={() => { this.props.data.navigation.navigate('HomeSearch') }}
+          onPress={() => { this.props.data.navigation.navigate('HomeSearch',{id_list:this.props.data.route.params.id_list}) }}
           // onClickAction={() => { this.searchPageRooting() this.setState({ fabIsVisible: !this.state.fabIsVisible }); }}
           color='white'
         />

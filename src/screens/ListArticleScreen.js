@@ -66,11 +66,11 @@ class HomeScreen extends Component {
   }
 
   render() {
-    //console.log(this.props.cart)
+    console.log(this.props.lists.filter(x => x.id == this.props.route.params.id_list)[0].cart)
     return (
       <SafeAreaView style={styles.container}>
         <SwipeListView style={styles.list}
-          data={this.props.cart}
+          data={this.props.lists.filter(x => x.id == this.props.route.params.id_list)[0].cart}
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
           renderHiddenItem={this.renderHiddenItem}
@@ -179,24 +179,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
 function mapStateToProps(state) {
   return {
-    cart: state.cartReducer.cart
+    lists: state.listReducer.lists
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addToCart: (newItem) => dispatch({
-      type: 'ADD_TO_CART',
+    addToLists: (newItem) => dispatch({
+      type: 'ADD_TO_LISTS',
       payload: newItem
     }),
-    checkItemCart: (itemToCheck) => dispatch({
-      type: 'CHECK_ITEM_CART',
-      payload: itemToCheck
+    addToCart: (newItem, id_list) => dispatch({
+      type: 'ADD_TO_CART',
+      payload: { newItem, id_list },
+      //id_list: id_list
     }),
-    deleteItemCart: (itemToDelete) => dispatch({
-      type: 'DELETE_ITEM_CART',
-      payload: itemToDelete
-    }),
+
 
   }
 } 
