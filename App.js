@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import SettingsScreen from './src/screens/SettingsScreen'
-import Register from './src/screens/SignUpScreen'
+import Register from './src/screens/Register'
 import SignInScreen from './src/screens/SignInScreen'
 import firebase from 'firebase'
 import Tabs from './src/components/Tabs'
@@ -94,13 +94,13 @@ export default class App extends Component {
 
 
   renderContent = () => {
-    console.log(this.state.loaded)
+    //console.log(this.props.navigation);
     if (!this.state.loaded) {
       return <Loading />
     }
     switch (this.state.loggedIn) {
       case false:
-        return <SignInScreen/>
+        return <SignInScreen />
       case true:
         return (
           <Provider store={store}>
@@ -126,8 +126,15 @@ export default class App extends Component {
 
                 <Stack.Screen name="SignInScreen"
                   component={SignInScreen}
+                  params={this.props}
                   options={({ navigation }) => ({
                   })} />
+
+                <Stack.Screen name="Register"
+                  component={Register}
+                  options={({ navigation }) => ({
+                  })} />
+
                 <Stack.Screen name="MoreInfoScreen"
                   component={MoreInfoProduct}
                   options={({ navigation }) => ({
@@ -136,6 +143,7 @@ export default class App extends Component {
                   component={ListArticleScreen}
                   options={({ navigation }) => ({
                   })} />
+
                 <Stack.Screen name="RegisterScreen"
                   component={RegisterScreen}
                   options={({ navigation }) => ({

@@ -3,16 +3,13 @@ import React, { Component } from 'react';
 import firebase, { firestore } from 'firebase'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Logo from '../components/Logo'
-import DialogInput from 'react-native-dialog-input';
-
-class SignInScreen extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
-      name: '',
-      isDialogVisible:false
+      name: ''
     }
     this.onRegister = this.onRegister.bind(this)
   }
@@ -39,7 +36,7 @@ class SignInScreen extends Component {
     const { email, password, name } = this.state;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({name,email})
+        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({ name, email })
         console.log(result)
       }).catch((error) => {
         console.log(error)
@@ -48,7 +45,6 @@ class SignInScreen extends Component {
 
 
   render() {
-    //console.log(this.props);
     return (
       <View style={styles.generalContainer}>
         <Logo />
@@ -79,21 +75,11 @@ class SignInScreen extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.registerContainer}
-            onPress={() => this.setState({ isDialogVisible: true })}
+            onPress={this.onRegister}
             testID={"TEST_ID_BUTTON_REGISTER"}>
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
 
-
-          <DialogInput isDialogVisible={this.state.isDialogVisible}
-            title={"Remplir"}
-            message={"Entrer votre nom"}
-            hintInput={"Name"}
-            submitInput={(inputText) =>  {
-              this.setState({ name: inputText }) & this.onRegister()
-            }}
-            closeDialog={() => this.setState({ isDialogVisible: false })}>
-          </DialogInput>
           <Text style={styles.errorText} >
             {this.state.error}
           </Text>
@@ -149,7 +135,7 @@ const styles = StyleSheet.create({
   loginContainer: {
     backgroundColor: '#3B3B98',
     padding: 10,
-      //paddingBottom:50,
+    //paddingBottom:50,
     borderRadius: 8
   },
   registerContainer: {
@@ -161,4 +147,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default SignInScreen;
+export default Register;
