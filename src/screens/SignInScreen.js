@@ -35,9 +35,9 @@ class SignInScreen extends Component {
 
 
 
-  onRegister(inputText) {
+  async onRegister(inputText) {
     const { email, password, name, isDialogVisible } = this.state;
-    this.setState({ name: inputText }) 
+    await this.setState({ name: inputText })
     console.log("heeeeey:");
     console.log(name);
     console.log(this.state.name);
