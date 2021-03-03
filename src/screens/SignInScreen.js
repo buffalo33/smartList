@@ -32,19 +32,10 @@ class SignInScreen extends Component {
     })
   }
 
-
-
-
   async onRegister(inputText) {
-    const { email, password, name, isDialogVisible } = this.state;
+    const { email, password } = this.state;
     await this.setState({ name: inputText })
-    console.log("heeeeey:");
-    console.log(name);
-    console.log(this.state.name);
-
-    console.log(email);
-    console.log(password);
-
+    var name = this.state.name;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
         firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({ name, email })
