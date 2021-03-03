@@ -72,7 +72,7 @@ const ListesScreen = (props) => {
   //console.log(props);
 
   const renderItem = ({ item }) => {
-    console.log(props);
+   // console.log(props);
     const backgroundColor = item.id === selectedId ? "white" : "white";
 
     return (

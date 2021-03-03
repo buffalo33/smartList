@@ -12,7 +12,7 @@ class SignInScreen extends Component {
       email: '',
       password: '',
       name: '',
-      isDialogVisible:false
+      isDialogVisible: false
     }
     this.onRegister = this.onRegister.bind(this)
   }
@@ -35,12 +35,20 @@ class SignInScreen extends Component {
 
 
 
-  onRegister() {
-    const { email, password, name } = this.state;
+  onRegister(inputText) {
+    const { email, password, name, isDialogVisible } = this.state;
+    this.setState({ name: inputText }) 
+    console.log("heeeeey:");
+    console.log(name);
+    console.log(this.state.name);
+
+    console.log(email);
+    console.log(password);
+
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({name,email})
-        console.log(result)
+        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({ name, email })
+        // console.log(result)
       }).catch((error) => {
         console.log(error)
       })
@@ -89,8 +97,8 @@ class SignInScreen extends Component {
             title={"Remplir"}
             message={"Entrer votre nom"}
             hintInput={"Name"}
-            submitInput={(inputText) =>  {
-              this.setState({ name: inputText }) & this.onRegister()
+            submitInput={(inputText) => {
+              this.onRegister(inputText)
             }}
             closeDialog={() => this.setState({ isDialogVisible: false })}>
           </DialogInput>
@@ -149,7 +157,7 @@ const styles = StyleSheet.create({
   loginContainer: {
     backgroundColor: '#3B3B98',
     padding: 10,
-      //paddingBottom:50,
+    //paddingBottom:50,
     borderRadius: 8
   },
   registerContainer: {
