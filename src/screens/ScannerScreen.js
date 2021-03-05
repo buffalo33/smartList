@@ -35,6 +35,8 @@ class BarcodeScannerExample extends React.Component {
   }
 
   render() {
+
+    console.log(this.props.route.params.id_list)
     const { hasCameraPermission, scanned, notAdded } = this.state;
 
     if (hasCameraPermission === null) {
@@ -67,7 +69,7 @@ class BarcodeScannerExample extends React.Component {
     const product = await openFoodFactsApi.findProductByBarcode(data);
     this.setState({ product: product });
     console.log(this.state.product);
-    this.props.addToCart(product);
+    this.props.addToCart(product, this.props.route.params.id_list);
     Alert.alert(
       "Product detected",
       "Do yan want to go back to the list ?",
@@ -87,19 +89,29 @@ class BarcodeScannerExample extends React.Component {
 
 export default connect(mapStateToProps, mapDispatchToProps)(BarcodeScannerExample)
 
-
 function mapStateToProps(state) {
   return {
-    cart: state.cartReducer.cart
+    lists: state.listReducer.lists
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addToCart: (newItem) => dispatch({
-      type: 'ADD_TO_CART',
+    addToLists: (newItem) => dispatch({
+      type: 'ADD_TO_LISTS',
       payload: newItem
     }),
+    addToCart: (newItem, id_list) => dispatch({
+      type: 'ADD_TO_CART',
+      payload: { newItem, id_list },
+      //id_list: id_list
+    }),
+    deleteItemCart: (deleteItem, id_list) => dispatch({
+      type: 'DELETE_ITEM_CART',
+      payload: { deleteItem, id_list },
+      //id_list: id_list
+    }),
+
 
   }
 } 

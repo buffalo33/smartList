@@ -86,7 +86,7 @@ class componentName extends Component {
     };
   }
 
-  renderItem = ({ item }) => (<TouchableOpacity onPress={() => this.props.addToCart(item,this.props.route.params.id_list)} >
+  renderItem = ({ item }) => (<TouchableOpacity onPress={() => this.props.addToCart(item, this.props.route.params.id_list)} >
     <Item product_name={item.product_name} />
   </TouchableOpacity >
 
@@ -129,7 +129,7 @@ class componentName extends Component {
                 type='material-community'
                 color='black'
                 size={30}
-                onPress={() => this.props.navigation.navigate('Scanner')} />
+                onPress={() => this.props.navigation.navigate('Scanner', { id_list: this.props.route.params.id_list })} />
 
             </TouchableOpacity>
 
@@ -185,7 +185,6 @@ function mapStateToProps(state) {
     lists: state.listReducer.lists
   }
 }
-
 function mapDispatchToProps(dispatch) {
   return {
     addToLists: (newItem) => dispatch({
@@ -197,7 +196,12 @@ function mapDispatchToProps(dispatch) {
       payload: { newItem, id_list },
       //id_list: id_list
     }),
+    deleteItemCart: (deleteItem, id_list) => dispatch({
+      type: 'DELETE_ITEM_CART',
+      payload: { deleteItem, id_list },
+      //id_list: id_list
+    }),
+
 
   }
 } 
-

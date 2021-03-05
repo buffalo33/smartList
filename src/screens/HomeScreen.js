@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-   // paddingBottom: 20
+    // paddingBottom: 20
 
     //marginTop: StatusBar.currentHeight || 0,
   },
