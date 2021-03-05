@@ -129,11 +129,13 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   fab: {
-    position: 'absolute',
-    margin: 16,
     right: 0,
-    bottom: 0,
-    backgroundColor: 'tomato'
+    bottom:2,
+    backgroundColor: 'tomato',
+    marginRight: '43%',
+    marginLeft: '43.3%',
+    justifyContent: 'center',
+    position: 'absolute',
   },
   item: {
     padding: 20,
