@@ -17,8 +17,6 @@ export default function listReducer(state = initialState, action) {
       y.cart.push(action.payload.newItem)
       return y;
     }));*/
-  var l = { ...state.lists.filter(x => x.id == action.payload.id_list) };
-  var b = l[0];
   // console.log(b.cart)
   switch (action.type) {
     case 'ADD_TO_LISTS':
