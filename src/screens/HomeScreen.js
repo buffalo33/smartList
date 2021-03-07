@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Searchbar } from 'react-native-paper';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import CheckBox from '@react-native-community/checkbox';
+import CheckBox from 'react-native-just-checkbox'
 import { useLinkProps, useNavigation } from '@react-navigation/native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import AddButton from '../components/AddButton';
@@ -22,8 +22,11 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
     <View style={styles.item}>
       <View style={styles.checkBoxContainer}>
         <CheckBox
-          value={isSelected}
-          onValueChange={setSelection}
+          style={styles.checkbox}
+          checkBoxSize={40}
+          checkColor='darkturquoise'
+          squareCheckBox={true}
+          onToggle={onToggle}
           style={styles.checkbox}
         />
       </View>
@@ -199,4 +202,4 @@ function mapDispatchToProps(dispatch) {
     }),
 
   }
-} 
+}
