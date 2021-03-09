@@ -33,8 +33,29 @@ describe('SignInScreen tests', () => {
 
 });
 
+
+
 describe('SignInScreen tests', () => {
-  it('should return The password is invalid when entering wrong password with valid email', async () => {
+  it('should return The email address is badly formatted when entering password empty with empty email', async () => {
+    const email = '';
+    const { getByTestId, getByRole } = render(<SignInScreen />)
+
+    const emailInput = getByTestId("TEST_ID_EMAIL_INPUT");
+    const button = getByTestId("TEST_ID_BUTTON_SUBMIT");
+
+    await waitFor(() => {
+      fireEvent.changeText(emailInput, email),
+        expect(emailInput.props.value).toBe(email);
+      fireEvent.press(button);
+      jest.spyOn(Alert, 'alert');
+      expect(Alert.alert).toHaveBeenCalledWith("The email address is badly formatted.")
+    })
+
+  });
+});
+
+describe('SignInScreen tests', () => {
+  it('should return The password is invalid when entering empty password with valid email', async () => {
     const email = 'id@gmail.com';
     const { getByTestId, getByRole } = render(<SignInScreen />)
 
@@ -51,3 +72,31 @@ describe('SignInScreen tests', () => {
 
   });
 });
+
+
+
+describe('SignInScreen tests', () => {
+  it('should return The password is invalid when entering wrong password with valid email', async () => {
+    const email = 'id@gmail.com';
+    const { getByTestId, getByRole } = render(<SignInScreen />)
+    const password = '123456';
+
+    const emailInput = getByTestId("TEST_ID_EMAIL_INPUT");
+    const button = getByTestId("TEST_ID_BUTTON_SUBMIT");
+    const passwordInput = getByTestId("TEST_ID_PASSWORD_INPUT");
+    await waitFor(() => {
+      fireEvent.changeText(emailInput, email),
+      
+        fireEvent.changeText(passwordInput, password),
+                expect(emailInput.props.value).toBe(email);
+
+        expect(passwordInput.props.value).toBe(password);
+      
+      fireEvent.press(button);
+      jest.spyOn(Alert, 'alert');
+      expect(Alert.alert).toHaveBeenCalledWith("The password is invalid or the user does not have a password.")
+    })
+    console.log(passwordInput.props.value);
+  });
+});
+
