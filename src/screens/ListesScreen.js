@@ -127,7 +127,8 @@ const ListesScreen = (props) => {
           message={"Entrer le nom de la liste"}
           hintInput={"Name"}
           submitInput={(inputText) => {
-            props.renameToLists(inputText)
+            props.renameToLists(inputText) 
+            && props.setDialogRenameVisible(false)
           }}
           closeDialog={() => props.setDialogRenameVisible(false)}>
         </DialogInput>

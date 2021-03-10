@@ -56,15 +56,11 @@ export default function listReducer(state = initialState, action) {
       }
     case 'RENAME_ITEM_LIST':
       var Tmp = state.lists;
-      console.log("Tmp: ");
-      console.log(Tmp);
-      console.log(state);
       for (let i = 0; i < Tmp.length; i++) {
         if (Tmp[i].id == state.lastIdSelected) {
-          Tmp.title = action.payload;
+          Tmp[i].title = action.payload;
         }
       }
-      console.log(Tmp);
       return {
         lists: [...Tmp],
       }
