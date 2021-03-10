@@ -41,7 +41,7 @@ const DATA = [
 ];
 
 
-const Item = ({ item, onPress, style }) => (
+const Item = ({ item, onPress, style, props }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
     <Text style={styles.title}>{item.title}</Text>
     <View style={styles.options}>
@@ -56,8 +56,12 @@ const Item = ({ item, onPress, style }) => (
         </MenuTrigger>
         <MenuOptions customStyles={{ optionsContainer: { marginTop: -90 } }}>
           <MenuOption value="Partager" text="Partager" />
-          <MenuOption value="Rennomer" text="Rennomer" />
-          <MenuOption value="Supprimer" text="Supprimer" />
+          <MenuOption value="Renommer" text="Renommer" />
+          <MenuOption value="Supprimer" text="Supprimer" onSelect={() => {
+            //console.log(props);
+            //console.log(item.id);
+            props.removeToLists(item.id);
+          }}/>
         </MenuOptions>
       </Menu>
     </View>
@@ -80,6 +84,7 @@ const ListesScreen = (props) => {
         item={item}
         onPress={() => props.navigation.navigate('ListArticleScreen',{id_list:item.id})}
         style={{ backgroundColor }}
+        props={props}
       />
     );
   };
@@ -102,8 +107,7 @@ const ListesScreen = (props) => {
           hintInput={"Name"}
           submitInput={(inputText) => {
             props.addToLists({
-              id: Random.getRandomBytes(2).toString()
-              ,
+              id: Random.getRandomBytes(2).toString(),
               title: inputText,
               cart:[]
             }) && setIsDialogVisible(false)
@@ -176,6 +180,13 @@ function mapDispatchToProps(dispatch) {
       type: 'ADD_TO_LISTS',
       payload: newItem
     }),
-
+    removeToLists: (id) => dispatch({
+      type: 'DELETE_ITEM_LIST',
+      payload: id
+    }),
+    renameToLists: (newItem) => dispatch({
+      type: 'RENAME_ITEM_LIST',
+      payload: newItem
+    })
   }
 } 

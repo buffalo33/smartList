@@ -37,8 +37,28 @@ export default function listReducer(state = initialState, action) {
       };
     }
     case 'DELETE_ITEM_LIST':
+    var Tmp = state.lists;
+    for (let i=0; i < Tmp.length ; i++)
+    {
+      if (Tmp[i].id == action.payload)
+      {
+        Tmp.splice(i,1);
+      }
+    }
       return {
-        lists: [...state.lists.filter(x => x != action.payload)],
+        lists: [...Tmp], 
+      }
+    case 'RENAME_ITEM_LIST':
+    var Tmp = state.lists;
+    for (let i=0; i < Tmp.length ; i++)
+    {
+      if (Tmp[i].id == action.payload.id)
+      {
+        Tmp.title = action.payoad.title;
+      }
+    }
+      return {
+        lists: [...Tmp], 
       }
     case 'ADD_TO_CART':
       return {
