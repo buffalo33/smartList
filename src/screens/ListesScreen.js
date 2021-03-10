@@ -56,12 +56,17 @@ const Item = ({ item, onPress, style, props }) => (
         </MenuTrigger>
         <MenuOptions customStyles={{ optionsContainer: { marginTop: -90 } }}>
           <MenuOption value="Partager" text="Partager" />
-          <MenuOption value="Renommer" text="Renommer" />
+          <MenuOption value="Renommer" text="Renommer" onSelect={() => {
+
+            props.setIdSelected(item.id);
+            props.setDialogRenameVisible(true);
+
+          }} />
           <MenuOption value="Supprimer" text="Supprimer" onSelect={() => {
             //console.log(props);
             //console.log(item.id);
             props.removeToLists(item.id);
-          }}/>
+          }} />
         </MenuOptions>
       </Menu>
     </View>
@@ -76,18 +81,19 @@ const ListesScreen = (props) => {
   //console.log(props);
 
   const renderItem = ({ item }) => {
-   // console.log(props);
+    // console.log(props);
     const backgroundColor = item.id === selectedId ? "white" : "white";
 
     return (
       <Item
         item={item}
-        onPress={() => props.navigation.navigate('ListArticleScreen',{id_list:item.id})}
+        onPress={() => props.navigation.navigate('ListArticleScreen', { id_list: item.id })}
         style={{ backgroundColor }}
         props={props}
       />
     );
   };
+  //console.log(props);
 
 
   return (
@@ -109,10 +115,21 @@ const ListesScreen = (props) => {
             props.addToLists({
               id: Random.getRandomBytes(2).toString(),
               title: inputText,
-              cart:[]
+              cart: []
             }) && setIsDialogVisible(false)
           }}
           closeDialog={() => setIsDialogVisible(false)}>
+        </DialogInput>
+
+        <DialogInput
+          isDialogVisible={props.isRenameVisible}
+          title={"Renommer la liste"}
+          message={"Entrer le nom de la liste"}
+          hintInput={"Name"}
+          submitInput={(inputText) => {
+            props.renameToLists(inputText)
+          }}
+          closeDialog={() => props.setDialogRenameVisible(false)}>
         </DialogInput>
         <FAB
           style={styles.fab}
@@ -134,7 +151,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     right: 0,
-    bottom:2,
+    bottom: 2,
     backgroundColor: 'tomato',
     marginRight: '43%',
     marginLeft: '43.3%',
@@ -169,8 +186,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(ListesScreen)
 
 
 function mapStateToProps(state) {
+  //console.log(state);
   return {
-    lists: state.listReducer.lists
+    lists: state.listReducer.lists,
+    isRenameVisible: state.dialogRenameReducer.isRenameVisible
   }
 }
 
@@ -184,9 +203,18 @@ function mapDispatchToProps(dispatch) {
       type: 'DELETE_ITEM_LIST',
       payload: id
     }),
-    renameToLists: (newItem) => dispatch({
+    renameToLists: (text) => dispatch({
       type: 'RENAME_ITEM_LIST',
-      payload: newItem
+      payload: text
+    }),
+    setIdSelected: (id) => dispatch({
+      type: 'SET_ID_SELECTED',
+      payload: id
+    }),
+
+    setDialogRenameVisible: (stateVisible) => dispatch({
+      type: 'SET_STATE_VISIBLE',
+      payload: stateVisible
     })
   }
-} 
+}

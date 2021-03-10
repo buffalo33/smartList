@@ -1,5 +1,6 @@
 const initialState = {
   lists: [],
+  lastIdSelected: ''
 }
 
 
@@ -16,13 +17,20 @@ export default function listReducer(state = initialState, action) {
 
 
   switch (action.type) {
+
+    case 'SET_ID_SELECTED':
+      return {
+        lists: [...state.lists],
+        lastIdSelected: action.payload,
+      }
+
     case 'ADD_TO_LISTS':
       return {
         lists: [action.payload, ...state.lists],
       }
     case 'DELETE_ITEM_CART': {
-      console.log('heey');
-      console.log(...state.lists.filter(x => x.id == action.payload.id_list))
+      //console.log('heey');
+      // console.log(...state.lists.filter(x => x.id == action.payload.id_list))
 
       return {
 
@@ -37,28 +45,28 @@ export default function listReducer(state = initialState, action) {
       };
     }
     case 'DELETE_ITEM_LIST':
-    var Tmp = state.lists;
-    for (let i=0; i < Tmp.length ; i++)
-    {
-      if (Tmp[i].id == action.payload)
-      {
-        Tmp.splice(i,1);
+      var Tmp = state.lists;
+      for (let i = 0; i < Tmp.length; i++) {
+        if (Tmp[i].id == action.payload) {
+          Tmp.splice(i, 1);
+        }
       }
-    }
       return {
-        lists: [...Tmp], 
+        lists: [...Tmp],
       }
     case 'RENAME_ITEM_LIST':
-    var Tmp = state.lists;
-    for (let i=0; i < Tmp.length ; i++)
-    {
-      if (Tmp[i].id == action.payload.id)
-      {
-        Tmp.title = action.payoad.title;
+      var Tmp = state.lists;
+      console.log("Tmp: ");
+      console.log(Tmp);
+      console.log(state);
+      for (let i = 0; i < Tmp.length; i++) {
+        if (Tmp[i].id == state.lastIdSelected) {
+          Tmp.title = action.payload;
+        }
       }
-    }
+      console.log(Tmp);
       return {
-        lists: [...Tmp], 
+        lists: [...Tmp],
       }
     case 'ADD_TO_CART':
       return {
