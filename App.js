@@ -20,11 +20,33 @@ import ListArticleScreen from './src/screens/ListArticleScreen'
 import { LogBox } from 'react-native';
 import Loading from './src/screens/LoadingScreen'
 import HomeSearchPage from './src/screens/Search/HomeSearchPage'
-
+import 'localstorage-polyfill';
 LogBox.ignoreLogs(['Setting a timer']); //nessecary 
 
 
-const store = createStore(reducer);
+function saveToLocalStorage(state) {
+  try {
+    const serialisedState = JSON.stringify(state);
+    localStorage.setItem("persistantState", serialisedState);
+  } catch (e) {
+    console.warn(e);
+  }
+}
+
+// load string from localStarage and convert into an Object
+// invalid output must be undefined
+function loadFromLocalStorage() {
+  try {
+    const serialisedState = localStorage.getItem("persistantState");
+    if (serialisedState === null) return undefined;
+    return JSON.parse(serialisedState);
+  } catch (e) {
+    console.warn(e);
+    return undefined;
+  }
+}
+const store = createStore(reducer, loadFromLocalStorage());
+store.subscribe(() => saveToLocalStorage(store.getState()));
 
 console.log(store.getState())
 import {
