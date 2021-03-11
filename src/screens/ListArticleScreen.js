@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Searchbar } from 'react-native-paper';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import CheckBox from 'react-native-just-checkbox'
+import CheckBox from '@react-native-community/checkbox';
 import { useLinkProps, useNavigation } from '@react-navigation/native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import AddButton from '../components/AddButton';
@@ -22,11 +22,8 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
     <View style={styles.item}>
       <View style={styles.checkBoxContainer}>
         <CheckBox
-          style={styles.checkbox}
-          checkBoxSize={40}
-          checkColor='darkturquoise'
-          squareCheckBox={true}
-          onToggle={onToggle}
+          value={isSelected}
+          onValueChange={setSelection}
           style={styles.checkbox}
         />
       </View>
@@ -61,7 +58,7 @@ class HomeScreen extends Component {
       <View style={styles.rowBack}>
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnRight]}
-          onPress={() => this.props.deleteItemCart(item)}>
+          onPress={() => this.props.setIdSelected(this.props.route.params.id_list) & this.props.deleteItemCart(item.id, this.props.route.params.id_list)}>
           <Text style={styles.backTextWhite}>Delete</Text>
         </TouchableOpacity>
       </View>
@@ -69,7 +66,7 @@ class HomeScreen extends Component {
   }
 
   render() {
-    console.log(this.props.lists.filter(x => x.id == this.props.route.params.id_list)[0].cart)
+    //.log(this.props.lists.filter(x => x.id == this.props.route.params.id_list)[0].cart)
     return (
       <SafeAreaView style={styles.container}>
         <SwipeListView style={styles.list}
@@ -196,6 +193,15 @@ function mapDispatchToProps(dispatch) {
       type: 'ADD_TO_CART',
       payload: { newItem, id_list },
       //id_list: id_list
+    }),
+    deleteItemCart: (id, id_list) => dispatch({
+      type: 'DELETE_ITEM_CART',
+      payload: { id, id_list },
+      //id_list: id_list
+    }),
+    setIdSelected: (id) => dispatch({
+      type: 'SET_ID_SELECTED',
+      payload: id
     }),
 
 

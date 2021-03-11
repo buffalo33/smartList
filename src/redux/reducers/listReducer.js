@@ -29,20 +29,24 @@ export default function listReducer(state = initialState, action) {
         lists: [action.payload, ...state.lists],
       }
     case 'DELETE_ITEM_CART': {
-      //console.log('heey');
-      // console.log(...state.lists.filter(x => x.id == action.payload.id_list))
+      console.log('heey');
+      console.log(action.payload);
+      var Tmp = state.lists;
+      for (let i = 0; i < Tmp.length; i++) {
+        console.log(Tmp[i].id);
+        console.log(state.lastIdSelected);
 
+        if (Tmp[i].id == state.lastIdSelected) {
+          console.log('im heeeere');
+          console.log(Tmp[i].cart.filter(x => x.id != action.payload.id));
+
+          Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
+        }
+      }
+      // console.log(Tmp);
       return {
-
-        lists: [...state.lists.filter(x => x.id == action.payload.id_list).map((z) => {
-          z.cart.map(o => {
-            if (o._id != action.payload.deleteItem._id) {
-              return action.payload.deleteItem._id;
-            }
-          })
-          return z;
-        }), ...state.lists.filter(x => x.id != action.payload.id_list)]
-      };
+        lists: [...Tmp],
+      }
     }
     case 'DELETE_ITEM_LIST':
       var Tmp = state.lists;

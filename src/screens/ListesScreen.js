@@ -87,7 +87,7 @@ const ListesScreen = (props) => {
     return (
       <Item
         item={item}
-        onPress={() => props.navigation.navigate('ListArticleScreen', { id_list: item.id })}
+        onPress={() =>  props.navigation.navigate('ListArticleScreen', { id_list: item.id })}
         style={{ backgroundColor }}
         props={props}
       />
@@ -216,6 +216,11 @@ function mapDispatchToProps(dispatch) {
     setDialogRenameVisible: (stateVisible) => dispatch({
       type: 'SET_STATE_VISIBLE',
       payload: stateVisible
-    })
+    }),
+    deleteItemCart: (id, id_list) => dispatch({
+      type: 'DELETE_ITEM_CART',
+      payload: { id, id_list },
+      //id_list: id_list
+    }),
   }
 }
