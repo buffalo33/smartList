@@ -7,7 +7,6 @@ import SearchPage from '../screens/Search/SearchPage'
 import { StyleSheet, Text, View, Icon } from 'react-native'
 import { AddButton } from './AddButton';
 import { Component } from 'react'
-import { connect } from 'react-redux'
 import HomeSearchPage from '../screens/Search/HomeSearchPage'
 import ListesSearchPage from '../screens/Search/ListesSearchPage'
 import ListesScreen from '../screens/ListesScreen'
@@ -17,25 +16,7 @@ const Tab = createBottomTabNavigator();
 
 
 export class Tabs extends Component {
-  searchPageRooting() {
-    //alert(this.props.pagePointer)
-    switch (this.props.pagePointer) {
-      case 'Courses':
-        return HomeSearchPage;
-        break;
-      case 'Listes':
-        return ListesSearchPage;
-        break;
-      case 'Garde-Manger':
-        return GardeMangerSearch;
-        break;
 
-      default:
-        return SearchPage;
-        break;
-    }
-
-  }
   render() {
     return (
       <Tab.Navigator
@@ -73,9 +54,6 @@ export class Tabs extends Component {
               default:
                 break;
             }
-
-
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
@@ -91,7 +69,6 @@ export class Tabs extends Component {
             },
           })} />
         
-
         <Tab.Screen name="Garde-Manger" component={GardeMangerScreen}
           listeners={({ navigation, route }) => ({
             tabPress: e => {
@@ -99,32 +76,12 @@ export class Tabs extends Component {
             },
           })} />
 
-
       </Tab.Navigator>
     );
   }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tabs)
+export default Tabs
 
 
-function mapStateToProps(state) {
-  return {
-    pagePointer: state.pagePointerReducer.pagePointer
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    homeScreen: () => dispatch({
-      type: 'HOME_SCREEN'
-    }),
-    listesScreen: () => dispatch({
-      type: 'LISTES_SCREEN'
-    }),
-    storeScreen: () => dispatch({
-      type: 'STORE_SCREEN'
-    }),
-  }
-} 

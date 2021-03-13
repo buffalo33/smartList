@@ -23,7 +23,7 @@ import HomeSearchPage from './src/screens/Search/HomeSearchPage'
 import 'localstorage-polyfill';
 import { AppRegistry, StyleSheet } from 'react-native';
 import ScannerScreen from './src/screens/ScannerScreen';
-import { store } from './src/Store/store'
+import { store } from './src/store/store'
 
 
 const Stack = createStackNavigator();

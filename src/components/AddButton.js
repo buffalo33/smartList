@@ -51,7 +51,6 @@ export class AddButton extends Component {
           visible={this.props.fabIsVisible}
           animated={true}
           onPress={() => { this.props.data.navigation.navigate('HomeSearch',{id_list:this.props.data.route.params.id_list}) }}
-          // onClickAction={() => { this.searchPageRooting() this.setState({ fabIsVisible: !this.state.fabIsVisible }); }}
           color='white'
         />
       </View>
@@ -72,32 +71,5 @@ const styles = StyleSheet.create({
 
   },
 })
-export default connect(mapStateToProps, mapDispatchToProps)(AddButton)
+export default AddButton
 
-
-function mapStateToProps(state) {
-  return {
-    pagePointer: state.pagePointerReducer.pagePointer,
-    fabIsVisible: state.addButtonReducer.fabIsVisible,
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    homeScreen: () => dispatch({
-      type: 'HOME_SCREEN'
-    }),
-    listesScreen: () => dispatch({
-      type: 'LISTES_SCREEN'
-    }),
-    storeScreen: () => dispatch({
-      type: 'STORE_SCREEN'
-    }),
-    showButton: () => dispatch({
-      type: 'SHOW'
-    }),
-    hideButton: () => dispatch({
-      type: 'HIDE'
-    }),
-  }
-} 
