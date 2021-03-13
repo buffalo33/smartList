@@ -9,7 +9,7 @@ import SettingsScreen from './src/screens/SettingsScreen'
 import Register from './src/screens/Register'
 import SignInScreen from './src/screens/SignInScreen'
 import firebase from 'firebase'
-import Tabs from './src/components/Tabs'
+import Tabs from './src/navigation/Tabs'
 import LoadingScreen from './src/screens/LoadingScreen'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
@@ -23,8 +23,8 @@ import HomeSearchPage from './src/screens/Search/HomeSearchPage'
 import 'localstorage-polyfill';
 import { AppRegistry, StyleSheet } from 'react-native';
 import ScannerScreen from './src/screens/ScannerScreen';
-import { store } from './src/store/store'
-
+import { store } from './src/redux/store/store'
+import RootNavigation from './src/navigation/RootNavigation'
 
 const Stack = createStackNavigator();
 
@@ -100,42 +100,7 @@ class App extends Component {
       case true:
         return (
           <Provider store={store}>
-            <NavigationContainer>
-              <Stack.Navigator initialRouteName="Home" >
-
-                <Stack.Screen name="ShoppingList" component={Tabs}
-                  options={({ navigation }) => ({
-                  headerRight: ({ navigate }) => (
-                    <TouchableOpacity>
-                      <Ionicons
-                        name="reorder-four-outline"
-                        size={36}
-                        onPress={() => navigation.navigate("Settings")}
-                      />
-                    </TouchableOpacity>
-                  ),
-                })} />
-
-                <Stack.Screen name="HomeSearch" component={HomeSearchPage} />
-
-                <Stack.Screen name="SignInScreen" component={SignInScreen} params={this.props} />
-
-                <Stack.Screen name="Register" component={Register} />
-
-                <Stack.Screen name="MoreInfoScreen" component={MoreInfoProduct} />
-
-                <Stack.Screen name="ListArticleScreen" component={ListArticleScreen} />
-
-                <Stack.Screen name="RegisterScreen" component={Register} />
-
-                <Stack.Screen name="Scanner" component={ScannerScreen} />
-
-
-                <Stack.Screen name="Settings" component={SettingsScreen} />
-
-              </Stack.Navigator>
-
-            </NavigationContainer>
+            <RootNavigation/>
           </Provider>);
 
       default:

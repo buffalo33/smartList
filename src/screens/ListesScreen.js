@@ -8,37 +8,8 @@ import { connect } from 'react-redux'
 import * as Random from 'expo-random';
 import firebase from 'firebase';
 import 'firebase/firestore';
-//import MyApp from '../../App'
-import {
-  MenuProvider,
-  Menu,
-  MenuTrigger,
-  MenuOptions,
-  MenuOption,
-} from 'react-native-popup-menu';
-
-
-
-
-
-//const dbh = firebase.firestore();
-
-
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-];
+import {mapStateToProps,mapDispatchToProps} from '../redux/actions/listesActions'
+import { MenuProvider,Menu,MenuTrigger,MenuOptions,MenuOption} from 'react-native-popup-menu';
 
 
 const Item = ({ item, onPress, style, props }) => (
@@ -78,10 +49,9 @@ const Item = ({ item, onPress, style, props }) => (
 const ListesScreen = (props) => {
   const [selectedId, setSelectedId] = useState(null);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
-  //console.log(props);
 
   const renderItem = ({ item }) => {
-    // console.log(props);
+    // modify that to match the spec colors
     const backgroundColor = item.id === selectedId ? "white" : "white";
 
     return (
@@ -93,8 +63,6 @@ const ListesScreen = (props) => {
       />
     );
   };
-  //console.log(props);
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -167,7 +135,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   options: {
-    // padding: 20,
     marginVertical: 8,
     marginHorizontal: -10,
     flexDirection: 'row',
@@ -186,41 +153,3 @@ const styles = StyleSheet.create({
 export default connect(mapStateToProps, mapDispatchToProps)(ListesScreen)
 
 
-function mapStateToProps(state) {
-  //console.log(state);
-  return {
-    lists: state.listReducer.lists,
-    isRenameVisible: state.dialogRenameReducer.isRenameVisible
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    addToLists: (newItem) => dispatch({
-      type: 'ADD_TO_LISTS',
-      payload: newItem
-    }),
-    removeToLists: (id) => dispatch({
-      type: 'DELETE_ITEM_LIST',
-      payload: id
-    }),
-    renameToLists: (text) => dispatch({
-      type: 'RENAME_ITEM_LIST',
-      payload: text
-    }),
-    setIdSelected: (id) => dispatch({
-      type: 'SET_ID_SELECTED',
-      payload: id
-    }),
-
-    setDialogRenameVisible: (stateVisible) => dispatch({
-      type: 'SET_STATE_VISIBLE',
-      payload: stateVisible
-    }),
-    deleteItemCart: (id, id_list) => dispatch({
-      type: 'DELETE_ITEM_CART',
-      payload: { id, id_list },
-      //id_list: id_list
-    }),
-  }
-}

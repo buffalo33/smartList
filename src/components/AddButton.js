@@ -17,27 +17,6 @@ export class AddButton extends Component {
     super(props);
   }
 
-
-  searchPageRooting() {
-
-    //alert(this.props.pagePointer)
-    switch (this.props.pagePointer) {
-      case 'Courses':
-        return 'HomeSearch';
-        break;
-      case 'Listes':
-        return 'ListesSearch';
-        break;
-      case 'Garde-Manger':
-        return 'GardeMangerSe';
-        break;
-
-      default:
-        return SearchPage;
-        break;
-    }
-
-  }
   render() {
     LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
     console.log(this.props.data.route.params.id_list);

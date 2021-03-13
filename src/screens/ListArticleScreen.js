@@ -8,6 +8,7 @@ import CheckBox from '@react-native-community/checkbox';
 import { useLinkProps, useNavigation } from '@react-navigation/native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import AddButton from '../components/AddButton';
+import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
 
 const Tab = createBottomTabNavigator();
 
@@ -176,34 +177,3 @@ const styles = StyleSheet.create({
 });
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
-
-function mapStateToProps(state) {
-  return {
-    lists: state.listReducer.lists
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    addToLists: (newItem) => dispatch({
-      type: 'ADD_TO_LISTS',
-      payload: newItem
-    }),
-    addToCart: (newItem, id_list) => dispatch({
-      type: 'ADD_TO_CART',
-      payload: { newItem, id_list },
-      //id_list: id_list
-    }),
-    deleteItemCart: (id, id_list) => dispatch({
-      type: 'DELETE_ITEM_CART',
-      payload: { id, id_list },
-      //id_list: id_list
-    }),
-    setIdSelected: (id) => dispatch({
-      type: 'SET_ID_SELECTED',
-      payload: id
-    }),
-
-
-  }
-}

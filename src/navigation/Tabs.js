@@ -5,7 +5,7 @@ import ScannerScreen from '../screens/ScannerScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchPage from '../screens/Search/SearchPage'
 import { StyleSheet, Text, View, Icon } from 'react-native'
-import { AddButton } from './AddButton';
+import { AddButton } from '../components/AddButton';
 import { Component } from 'react'
 import HomeSearchPage from '../screens/Search/HomeSearchPage'
 import ListesSearchPage from '../screens/Search/ListesSearchPage'
