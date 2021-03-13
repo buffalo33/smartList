@@ -7,7 +7,8 @@
     "excludePattern": "(node_modules/|docs)"
   },
   "plugins": [
-    "plugins/markdown"
+    "plugins/markdown",
+    "node_modules/better-docs/typescript"
   ],
   "templates": {
     "cleverLinks": true,
@@ -15,6 +16,7 @@
   },
   "opts": {
     "recurse": true,
+    "template": "node_modules/better-docs",
     "destination": "./docs/",
     "readme": "./README.md"
   }

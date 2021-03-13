@@ -72,9 +72,10 @@ function RegisterScreen({ navigation }) {
 }
 
 
-const Stack = createStackNavigator();
+
+
 /**
- * Class App
+ * Class App entry
  */
 
 export default class App extends Component {
