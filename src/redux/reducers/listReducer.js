@@ -1,7 +1,13 @@
+
+
+import firebase, { firestore } from 'firebase'
+
 const initialState = {
+
   lists: [],
   lastIdSelected: ''
 }
+
 
 
 
@@ -24,10 +30,12 @@ export default function listReducer(state = initialState, action) {
         lastIdSelected: action.payload,
       }
 
-    case 'ADD_TO_LISTS':
+    case 'ADD_TO_LISTS': {
+      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({ lists: [action.payload, ...state.lists] });
       return {
         lists: [action.payload, ...state.lists],
       }
+    }
     case 'DELETE_ITEM_CART': {
       console.log('heey');
       console.log(action.payload);
