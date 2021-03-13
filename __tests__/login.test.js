@@ -6,9 +6,9 @@ import SignInScreen from '../src/screens/Authentification/SignInScreen';
 import { fireEvent, waitFor, screen } from '@testing-library/react-native';
 import { render } from 'react-native-testing-library';
 import { Alert } from 'react-native';
-
-
 import firebase from 'firebase'
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyAF_rY_VHwjw_sHV-XTwQtxyrx-L1r1XoE",
   authDomain: "shoppinglist-6cc7b.firebaseapp.com",
@@ -86,12 +86,12 @@ describe('SignInScreen tests', () => {
     const passwordInput = getByTestId("TEST_ID_PASSWORD_INPUT");
     await waitFor(() => {
       fireEvent.changeText(emailInput, email),
-      
-        fireEvent.changeText(passwordInput, password),
-                expect(emailInput.props.value).toBe(email);
 
-        expect(passwordInput.props.value).toBe(password);
-      
+        fireEvent.changeText(passwordInput, password),
+        expect(emailInput.props.value).toBe(email);
+
+      expect(passwordInput.props.value).toBe(password);
+
       fireEvent.press(button);
       jest.spyOn(Alert, 'alert');
       expect(Alert.alert).toHaveBeenCalledWith("The password is invalid or the user does not have a password.")

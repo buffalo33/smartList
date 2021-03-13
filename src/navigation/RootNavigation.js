@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Tabs from './Tabs'
+import Tabs from './TabsNavigation'
 import HomeSearchPage from '../screens/search/HomeSearchPage'
 import SignInScreen from '../screens/Authentification/SignInScreen'
 import Register from '../screens/Authentification/Register'
