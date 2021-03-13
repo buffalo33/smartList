@@ -26,28 +26,6 @@ import ScannerScreen from './src/screens/ScannerScreen';
 import { store } from './src/Store/store'
 
 
-
-/**
- * function that returns the tab navigation component
- * @returns Component
- */
-function HomeScreen() {
-  return (
-    <Tabs />
-  );
-}
-
-/**
- * function that returns the Register component
- * @returns Component
- */
-function RegisterScreen() {
-  return (
-    <Register />
-  );
-}
-
-
 const Stack = createStackNavigator();
 
 /**
@@ -106,10 +84,10 @@ class App extends Component {
       }
     })
   }
-/**
- * render the app depending on the states.
- * @returns AppTree
- */
+  /**
+   * render the app depending on the states.
+   * @returns AppTree
+   */
 
   renderContent = () => {
     //console.log(this.props.navigation);
@@ -125,51 +103,33 @@ class App extends Component {
             <NavigationContainer>
               <Stack.Navigator initialRouteName="Home" >
 
-                <Stack.Screen name="ShoppingList" component={HomeScreen}
+                <Stack.Screen name="ShoppingList" component={Tabs}
                   options={({ navigation }) => ({
-                    headerRight: ({ navigate }) => (
-                      <TouchableOpacity>
-                        <Ionicons
-                          name="reorder-four-outline"
-                          size={36}
-                          onPress={() => navigation.navigate("Settings")}
-                        />
-                      </TouchableOpacity>
-                    ),
-                  })} />
+                  headerRight: ({ navigate }) => (
+                    <TouchableOpacity>
+                      <Ionicons
+                        name="reorder-four-outline"
+                        size={36}
+                        onPress={() => navigation.navigate("Settings")}
+                      />
+                    </TouchableOpacity>
+                  ),
+                })} />
 
-                <Stack.Screen name="HomeSearch"
-                  component={HomeSearchPage}
-                  options={({ navigation }) => ({
-                  })} />
+                <Stack.Screen name="HomeSearch" component={HomeSearchPage} />
 
-                <Stack.Screen name="SignInScreen"
-                  component={SignInScreen}
-                  params={this.props}
-                  options={({ navigation }) => ({
-                  })} />
+                <Stack.Screen name="SignInScreen" component={SignInScreen} params={this.props} />
 
-                <Stack.Screen name="Register"
-                  component={Register}
-                  options={({ navigation }) => ({
-                  })} />
+                <Stack.Screen name="Register" component={Register} />
 
-                <Stack.Screen name="MoreInfoScreen"
-                  component={MoreInfoProduct}
-                  options={({ navigation }) => ({
-                  })} />
-                <Stack.Screen name="ListArticleScreen"
-                  component={ListArticleScreen}
-                  options={({ navigation }) => ({
-                  })} />
+                <Stack.Screen name="MoreInfoScreen" component={MoreInfoProduct} />
 
-                <Stack.Screen name="RegisterScreen"
-                  component={RegisterScreen}
-                  options={({ navigation }) => ({
-                  })} />
+                <Stack.Screen name="ListArticleScreen" component={ListArticleScreen} />
+
+                <Stack.Screen name="RegisterScreen" component={Register} />
+
                 <Stack.Screen name="Scanner" component={ScannerScreen} />
 
-                <Stack.Screen name="AddButton" component={AddButton} />
 
                 <Stack.Screen name="Settings" component={SettingsScreen} />
 
@@ -182,6 +142,12 @@ class App extends Component {
         return <LoadingScreen />
     }
   }
+
+  /**
+ * calls renderContent to render the app depending on the states.
+ * @returns AppTree
+ */
+
   render() {
     return (
       <View style={styles.container}>
