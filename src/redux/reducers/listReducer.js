@@ -1,5 +1,4 @@
 
-
 import firebase, { firestore } from 'firebase'
 
 const initialState = {
@@ -8,19 +7,7 @@ const initialState = {
   lastIdSelected: ''
 }
 
-
-
-
 export default function listReducer(state = initialState, action) {
-  // console.log(action.payload);
-  // console.log(updateObjectInArray(state.lists,action))
-  /*
-    console.log(...state.lists.filter(x => x.id == action.payload.id_list).map((y) => {
-      y.cart.push(action.payload.newItem)
-      return y;
-    }));*/
-
-
 
   switch (action.type) {
 
@@ -36,6 +23,7 @@ export default function listReducer(state = initialState, action) {
         lists: [action.payload, ...state.lists],
       }
     }
+
     case 'DELETE_ITEM_CART': {
       console.log('heey');
       console.log(action.payload);
@@ -51,11 +39,11 @@ export default function listReducer(state = initialState, action) {
           Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
         }
       }
-      // console.log(Tmp);
       return {
         lists: [...Tmp],
       }
     }
+
     case 'DELETE_ITEM_LIST':
       var Tmp = state.lists;
       for (let i = 0; i < Tmp.length; i++) {
@@ -66,6 +54,7 @@ export default function listReducer(state = initialState, action) {
       return {
         lists: [...Tmp],
       }
+
     case 'RENAME_ITEM_LIST':
       var Tmp = state.lists;
       for (let i = 0; i < Tmp.length; i++) {
@@ -76,6 +65,7 @@ export default function listReducer(state = initialState, action) {
       return {
         lists: [...Tmp],
       }
+
     case 'ADD_TO_CART':
       return {
         //    ...state,
@@ -85,6 +75,7 @@ export default function listReducer(state = initialState, action) {
           return y;
         }), ...state.lists.filter(x => x.id != action.payload.id_list)]
       };
+
     default:
       return state
   }
