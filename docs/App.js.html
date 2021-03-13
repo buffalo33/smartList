@@ -1,25 +1,53 @@
-import * as React from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as React from 'react';
 import { Button, View } from 'react-native';
 import { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import SettingsScreen from './src/screens/SettingsScreen'
-import Register from './src/screens/Register'
-import SignInScreen from './src/screens/SignInScreen'
+import SettingsScreen from './screens/SettingsScreen'
+import Register from './screens/Register'
+import SignInScreen from './screens/SignInScreen'
 import firebase from 'firebase'
-import Tabs from './src/components/Tabs'
-import LoadingScreen from './src/screens/LoadingScreen'
+import Tabs from './components/Tabs'
+import LoadingScreen from './screens/LoadingScreen'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import reducer from './src/redux/reducers/index'
-import MoreInfoProduct from './src/screens/MoreInfoProduct'
-import AddButton from './src/components/AddButton'
-import ListArticleScreen from './src/screens/ListArticleScreen'
+import reducer from './redux/reducers/index'
+import MoreInfoProduct from './screens/MoreInfoProduct'
+import AddButton from './components/AddButton'
+import ListArticleScreen from './screens/ListArticleScreen'
 import { LogBox } from 'react-native';
-import Loading from './src/screens/LoadingScreen'
-import HomeSearchPage from './src/screens/Search/HomeSearchPage'
+import Loading from './screens/LoadingScreen'
+import HomeSearchPage from './screens/Search/HomeSearchPage'
 import 'localstorage-polyfill';
 LogBox.ignoreLogs(['Setting a timer']); //nessecary 
 
@@ -57,25 +85,31 @@ import {
   TextInput,
   TouchableHighlight,
 } from 'react-native';
-import SearchPage from './src/screens/Search/SearchPage';
-import ScannerScreen from './src/screens/ScannerScreen';
+import SearchPage from './screens/Search/SearchPage';
+import ScannerScreen from './screens/ScannerScreen';
 function HomeScreen({ navigation }) {
   return (
-    <Tabs />
+    &lt;Tabs />
   );
 }
 
 function RegisterScreen({ navigation }) {
   return (
-    <Register />
+    &lt;Register />
   );
 }
 
 
 const Stack = createStackNavigator();
-
+/**
+ * Class App
+ */
 
 export default class App extends Component {
+  /**
+   * 
+   * @param {Object} props 
+   */
   constructor(props) {
     super(props);
   }
@@ -118,78 +152,78 @@ export default class App extends Component {
   renderContent = () => {
     //console.log(this.props.navigation);
     if (!this.state.loaded) {
-      return <Loading />
+      return &lt;Loading />
     }
     switch (this.state.loggedIn) {
       case false:
-        return <SignInScreen />
+        return &lt;SignInScreen />
       case true:
         return (
-          <Provider store={store}>
-            <NavigationContainer>
-              <Stack.Navigator initialRouteName="Home" >
-                <Stack.Screen name="ShoppingList" component={HomeScreen}
+          &lt;Provider store={store}>
+            &lt;NavigationContainer>
+              &lt;Stack.Navigator initialRouteName="Home" >
+                &lt;Stack.Screen name="ShoppingList" component={HomeScreen}
                   options={({ navigation }) => ({
                     headerRight: ({ navigate }) => (
-                      <TouchableOpacity>
-                        <Ionicons
+                      &lt;TouchableOpacity>
+                        &lt;Ionicons
                           name="reorder-four-outline"
                           size={36}
                           onPress={() => navigation.navigate("Settings")}
                         />
-                      </TouchableOpacity>
+                      &lt;/TouchableOpacity>
 
                     ),
                   })} />
-                <Stack.Screen name="HomeSearch"
+                &lt;Stack.Screen name="HomeSearch"
                   component={HomeSearchPage}
                   options={({ navigation }) => ({
                   })} />
 
-                <Stack.Screen name="SignInScreen"
+                &lt;Stack.Screen name="SignInScreen"
                   component={SignInScreen}
                   params={this.props}
                   options={({ navigation }) => ({
                   })} />
 
-                <Stack.Screen name="Register"
+                &lt;Stack.Screen name="Register"
                   component={Register}
                   options={({ navigation }) => ({
                   })} />
 
-                <Stack.Screen name="MoreInfoScreen"
+                &lt;Stack.Screen name="MoreInfoScreen"
                   component={MoreInfoProduct}
                   options={({ navigation }) => ({
                   })} />
-                <Stack.Screen name="ListArticleScreen"
+                &lt;Stack.Screen name="ListArticleScreen"
                   component={ListArticleScreen}
                   options={({ navigation }) => ({
                   })} />
 
-                <Stack.Screen name="RegisterScreen"
+                &lt;Stack.Screen name="RegisterScreen"
                   component={RegisterScreen}
                   options={({ navigation }) => ({
                   })} />
-                <Stack.Screen name="Scanner" component={ScannerScreen} />
-                <Stack.Screen name="AddButton" component={AddButton} />
+                &lt;Stack.Screen name="Scanner" component={ScannerScreen} />
+                &lt;Stack.Screen name="AddButton" component={AddButton} />
 
-                <Stack.Screen name="Settings" component={SettingsScreen} />
-              </Stack.Navigator>
+                &lt;Stack.Screen name="Settings" component={SettingsScreen} />
+              &lt;/Stack.Navigator>
 
-            </NavigationContainer>
-          </Provider>);
+            &lt;/NavigationContainer>
+          &lt;/Provider>);
 
       default:
-        return <LoadingScreen />
+        return &lt;LoadingScreen />
 
 
     }
   }
   render() {
     return (
-      <View style={styles.container}>
+      &lt;View style={styles.container}>
         {this.renderContent()}
-      </View>
+      &lt;/View>
     );
   }
 }
@@ -210,3 +244,26 @@ const styles = StyleSheet.create({
 
 
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module.exports.html">exports</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Mar 13 2021 15:30:40 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
