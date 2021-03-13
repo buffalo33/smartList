@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> exports</title>
+  <title> src/Store/store.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -66,214 +68,79 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="module.exports.html">exports</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="App.html">App</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#loadFromLocalStorage">loadFromLocalStorage</a></li><li><a href="global.html#RegisterScreen">RegisterScreen</a></li><li><a href="global.html#saveToLocalStorage">saveToLocalStorage</a></li><li><a href="global.html#store">store</a></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Class</p>
-                    <h1>exports</h1>
+                    <p>Source</p>
+                    <h1>src/Store/store.js</h1>
                 </header>
                 
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>exports<span class="signature">(props)</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description"><p>Class App entry</p></div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <div class="members">
-                    <div class="member">
-                        <div class=name>
-                            <span class="tag">Constructor</span>
-                        </div>
-                        
-
-
-    
-    <h4 class="name" id="exports">
-        <a class="href-link" href="#exports">#</a>
-        
-        <span class="code-name">
-            
-                new exports<span class="signature">(props)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>props</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Object</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="App.js.html" class="button">View Source</a>
-            <span>
-                <a href="App.js.html">App.js</a>, <a href="App.js.html#line81">line 81</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    </div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import 'localstorage-polyfill';
+import { createStore } from 'redux'
+import reducer from '../redux/reducers/index'
+
+
+/**
+ * Function that saves data to local storage
+ * @param {Object} state 
+ */
+export function saveToLocalStorage(state) {
+  try {
+    const serialisedState = JSON.stringify(state);
+    localStorage.setItem("persistantState", serialisedState);
+  } catch (e) {
+    console.warn(e);
+  }
+}
+
+// load string from localStarage and convert into an Object
+// invalid output must be undefined
+/**
+ * load string from localStarage and convert into an Object
+ * invalid output must be undefined
+ * @returns storedData
+ */
+export function loadFromLocalStorage() {
+  try {
+    const serialisedState = localStorage.getItem("persistantState");
+    if (serialisedState === null) return undefined;
+    return JSON.parse(serialisedState);
+  } catch (e) {
+    console.warn(e);
+    return undefined;
+  }
+}
+
+/**
+ * constant that loads data from local storage into the reducer
+ * it is mainly used in the provider wrapper in App.js in order 
+ * to pass the reducer to the general props
+ * @param  {Objecct} reducer
+ * @param  {Method} loadFromLocalStorage(
+ */
+export const store = createStore(reducer, loadFromLocalStorage());
+/**
+ * This is a change listener. 
+ * It will be called any time an action is dispatched
+ *  and the data will be stored as a result.
+ */
+store.subscribe(() => saveToLocalStorage(store.getState()));
+
+// this log is used to show the state of the store object
+//console.log(store.getState())
+</code></pre>
+        </article>
+    </section>
 
 
 

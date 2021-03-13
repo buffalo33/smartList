@@ -1,7 +1,7 @@
 {
   "source": {
     "include": [
-      "src"
+      "src","./App.js"
     ],
     "includePattern": ".js$",
     "excludePattern": "(node_modules/|docs)"

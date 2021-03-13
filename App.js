@@ -1,95 +1,77 @@
 import * as React from 'react';
-import { Button, View } from 'react-native';
+import { View } from 'react-native';
 import { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import SettingsScreen from './screens/SettingsScreen'
-import Register from './screens/Register'
-import SignInScreen from './screens/SignInScreen'
+import SettingsScreen from './src/screens/SettingsScreen'
+import Register from './src/screens/Register'
+import SignInScreen from './src/screens/SignInScreen'
 import firebase from 'firebase'
-import Tabs from './components/Tabs'
-import LoadingScreen from './screens/LoadingScreen'
+import Tabs from './src/components/Tabs'
+import LoadingScreen from './src/screens/LoadingScreen'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import reducer from './redux/reducers/index'
-import MoreInfoProduct from './screens/MoreInfoProduct'
-import AddButton from './components/AddButton'
-import ListArticleScreen from './screens/ListArticleScreen'
+import reducer from './src/redux/reducers/index'
+import MoreInfoProduct from './src/screens/MoreInfoProduct'
+import AddButton from './src/components/AddButton'
+import ListArticleScreen from './src/screens/ListArticleScreen'
 import { LogBox } from 'react-native';
-import Loading from './screens/LoadingScreen'
-import HomeSearchPage from './screens/Search/HomeSearchPage'
+import Loading from './src/screens/LoadingScreen'
+import HomeSearchPage from './src/screens/Search/HomeSearchPage'
 import 'localstorage-polyfill';
-LogBox.ignoreLogs(['Setting a timer']); //nessecary 
+import { AppRegistry, StyleSheet } from 'react-native';
+import ScannerScreen from './src/screens/ScannerScreen';
+import { store } from './src/Store/store'
 
 
-function saveToLocalStorage(state) {
-  try {
-    const serialisedState = JSON.stringify(state);
-    localStorage.setItem("persistantState", serialisedState);
-  } catch (e) {
-    console.warn(e);
-  }
-}
 
-// load string from localStarage and convert into an Object
-// invalid output must be undefined
-function loadFromLocalStorage() {
-  try {
-    const serialisedState = localStorage.getItem("persistantState");
-    if (serialisedState === null) return undefined;
-    return JSON.parse(serialisedState);
-  } catch (e) {
-    console.warn(e);
-    return undefined;
-  }
-}
-const store = createStore(reducer, loadFromLocalStorage());
-store.subscribe(() => saveToLocalStorage(store.getState()));
-
-console.log(store.getState())
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  Image,
-  TextInput,
-  TouchableHighlight,
-} from 'react-native';
-import SearchPage from './screens/Search/SearchPage';
-import ScannerScreen from './screens/ScannerScreen';
-function HomeScreen({ navigation }) {
+/**
+ * function that returns the tab navigation component
+ * @returns Component
+ */
+function HomeScreen() {
   return (
     <Tabs />
   );
 }
 
-function RegisterScreen({ navigation }) {
+/**
+ * function that returns the Register component
+ * @returns Component
+ */
+function RegisterScreen() {
   return (
     <Register />
   );
 }
 
 
-
+const Stack = createStackNavigator();
 
 /**
- * Class App entry
+ * This is the entry of our app.
+ * It handles authentification and defines the navigation tree
  */
-
-export default class App extends Component {
+class App extends Component {
   /**
-   * 
    * @param {Object} props 
    */
   constructor(props) {
     super(props);
   }
+
+  /**
+   * states handeled by the class 
+   */
   state = {
     loggedIn: false,
     loaded: false
   }
+  /**
+   * Makes sure that the firebase configuration is completed before running the app
+   */
   componentDidMount() {
     const firebaseConfig = {
       apiKey: "AIzaSyAF_rY_VHwjw_sHV-XTwQtxyrx-L1r1XoE",
@@ -101,11 +83,15 @@ export default class App extends Component {
       measurementId: "G-F5XJDKGDKF"
     };
 
+    /**
+     * if the instance of firebase is already intialized don't do it again
+     */
     if (!firebase.apps.length) {
-      var fire = firebase.initializeApp(firebaseConfig);
-      //module.exports.MyApp = MyApp.firestore();
+      firebase.initializeApp(firebaseConfig);
     }
-    // var db = firebase.firestore();
+    /**
+     * Manage the state of loggedIn and loaded depending on the authentification state of the user in the cloud
+     */
     firebase.auth().onAuthStateChanged(user => {
       if (!user) {
         this.setState({
@@ -120,7 +106,10 @@ export default class App extends Component {
       }
     })
   }
-
+/**
+ * render the app depending on the states.
+ * @returns AppTree
+ */
 
   renderContent = () => {
     //console.log(this.props.navigation);
@@ -135,6 +124,7 @@ export default class App extends Component {
           <Provider store={store}>
             <NavigationContainer>
               <Stack.Navigator initialRouteName="Home" >
+
                 <Stack.Screen name="ShoppingList" component={HomeScreen}
                   options={({ navigation }) => ({
                     headerRight: ({ navigate }) => (
@@ -145,9 +135,9 @@ export default class App extends Component {
                           onPress={() => navigation.navigate("Settings")}
                         />
                       </TouchableOpacity>
-
                     ),
                   })} />
+
                 <Stack.Screen name="HomeSearch"
                   component={HomeSearchPage}
                   options={({ navigation }) => ({
@@ -178,9 +168,11 @@ export default class App extends Component {
                   options={({ navigation }) => ({
                   })} />
                 <Stack.Screen name="Scanner" component={ScannerScreen} />
+
                 <Stack.Screen name="AddButton" component={AddButton} />
 
                 <Stack.Screen name="Settings" component={SettingsScreen} />
+
               </Stack.Navigator>
 
             </NavigationContainer>
@@ -188,8 +180,6 @@ export default class App extends Component {
 
       default:
         return <LoadingScreen />
-
-
     }
   }
   render() {
@@ -201,19 +191,26 @@ export default class App extends Component {
   }
 }
 
-// define your styles
+export default App
+
+
+/**
+ * define your styles
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     height: '100%',
     width: '100%'
-
-
   },
+
 });
 
 
-
-
-
+/**
+ * ignore warning for timer settings
+ * This is mainly caused by firebase when connection to the database service
+ * Don't seem to be causing any issues
+ */
+LogBox.ignoreLogs(['Setting a timer']);
