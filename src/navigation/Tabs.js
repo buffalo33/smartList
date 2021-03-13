@@ -1,17 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import HomeScreen from '../screens/HomeScreen'
 import ScannerScreen from '../screens/ScannerScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import SearchPage from '../screens/Search/SearchPage'
-import { StyleSheet, Text, View, Icon } from 'react-native'
-import { AddButton } from '../components/AddButton';
 import { Component } from 'react'
-import HomeSearchPage from '../screens/Search/HomeSearchPage'
-import ListesSearchPage from '../screens/Search/ListesSearchPage'
 import ListesScreen from '../screens/ListesScreen'
 import GardeMangerScreen from '../screens/GardeMangerScreen'
-import GardeMangerSearch from '../screens/Search/GardeMangerSearch';
+
 const Tab = createBottomTabNavigator();
 
 

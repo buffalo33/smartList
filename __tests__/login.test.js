@@ -2,7 +2,7 @@ import 'react-native'
 import React from 'react'
 import HomeScreen from '../src/screens/HomeScreen'
 import renderer from 'react-test-renderer'
-import SignInScreen from '../src/screens/SignInScreen';
+import SignInScreen from '../src/screens/Authentification/SignInScreen';
 import { fireEvent, waitFor, screen } from '@testing-library/react-native';
 import { render } from 'react-native-testing-library';
 import { Alert } from 'react-native';

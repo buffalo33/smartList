@@ -5,9 +5,9 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Tabs from './Tabs'
-import HomeSearchPage from '../screens/Search/HomeSearchPage'
-import SignInScreen from '../screens/SignInScreen'
-import Register from '../screens/Register'
+import HomeSearchPage from '../screens/search/HomeSearchPage'
+import SignInScreen from '../screens/Authentification/SignInScreen'
+import Register from '../screens/Authentification/Register'
 import MoreInfoProduct from '../screens/MoreInfoProduct'
 import ListArticleScreen from '../screens/ListArticleScreen'
 import ScannerScreen from '../screens/ScannerScreen';

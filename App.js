@@ -6,8 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import SettingsScreen from './src/screens/SettingsScreen'
-import Register from './src/screens/Register'
-import SignInScreen from './src/screens/SignInScreen'
+import Register from './src/screens/Authentification/Register'
+import SignInScreen from './src/screens/Authentification/SignInScreen'
 import firebase from 'firebase'
 import Tabs from './src/navigation/Tabs'
 import LoadingScreen from './src/screens/LoadingScreen'
@@ -19,7 +19,7 @@ import AddButton from './src/components/AddButton'
 import ListArticleScreen from './src/screens/ListArticleScreen'
 import { LogBox } from 'react-native';
 import Loading from './src/screens/LoadingScreen'
-import HomeSearchPage from './src/screens/Search/HomeSearchPage'
+import HomeSearchPage from './src/screens/search/HomeSearchPage'
 import 'localstorage-polyfill';
 import { AppRegistry, StyleSheet } from 'react-native';
 import ScannerScreen from './src/screens/ScannerScreen';

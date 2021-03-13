@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import firebase, { firestore } from 'firebase'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
-import Logo from '../components/Logo'
+import Logo from '../../components/Logo'
 import DialogInput from 'react-native-dialog-input';
 
 class SignInScreen extends Component {
