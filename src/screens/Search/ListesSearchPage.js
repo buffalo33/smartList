@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import firebase from 'firebase'
 import { Searchbar } from 'react-native-paper';
 
 export default function ListesSearchPage() {

@@ -1,32 +1,17 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Component } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import SettingsScreen from './src/screens/SettingsScreen'
-import Register from './src/screens/Authentification/Register'
 import SignInScreen from './src/screens/Authentification/SignInScreen'
 import firebase from 'firebase'
-import Tabs from './src/navigation/Tabs'
 import LoadingScreen from './src/screens/LoadingScreen'
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import reducer from './src/redux/reducers/index'
-import MoreInfoProduct from './src/screens/MoreInfoProduct'
-import AddButton from './src/components/AddButton'
-import ListArticleScreen from './src/screens/ListArticleScreen'
 import { LogBox } from 'react-native';
 import Loading from './src/screens/LoadingScreen'
-import HomeSearchPage from './src/screens/search/HomeSearchPage'
 import 'localstorage-polyfill';
 import { AppRegistry, StyleSheet } from 'react-native';
-import ScannerScreen from './src/screens/ScannerScreen';
 import { store } from './src/redux/store/store'
 import RootNavigation from './src/navigation/RootNavigation'
 
-const Stack = createStackNavigator();
 
 /**
  * This is the entry of our app.
@@ -100,7 +85,7 @@ class App extends Component {
       case true:
         return (
           <Provider store={store}>
-            <RootNavigation/>
+            <RootNavigation />
           </Provider>);
 
       default:

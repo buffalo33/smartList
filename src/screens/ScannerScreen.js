@@ -9,15 +9,8 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
-const Item = ({ product_name }) => (
 
-  <View style={styles.item}>
-    <Text style={styles.product_name}>{product_name}</Text>
-  </View>
-
-);
-
-class BarcodeScannerExample extends React.Component {
+class ScannerScreen extends React.Component {
   state = {
     hasCameraPermission: null,
     scanned: false,
@@ -87,7 +80,7 @@ class BarcodeScannerExample extends React.Component {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BarcodeScannerExample)
+export default connect(mapStateToProps, mapDispatchToProps)(ScannerScreen)
 
 function mapStateToProps(state) {
   return {

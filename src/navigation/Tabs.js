@@ -4,7 +4,7 @@ import ScannerScreen from '../screens/ScannerScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Component } from 'react'
 import ListesScreen from '../screens/ListesScreen'
-import GardeMangerScreen from '../screens/GardeMangerScreen'
+import GardeMangerScreen from '../screens/GardeManger'
 
 const Tab = createBottomTabNavigator();
 
