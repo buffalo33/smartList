@@ -2348,6 +2348,11 @@
   resolved "https://registry.npm.taobao.org/@react-native-community/masked-view/download/@react-native-community/masked-view-0.1.10.tgz"
   integrity sha1-XdpkPhnlh3k7wgNN2b9zmK1D1AE=
 
+"@react-native-community/netinfo@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npm.taobao.org/@react-native-community/netinfo/download/@react-native-community/netinfo-6.0.0.tgz#2a4d7190b508dd0c2293656c9c1aa068f6f60a71"
+  integrity sha1-Kk1xkLUI3Qwik2VsnBqgaPb2CnE=
+
 "@react-native-firebase/firestore@^10.8.1":
   version "10.8.1"
   resolved "https://registry.npm.taobao.org/@react-native-firebase/firestore/download/@react-native-firebase/firestore-10.8.1.tgz#0a48d68eb717e7841411bd1d48b734c794b0a9cf"

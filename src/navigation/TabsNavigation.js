@@ -59,19 +59,9 @@ class Tabs extends Component {
           inactiveTintColor: 'gray',
         }}>
 
-        <Tab.Screen name="Listes" component={ListesScreen}
-          listeners={({ navigation, route }) => ({
-            tabPress: e => {
-              this.props.listesScreen()
-            },
-          })} />
+        <Tab.Screen name="Listes" component={ListesScreen} />
 
-        <Tab.Screen name="Garde-Manger" component={GardeMangerScreen}
-          listeners={({ navigation, route }) => ({
-            tabPress: e => {
-              this.props.storeScreen()
-            },
-          })} />
+        <Tab.Screen name="Garde-Manger" component={GardeMangerScreen} />
 
       </Tab.Navigator>
     );
