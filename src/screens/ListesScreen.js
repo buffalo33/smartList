@@ -8,8 +8,9 @@ import { connect } from 'react-redux'
 import * as Random from 'expo-random';
 import firebase from 'firebase';
 import 'firebase/firestore';
-import {mapStateToProps,mapDispatchToProps} from '../redux/actions/listesActions'
-import { MenuProvider,Menu,MenuTrigger,MenuOptions,MenuOption} from 'react-native-popup-menu';
+import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
+import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
+import FloatingActionButton from "react-native-floating-action-button";
 
 
 const Item = ({ item, onPress, style, props }) => (
@@ -57,7 +58,7 @@ const ListesScreen = (props) => {
     return (
       <Item
         item={item}
-        onPress={() =>  props.navigation.navigate('ListArticleScreen', { id_list: item.id })}
+        onPress={() => props.navigation.navigate('ListArticleScreen', { id_list: item.id })}
         style={{ backgroundColor }}
         props={props}
       />
@@ -95,17 +96,20 @@ const ListesScreen = (props) => {
           message={"Entrer le nom de la liste"}
           hintInput={"Name"}
           submitInput={(inputText) => {
-            props.renameToLists(inputText) 
-            && props.setDialogRenameVisible(false)
+            props.renameToLists(inputText)
+              && props.setDialogRenameVisible(false)
           }}
           closeDialog={() => props.setDialogRenameVisible(false)}>
         </DialogInput>
-        <FAB
-          style={styles.fab}
-          // small
-          icon="plus"
+        <FloatingActionButton
+          iconName="plus"
+          iconColor="white"
+          size={60}
+          iconSize={30}
+          backgroundColor='tomato'
+          shadowColor="black"
+          animated={true}
           onPress={() => setIsDialogVisible(true)}
-          color='white'
         />
       </MenuProvider>
 
@@ -117,15 +121,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
-  },
-  fab: {
-    right: 0,
-    bottom: 2,
-    backgroundColor: 'tomato',
-    marginRight: '43%',
-    marginLeft: '43.3%',
-    justifyContent: 'center',
-    position: 'absolute',
   },
   item: {
     padding: 20,

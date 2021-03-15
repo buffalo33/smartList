@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { FAB } from 'react-native-paper';
 import { LogBox } from 'react-native';
+import FloatingActionButton from "react-native-floating-action-button";
 
 export class AddButton extends Component {
   constructor(props) {
@@ -14,14 +15,16 @@ export class AddButton extends Component {
     return (
       <View >
 
-        <FAB
-          style={styles.fab}
-          // small
-          icon="plus"
+        <FloatingActionButton
+          iconName="plus"
+          iconColor="white"
+          size={60}
+          iconSize={30}
+          backgroundColor= 'tomato'
+          shadowColor="black"
           visible={this.props.fabIsVisible}
           animated={true}
           onPress={() => { this.props.data.navigation.navigate('HomeSearch', { id_list: this.props.data.route.params.id_list }) }}
-          color='white'
         />
       </View>
     )

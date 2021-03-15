@@ -74,7 +74,7 @@ const renderItem = ({ item }) => (<TouchableOpacity onPress={() => console.warn(
 
 );
 
-class componentName extends Component {
+class ArticleSearchPage extends Component {
   constructor(props) {
     super(props);
     this.state = { text: '' };
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(componentName)
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleSearchPage)
 
 
 function mapStateToProps(state) {

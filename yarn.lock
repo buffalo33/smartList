@@ -8907,6 +8907,11 @@ react-native-drawer@2.5.1:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
 
+react-native-dynamic-vector-icons@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/react-native-dynamic-vector-icons/download/react-native-dynamic-vector-icons-1.1.4.tgz#a6dffbe0b71e4b26b34fd61e906e8a1d050f22ed"
+  integrity sha1-pt/74LceSyazT9YekG6KHQUPIu0=
+
 react-native-easy-grid@0.2.2:
   version "0.2.2"
   resolved "https://registry.npm.taobao.org/react-native-easy-grid/download/react-native-easy-grid-0.2.2.tgz#f0be33620be1ebe2d2295918eb58b0a27e8272ab"
@@ -8936,6 +8941,11 @@ react-native-fab@^1.0.17:
   dependencies:
     prop-types "^15.6.0"
 
+react-native-floating-action-button@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npm.taobao.org/react-native-floating-action-button/download/react-native-floating-action-button-0.2.2.tgz#00e15377e175141f7aa5a7c017f0936f53530933"
+  integrity sha1-AOFTd+F1FB96pafAF/CTb1NTCTM=
+
 react-native-floating-action@^1.21.0:
   version "1.21.0"
   resolved "https://registry.npm.taobao.org/react-native-floating-action/download/react-native-floating-action-1.21.0.tgz#cb1e8349fec5b9aed06c8053c07372822c64b22f"
@@ -8960,6 +8970,13 @@ react-native-just-checkbox@^1.0.12:
   version "1.0.12"
   resolved "https://registry.npm.taobao.org/react-native-just-checkbox/download/react-native-just-checkbox-1.0.12.tgz#726b9c4970254f6e042298f328c87ddcf566c206"
   integrity sha1-cmucSXAlT24EIpjzKMh93PVmwgY=
+
+react-native-material-ripple@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.npm.taobao.org/react-native-material-ripple/download/react-native-material-ripple-0.9.1.tgz#db1ad9dd7cf97011e4cd8475ae2041ade0f891cb"
+  integrity sha1-2xrZ3Xz5cBHkzYR1riBBreD4kcs=
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-mmkv-storage@^0.5.3:
   version "0.5.3"
@@ -9050,10 +9067,10 @@ react-native-vector-icons@^7.0.0:
     prop-types "^15.7.2"
     yargs "^15.0.2"
 
-react-native-vector-icons@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-8.0.0.tgz"
-  integrity sha512-u3NWvO+b7nTCxx7IU4EzukFyiApHdpjbsjKgMFEI2Ma+r1Mq48s0ajvBCIPI7LCgKBGYclOxWmMV9DHV2cJFlw==
+react-native-vector-icons@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.npm.taobao.org/react-native-vector-icons/download/react-native-vector-icons-8.1.0.tgz#e8ee2b17bc4d9f636da1c6f67feee8e2a850c3d8"
+  integrity sha1-6O4rF7xNn2Ntocb2f+7o4qhQw9g=
   dependencies:
     lodash.frompairs "^4.0.1"
     lodash.isequal "^4.5.0"

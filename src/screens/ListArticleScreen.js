@@ -45,7 +45,7 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
 };
 
 
-class HomeScreen extends Component {
+class ListArticleScreen extends Component {
   constructor(props) {
     super(props);
   }
@@ -175,5 +175,5 @@ const styles = StyleSheet.create({
     right: 0,
   },
 });
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(ListArticleScreen)
 

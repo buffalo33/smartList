@@ -5,7 +5,7 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Tabs from './TabsNavigation'
-import HomeSearchPage from '../screens/search/HomeSearchPage'
+import ArticleSearchPage from '../screens/search/ArticleSearchPage'
 import SignInScreen from '../screens/Authentification/SignInScreen'
 import Register from '../screens/Authentification/Register'
 import MoreInfoProduct from '../screens/MoreInfoProduct'
@@ -43,7 +43,7 @@ class RootNavigation extends Component {
                 ),
               })} />
 
-            <Stack.Screen name="HomeSearch" component={HomeSearchPage} />
+            <Stack.Screen name="HomeSearch" component={ArticleSearchPage} />
 
             <Stack.Screen name="SignInScreen" component={SignInScreen} params={this.props} />
 
