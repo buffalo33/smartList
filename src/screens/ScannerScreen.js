@@ -4,12 +4,16 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { OpenFoodFactsApi } from 'openfoodfac-ts';
 import { connect } from 'react-redux'
-
+import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
-
+/**
+ * This class implements the scanning features
+ *
+ *  @see https://docs.google.com/document/d/12vbFsvk-hLTKwN6IE-TMI164qkPLLNUUp2hQcukp92s/edit
+ */
 class ScannerScreen extends React.Component {
   state = {
     hasCameraPermission: null,
@@ -21,14 +25,15 @@ class ScannerScreen extends React.Component {
   async componentDidMount() {
     this.getPermissionsAsync();
   }
-
+  /**
+   * Get permissions from user
+   */
   getPermissionsAsync = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
   }
 
   render() {
-
     console.log(this.props.route.params.id_list)
     const { hasCameraPermission, scanned, notAdded } = this.state;
 
@@ -50,13 +55,16 @@ class ScannerScreen extends React.Component {
           style={StyleSheet.absoluteFillObject}
         />
 
-
       </View>
     );
   }
 
 
-
+  /**
+   * Connect to openFoodFactsApi via openfoodfac-ts api in order to 
+   * search for the scaned Barcode
+   * @param {Object} data
+   */
   handleBarCodeScanned = async ({ type, data }) => {
     this.setState({ scanned: true });
     const product = await openFoodFactsApi.findProductByBarcode(data);
@@ -81,30 +89,3 @@ class ScannerScreen extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScannerScreen)
-
-function mapStateToProps(state) {
-  return {
-    lists: state.listReducer.lists
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    addToLists: (newItem) => dispatch({
-      type: 'ADD_TO_LISTS',
-      payload: newItem
-    }),
-    addToCart: (newItem, id_list) => dispatch({
-      type: 'ADD_TO_CART',
-      payload: { newItem, id_list },
-      //id_list: id_list
-    }),
-    deleteItemCart: (deleteItem, id_list) => dispatch({
-      type: 'DELETE_ITEM_CART',
-      payload: { deleteItem, id_list },
-      //id_list: id_list
-    }),
-
-
-  }
-} 

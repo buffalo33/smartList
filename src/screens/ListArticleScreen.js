@@ -44,7 +44,10 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
 
 };
 
-
+/**
+ * A class that implements the cart of the user.
+ *  It gathers all the products added in a Flat(List Component.
+ */
 class ListArticleScreen extends Component {
   constructor(props) {
     super(props);

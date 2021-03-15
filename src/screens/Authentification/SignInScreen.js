@@ -5,7 +5,14 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'reac
 import Logo from '../../components/Logo'
 import DialogInput from 'react-native-dialog-input';
 
+/**
+ * Class that handles sign in features
+ */
 class SignInScreen extends Component {
+  /**
+   * 
+   * @param {Object} props 
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -122,9 +129,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    // backgroundColor: 'rgba(255,255,255,.5)',
     paddingLeft: 10,
-
     marginBottom: 15,
     borderRadius: 5,
     fontSize: 15,

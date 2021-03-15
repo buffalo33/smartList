@@ -8,73 +8,25 @@ import { Container, Content, InputGroup, Input } from 'native-base';
 import { LogBox } from 'react-native';
 import { Component } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { mapStateToProps, mapDispatchToProps } from '../../redux/actions/listesActions'
 
-
-const DATA = [
-  {
-    _id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    product_name: 'First Item',
-  },
-  {
-    _id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    product_name: 'Second Item',
-  },
-  {
-    _id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    product_name: 'Third Item',
-  },
-  {
-    _id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28baa',
-    product_name: 'First Item',
-  },
-  {
-    _id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63aa',
-    product_name: 'Second Item',
-  },
-  {
-    _id: '58694a0f-3da1-471f-bd96-145571e29d72aa',
-    product_name: 'Third Item',
-  },
-  {
-    _id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28baaaaaa',
-    product_name: 'First Item',
-  },
-  {
-    _id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63aaaaaa',
-    product_name: 'Second Item',
-  },
-  {
-    _id: '58694a0f-3da1-471f-bd96-145571e29d72aaaaaaa',
-    product_name: 'Third Item',
-  },
-  {
-    _id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28baccc',
-    product_name: 'First Item',
-  },
-  {
-    _id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63cd',
-    product_name: 'Second Item',
-  },
-  {
-    _id: '58694a0f-3da1-471f-bd96-145571e29d72ddd',
-    product_name: 'Third Item',
-  },
-];
 
 const Item = ({ product_name }) => (
 
   <View style={styles.item}>
     <Text style={styles.product_name}>{product_name}</Text>
   </View>
-
-);
-const renderItem = ({ item }) => (<TouchableOpacity onPress={() => console.warn("hey")} >
-  <Item product_name={item.product_name} />
-</TouchableOpacity >
-
 );
 
+/**
+ * Component that implements the search feature using scan
+ *  and search bar.
+ */
 class ArticleSearchPage extends Component {
+  /**
+   * 
+   * @param {Object} props 
+   */
   constructor(props) {
     super(props);
     this.state = { text: '' };
@@ -91,6 +43,13 @@ class ArticleSearchPage extends Component {
   </TouchableOpacity >
 
   );
+
+  /**
+   * Fetch data entered from url and parse the results 
+   * into dataSource state.
+   * 
+   * @param {String} text 
+   */
   fetchData(text) {
     this.setState({ text });
     const url = 'https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&json=true&search_terms=';
@@ -146,7 +105,6 @@ class ArticleSearchPage extends Component {
             data={this.state.dataSource}
             renderItem={this.renderItem}
             keyExtractor={item => item._id}
-          //ItemSeparatorComponent={this.FlatListItemSeparator}
           />
 
         </Content>
@@ -159,8 +117,6 @@ class ArticleSearchPage extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    //  flex: 1,
-    //marginTop: StatusBar.currentHeight || 0,
     paddingRight: 40,
   },
   item: {
@@ -168,7 +124,6 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
-    // paddingBottom: 19
   },
   product_name: {
     fontSize: 20,
@@ -176,32 +131,5 @@ const styles = StyleSheet.create({
 });
 
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleSearchPage)
 
-
-function mapStateToProps(state) {
-  return {
-    lists: state.listReducer.lists
-  }
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    addToLists: (newItem) => dispatch({
-      type: 'ADD_TO_LISTS',
-      payload: newItem
-    }),
-    addToCart: (newItem, id_list) => dispatch({
-      type: 'ADD_TO_CART',
-      payload: { newItem, id_list },
-      //id_list: id_list
-    }),
-    deleteItemCart: (deleteItem, id_list) => dispatch({
-      type: 'DELETE_ITEM_CART',
-      payload: { deleteItem, id_list },
-      //id_list: id_list
-    }),
-
-
-  }
-} 

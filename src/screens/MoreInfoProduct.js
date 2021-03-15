@@ -1,23 +1,28 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, Image } from 'react-native'
 
-export default class MoreInfoProduct extends Component {
+/**
+ * A class that show extended info on selected product
+ * 
+ */
+class MoreInfoProduct extends Component {
+  /**
+   * 
+   * @param {Object} props 
+   */
   constructor(props) {
-
     super(props);
-
     this.state = {
-
       ImageWidth: null,
-
       ImageHeight: null,
-
     }
 
     this.ImageURI = this.props.route.params.image_front_thumb_url;
-
   }
 
+  /**
+   * Get the size of the URI image before rendering component
+   */
   componentDidMount() {
 
     Image.getSize(this.ImageURI, (Width, Height) => {
@@ -25,16 +30,13 @@ export default class MoreInfoProduct extends Component {
 
     }, (errorMsg) => {
       console.log(errorMsg);
-
     });
-
   }
+
   render() {
 
     return (
       <View style={styles.MainContainer}>
-
-
         <Image source={{ uri: this.ImageURI }} style={{
           resizeMode: 'cover',
           width: this.state.ImageWidth,
@@ -47,24 +49,21 @@ export default class MoreInfoProduct extends Component {
           <Text style={styles.TextStyle}>Nutriscore: {this.props.route.params.nutriscore_grade}  </Text>
 
         </View>
-
-
       </View>
     )
   }
 }
 
+export default MoreInfoProduct
+
 const styles = StyleSheet.create({
 
   MainContainer:
   {
-    //flex: 1,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  
 
   TextStyle:
   {

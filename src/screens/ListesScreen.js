@@ -47,6 +47,13 @@ const Item = ({ item, onPress, style, props }) => (
   </TouchableOpacity>
 );
 
+/**
+ *  Component that implements user lists features.
+ * 
+ * 
+ * @param {Object} props 
+ * @returns a list view
+ */
 const ListesScreen = (props) => {
   const [selectedId, setSelectedId] = useState(null);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
@@ -101,7 +108,7 @@ const ListesScreen = (props) => {
           }}
           closeDialog={() => props.setDialogRenameVisible(false)}>
         </DialogInput>
-        <FloatingActionButton 
+        <FloatingActionButton
           iconName="plus"
           iconColor="white"
           size={50}
