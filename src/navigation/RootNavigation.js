@@ -15,7 +15,10 @@ import SettingsScreen from '../screens/SettingsScreen'
 
 const Stack = createStackNavigator();
 
-
+/**
+ * Class that handles the navigation from the root 
+ * 
+ */
 class RootNavigation extends Component {
   constructor(props) {
     super(props);

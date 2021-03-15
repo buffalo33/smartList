@@ -4,7 +4,11 @@ import { FAB } from 'react-native-paper';
 import { LogBox } from 'react-native';
 import FloatingActionButton from "react-native-floating-action-button";
 
-export class AddButton extends Component {
+/**
+ * Add Button Component
+ * 
+ */
+class AddButton extends Component {
   constructor(props) {
     super(props);
   }

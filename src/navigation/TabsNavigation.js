@@ -8,8 +8,11 @@ import GardeMangerScreen from '../screens/GardeManger'
 
 const Tab = createBottomTabNavigator();
 
-
-export class Tabs extends Component {
+/**
+ * Class that handles the tab navigation
+ * 
+ */
+class Tabs extends Component {
 
   render() {
     return (
@@ -62,7 +65,7 @@ export class Tabs extends Component {
               this.props.listesScreen()
             },
           })} />
-        
+
         <Tab.Screen name="Garde-Manger" component={GardeMangerScreen}
           listeners={({ navigation, route }) => ({
             tabPress: e => {

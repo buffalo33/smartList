@@ -1,7 +1,13 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 
-export default function Logo() {
+
+/**
+ * Main Logo of the app
+ * 
+ * @returns Logo
+ */
+function Logo() {
   return (
     <View style={styles.container}>
       <Text style={styles.slogant}>
@@ -14,7 +20,7 @@ export default function Logo() {
     </View>
   )
 }
-
+export default Logo
 const styles = StyleSheet.create({
   slogant: {
     textAlign: 'center',
