@@ -101,10 +101,10 @@ const ListesScreen = (props) => {
           }}
           closeDialog={() => props.setDialogRenameVisible(false)}>
         </DialogInput>
-        <FloatingActionButton
+        <FloatingActionButton 
           iconName="plus"
           iconColor="white"
-          size={60}
+          size={50}
           iconSize={30}
           backgroundColor='tomato'
           shadowColor="black"

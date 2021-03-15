@@ -18,9 +18,9 @@ export class AddButton extends Component {
         <FloatingActionButton
           iconName="plus"
           iconColor="white"
-          size={60}
+          size={50}
           iconSize={30}
-          backgroundColor= 'tomato'
+          backgroundColor='tomato'
           shadowColor="black"
           visible={this.props.fabIsVisible}
           animated={true}
@@ -31,18 +31,5 @@ export class AddButton extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-
-  fab: {
-    right: 0,
-    bottom: 2,
-    backgroundColor: 'tomato',
-    marginRight: '43%',
-    marginLeft: '43.3%',
-    justifyContent: 'center',
-    position: 'absolute',
-
-  },
-})
 export default AddButton
 
