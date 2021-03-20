@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, setState } from "react";
 import { View, Alert, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Icon } from 'react-native-elements'
 import { FAB } from 'react-native-paper';
@@ -11,8 +11,14 @@ import 'firebase/firestore';
 import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
 import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import FloatingActionButton from "react-native-floating-action-button";
+import NetInfo from '@react-native-community/netinfo';
 
-
+class NetworkUtils {
+  static async isNetworkAvailable() {
+    const response = await NetInfo.fetch();
+    return response.isConnected;
+  }
+}
 const Item = ({ item, onPress, style, props }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
     <Text style={styles.title}>{item.title}</Text>
@@ -56,10 +62,33 @@ const Item = ({ item, onPress, style, props }) => (
  */
 const ListesScreen = (props) => {
   const [selectedId, setSelectedId] = useState(null);
+  const [isConnected, setIsConnected] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
+
+
+  const unsubscribe = NetInfo.addEventListener(state => {
+    console.log("Connection type", state.type);
+    console.log("Is connected?", state.isConnected);
+    
+  });
+
+  useEffect(() => {
+    //isConnectedToNetwork();
+
+  }, []);
+
+  const isConnectedToNetwork = async () => {
+    const response = await NetworkUtils.isNetworkAvailable();
+    setIsConnected({ isConnected: response });
+
+
+  }
+
 
   const renderItem = ({ item }) => {
     // modify that to match the spec colors
+
+
     const backgroundColor = item.id === selectedId ? "white" : "white";
 
     return (
@@ -71,6 +100,15 @@ const ListesScreen = (props) => {
       />
     );
   };
+
+
+  console.log(isConnected);
+
+  if (isConnected) {
+    console.log('Im fetching user');
+
+    props.loadListsFromCloud();
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -150,6 +188,7 @@ const styles = StyleSheet.create({
 
   },
 });
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListesScreen)

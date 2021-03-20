@@ -12,7 +12,6 @@ import { AppRegistry, StyleSheet } from 'react-native';
 import { store } from './src/redux/store/store'
 import RootNavigation from './src/navigation/RootNavigation'
 
-
 /**
  * This is the entry of our app.
  * It handles authentification and defines the navigation tree
@@ -23,20 +22,18 @@ class App extends Component {
    */
   constructor(props) {
     super(props);
-  }
-
-  /**
-   * states handeled by the class 
-   */
-  state = {
-    loggedIn: false,
-    loaded: false
+    this.state = {
+      loggedIn: false,
+      loaded: false,
+      store: {},
+    }
   }
   /**
    * Makes sure that the firebase configuration is completed before running the app
    */
   componentDidMount() {
     const firebaseConfig = {
+      PersistenceEnabled: true,
       apiKey: "AIzaSyAF_rY_VHwjw_sHV-XTwQtxyrx-L1r1XoE",
       authDomain: "shoppinglist-6cc7b.firebaseapp.com",
       projectId: "shoppinglist-6cc7b",
@@ -45,7 +42,6 @@ class App extends Component {
       appId: "1:899980789044:web:437a9d1df1252be5abd161",
       measurementId: "G-F5XJDKGDKF"
     };
-
     /**
      * if the instance of firebase is already intialized don't do it again
      */
@@ -73,9 +69,7 @@ class App extends Component {
    * render the app depending on the states.
    * @returns AppTree
    */
-
   renderContent = () => {
-    //console.log(this.props.navigation);
     if (!this.state.loaded) {
       return <Loading />
     }

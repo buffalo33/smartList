@@ -6,5 +6,5 @@ import dialogRenameReducer from './dialogRenameReducer'
 export default combineReducers({
   listReducer,
   cartReducer,
-  dialogRenameReducer
+  dialogRenameReducer,
 })

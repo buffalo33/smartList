@@ -7,6 +7,8 @@ const initialState = {
   lastIdSelected: ''
 }
 
+
+
 export default function listReducer(state = initialState, action) {
 
   switch (action.type) {
@@ -24,7 +26,59 @@ export default function listReducer(state = initialState, action) {
       }
     }
 
+    case 'LOAD_LISTS_CLOUD': {
+      console.log('Im in the switch load');
+      console.log(action.payload.lists);
+      return {
+        lists: [...action.payload.lists],
+      }
+    }
+
+
+    case 'DELETE_ITEM_LIST':
+      var Tmp = state.lists;
+      for (let i = 0; i < Tmp.length; i++) {
+        if (Tmp[i].id == action.payload) {
+          Tmp.splice(i, 1);
+        }
+      }
+      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({ lists: [...Tmp] });
+
+      return {
+        lists: [...Tmp],
+      }
+
+    case 'RENAME_ITEM_LIST':
+      var Tmp = state.lists;
+      for (let i = 0; i < Tmp.length; i++) {
+        if (Tmp[i].id == state.lastIdSelected) {
+          Tmp[i].title = action.payload;
+        }
+      }
+      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({ lists: [...Tmp] });
+
+      return {
+        lists: [...Tmp],
+      }
+
+    case 'ADD_TO_CART':
+      var addItem = state.lists.filter(x => x.id == action.payload.id_list).map((y) => {
+        y.cart.push(action.payload.newItem);
+        // console.log(y);
+        return y;
+      })
+
+      var otherLists = state.lists.filter(x => x.id != action.payload.id_list)
+      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({ lists: [...addItem, ...otherLists] });
+
+      return {
+        //    ...state,
+        lists: [...addItem, ...otherLists]
+      };
+
+
     case 'DELETE_ITEM_CART': {
+
       console.log('heey');
       console.log(action.payload);
       var Tmp = state.lists;
@@ -39,44 +93,16 @@ export default function listReducer(state = initialState, action) {
           Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
         }
       }
+      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({ lists: [...Tmp] });
+
       return {
         lists: [...Tmp],
       }
     }
 
-    case 'DELETE_ITEM_LIST':
-      var Tmp = state.lists;
-      for (let i = 0; i < Tmp.length; i++) {
-        if (Tmp[i].id == action.payload) {
-          Tmp.splice(i, 1);
-        }
-      }
-      return {
-        lists: [...Tmp],
-      }
-
-    case 'RENAME_ITEM_LIST':
-      var Tmp = state.lists;
-      for (let i = 0; i < Tmp.length; i++) {
-        if (Tmp[i].id == state.lastIdSelected) {
-          Tmp[i].title = action.payload;
-        }
-      }
-      return {
-        lists: [...Tmp],
-      }
-
-    case 'ADD_TO_CART':
-      return {
-        //    ...state,
-        lists: [...state.lists.filter(x => x.id == action.payload.id_list).map((y) => {
-          y.cart.push(action.payload.newItem);
-          // console.log(y);
-          return y;
-        }), ...state.lists.filter(x => x.id != action.payload.id_list)]
-      };
-
     default:
       return state
+
+
   }
 }
