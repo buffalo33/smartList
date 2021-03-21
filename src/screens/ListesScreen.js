@@ -65,29 +65,8 @@ const ListesScreen = (props) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
-
-  const unsubscribe = NetInfo.addEventListener(state => {
-    console.log("Connection type", state.type);
-    console.log("Is connected?", state.isConnected);
-    
-  });
-
-  useEffect(() => {
-    //isConnectedToNetwork();
-
-  }, []);
-
-  const isConnectedToNetwork = async () => {
-    const response = await NetworkUtils.isNetworkAvailable();
-    setIsConnected({ isConnected: response });
-
-
-  }
-
-
   const renderItem = ({ item }) => {
     // modify that to match the spec colors
-
 
     const backgroundColor = item.id === selectedId ? "white" : "white";
 
@@ -101,14 +80,11 @@ const ListesScreen = (props) => {
     );
   };
 
-
-  console.log(isConnected);
-
-  if (isConnected) {
-    console.log('Im fetching user');
-
+  useEffect(() => {
     props.loadListsFromCloud();
-  }
+
+  }, [])
+
 
   return (
     <SafeAreaView style={styles.container}>

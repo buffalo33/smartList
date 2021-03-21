@@ -8,7 +8,6 @@ export function mapStateToProps(state) {
   }
 }
 export function fetchUser() {
-  console.log('still fetching user');
   return ((dispatch) => {
 
     firebase.firestore().collection("users")
@@ -27,7 +26,7 @@ export function fetchUser() {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    loadListsFromCloud: async () => dispatch(fetchUser()),
+    loadListsFromCloud: () => dispatch(fetchUser()),
     addToLists: (newItem) => dispatch({
       type: 'ADD_TO_LISTS',
       payload: newItem

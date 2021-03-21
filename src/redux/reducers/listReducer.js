@@ -27,8 +27,6 @@ export default function listReducer(state = initialState, action) {
     }
 
     case 'LOAD_LISTS_CLOUD': {
-      console.log('Im in the switch load');
-      console.log(action.payload.lists);
       return {
         lists: [...action.payload.lists],
       }
