@@ -81,9 +81,18 @@ const ListesScreen = (props) => {
   };
 
   useEffect(() => {
-    props.loadListsFromCloud();
+    const messagesListener = firebase.firestore().collection("users")
+      .doc(firebase.auth().currentUser.uid).collection('Messages').onSnapshot(querySnapshot => {
+        const messages = querySnapshot.docs.map(doc => {
+          const firebaseData = doc.data();
+          console.log(doc.data());
+        });
+        console.log(messages);
+        props.loadListsFromCloud(messages.lists);
+      });
 
-  }, [])
+    return () => messagesListener();
+  }, [firebase]);
 
 
   return (
