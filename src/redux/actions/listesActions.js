@@ -11,7 +11,7 @@ export function fetchUser() {
   return ((dispatch) => {
 
     firebase.firestore().collection("users")
-      .doc(firebase.auth().currentUser.uid)
+      .doc(firebase.auth().currentUser.uid).collection("User").doc("user")
       .get()
       .then((snapshot) => {
         if (snapshot.exists) {

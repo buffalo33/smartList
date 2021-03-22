@@ -45,8 +45,7 @@ class SignInScreen extends Component {
     var name = this.state.name;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({ name, email })
-        // console.log(result)
+        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).collection("User").doc("user").set({ name, email })
       }).catch((error) => {
         console.log(error)
       })
