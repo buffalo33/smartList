@@ -53,10 +53,13 @@ export function mapDispatchToProps(dispatch) {
       type: 'SET_ID_SELECTED',
       payload: id
     }),
-
     setDialogRenameVisible: (stateVisible) => dispatch({
       type: 'SET_STATE_VISIBLE',
       payload: stateVisible
+    }),
+    swapLists: (infoMove) => dispatch({
+      type: 'SWAP_LISTS',
+      payload: infoMove
     }),
   }
 }

@@ -20,8 +20,8 @@ export default function listReducer(state = initialState, action) {
       }
 
     case 'ADD_TO_LISTS': {
-      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        .collection("User").doc("user").update({ lists: [action.payload, ...state.lists] });
+      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+        //.collection("User").doc("user").update({ lists: [action.payload, ...state.lists] });
       return {
         lists: [action.payload, ...state.lists],
       }
@@ -41,8 +41,8 @@ export default function listReducer(state = initialState, action) {
           Tmp.splice(i, 1);
         }
       }
-      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        .collection("User").doc("user").update({ lists: [...Tmp] });
+      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+        //.collection("User").doc("user").update({ lists: [...Tmp] });
 
       return {
         lists: [...Tmp],
@@ -55,8 +55,8 @@ export default function listReducer(state = initialState, action) {
           Tmp[i].title = action.payload;
         }
       }
-      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        .collection("User").doc("user").update({ lists: [...Tmp] });
+      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+        //.collection("User").doc("user").update({ lists: [...Tmp] });
 
       return {
         lists: [...Tmp],
@@ -69,8 +69,8 @@ export default function listReducer(state = initialState, action) {
       })
 
       var otherLists = state.lists.filter(x => x.id != action.payload.id_list)
-      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        .collection("User").doc("user").update({ lists: [...addItem, ...otherLists] });
+      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+        //.collection("User").doc("user").update({ lists: [...addItem, ...otherLists] });
 
       return {
         lists: [...addItem, ...otherLists]
@@ -91,13 +91,24 @@ export default function listReducer(state = initialState, action) {
           Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
         }
       }
-      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        .collection("User").doc("user").update({ lists: [...Tmp] });
+      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+        //.collection("User").doc("user").update({ lists: [...Tmp] });
 
       return {
         lists: [...Tmp],
       }
     }
+
+    case 'SWAP_LISTS':
+      /*var Tmp = state.lists;
+      var save = Tmp[action.payload.idx + action.payload.move];
+      Tmp[action.payload.idx + action.payload.move] = Tmp[action.payload.idx ];
+      Tmp[action.payload.idx ] = save;*/
+      console.log("hey");
+      return {
+        lists: [...state.lists],
+        lastIdSelected: state.lastIdSelected
+      }
 
     default:
       return state

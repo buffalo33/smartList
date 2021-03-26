@@ -12,18 +12,27 @@ import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActi
 import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import FloatingActionButton from "react-native-floating-action-button";
 import NetInfo from '@react-native-community/netinfo';
+import PanMoveHandler from './PanMoveHandler'
 
-class NetworkUtils {
+/*class NetworkUtils {
   static async isNetworkAvailable() {
     const response = await NetInfo.fetch();
     return response.isConnected;
   }
-}
+}*/
+
+//<TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+//  <PanMoveHandler transmit={style}>
+
+
+
 const Item = ({ item, onPress, style, props }) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+<PanMoveHandler transmit={style}
+itemId={item.id}
+props = {props}
+>
     <Text style={styles.title}>{item.title}</Text>
     <View style={styles.options}>
-      <Text style={styles.trackNumber}>10/50</Text>
       <Menu onSelect={value => Alert.alert(value)}>
         <MenuTrigger >
           <Icon
@@ -35,7 +44,7 @@ const Item = ({ item, onPress, style, props }) => (
         <MenuOptions customStyles={{ optionsContainer: { marginTop: -90 } }}>
           <MenuOption value="Partager" text="Partager" />
           <MenuOption value="Renommer" text="Renommer" onSelect={() => {
-
+            console.log(item.id);
             props.setIdSelected(item.id);
             props.setDialogRenameVisible(true);
 
@@ -48,9 +57,7 @@ const Item = ({ item, onPress, style, props }) => (
         </MenuOptions>
       </Menu>
     </View>
-
-
-  </TouchableOpacity>
+    </PanMoveHandler>
 );
 
 /**
@@ -67,7 +74,6 @@ const ListesScreen = (props) => {
 
   const renderItem = ({ item }) => {
     // modify that to match the spec colors
-
     const backgroundColor = item.id === selectedId ? "white" : "white";
 
     return (
