@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, TouchableWithoutFeedback, FlatList, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, TouchableWithoutFeedback, FlatList, StatusBar, Image } from 'react-native'
 import firebase from 'firebase'
 import { Button, Searchbar } from 'react-native-paper';
 import { connect } from 'react-redux'
@@ -9,14 +9,20 @@ import { LogBox } from 'react-native';
 import { Component } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { mapStateToProps, mapDispatchToProps } from '../../redux/actions/listesActions'
+import { Dimensions } from 'react-native';
 
 
-const Item = ({ product_name }) => (
+const Item = ({ product_name, product_image }) => (
 
   <View style={styles.item}>
+    <Image source={{ uri: product_image }} style={styles.product_image} />
     <Text style={styles.product_name}>{product_name}</Text>
   </View>
 );
+
+const numColumns = 3;
+const marginHoriz = 5;
+const itemWidth = (Dimensions.get('window').width - (numColumns+1) * marginHoriz ) / numColumns;
 
 /**
  * Component that implements the search feature using scan
@@ -38,9 +44,10 @@ class ArticleSearchPage extends Component {
     };
   }
 
-  renderItem = ({ item }) => (<TouchableOpacity onPress={() => this.props.addToCart(item, this.props.route.params.id_list)} >
-    <Item product_name={item.product_name} />
-  </TouchableOpacity >
+  renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => this.props.addToCart(item, this.props.route.params.id_list)} >
+      <Item product_name={item.product_name} product_image={item.image_front_thumb_url} />
+    </TouchableOpacity >
 
   );
 
@@ -105,6 +112,7 @@ class ArticleSearchPage extends Component {
             data={this.state.dataSource}
             renderItem={this.renderItem}
             keyExtractor={item => item._id}
+            numColumns={numColumns}
           />
 
         </Content>
@@ -118,16 +126,40 @@ class ArticleSearchPage extends Component {
 const styles = StyleSheet.create({
   container: {
     paddingRight: 40,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    backgroundColor: 'white',
+    marginTop: 8,
+    marginHorizontal: marginHoriz,
+    height: itemWidth, // get a square
+    width: itemWidth,
+    shadowColor: "#000",
+    shadowOffset: {
+      width:0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   product_name: {
-    fontSize: 20,
+    fontSize: 12,
+    color: 'grey',
+    fontWeight: 'bold',
+    flexWrap: 'wrap',
   },
+  product_image : {
+    width: itemWidth/1.3,
+    height: itemWidth/1.3,
+    resizeMode: 'cover',
+    flexShrink: 1,
+  }
 });
 
 
