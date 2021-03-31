@@ -104,7 +104,7 @@ export default function listReducer(state = initialState, action) {
       var save = Tmp[action.payload.idx + action.payload.move];
       Tmp[action.payload.idx + action.payload.move] = Tmp[action.payload.idx ];
       Tmp[action.payload.idx ] = save;*/
-      console.log("hey");
+      //console.log("hey");
       return {
         lists: [...state.lists],
         lastIdSelected: state.lastIdSelected

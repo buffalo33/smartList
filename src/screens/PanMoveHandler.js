@@ -20,6 +20,7 @@ class PanMoveHandler extends Component {
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (evt, gestureState) => true, //Detection of event (touch interaction) enabled.
             onPanResponderStart: (evt, gestureState) => { //To apply only at the begining of the interaction.
+                props.setIdSelected(this.itemId);
             },
             onPanResponderMove: (evt, gestureState) => { //To apply all along the interaction
                 //console.log(gestureState.y0);
@@ -35,7 +36,7 @@ class PanMoveHandler extends Component {
                 var semiHeight = realHeight/2;
                 var deltaAbs = Math.abs(gestureState.dy); //Absolute value of the distance run by the component compared to its original coordonate y0.
                 var nbIndex;
-                
+
                 /*- Component has to run at least the half of its height to change index.
                 - If it is the case we add 1 to the index move and substract height/2 to the considered distance run.
                 - Then we computed the equivalent distance in terms of entire item height
@@ -46,8 +47,9 @@ class PanMoveHandler extends Component {
                     {
                         nbIndex = 1 + Math.floor((deltaAbs - semiHeight)/realHeight) - 1 + ((deltaAbs - semiHeight)%realHeight > 0);
                         
-                        console.log(nbIndex); //Display the absolute number of index the item has to move.
+                        //console.log(nbIndex); //Display the absolute number of index the item has to move.
                         
+                        props.swapLists(nbIndex);
                         this.setState({
                             topPosition: 0,
                             }) 
