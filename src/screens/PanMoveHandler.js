@@ -20,12 +20,22 @@ class PanMoveHandler extends Component {
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (evt, gestureState) => true, //Detection of event (touch interaction) enabled.
             onPanResponderStart: (evt, gestureState) => { //To apply only at the begining of the interaction.
-                props.setIdSelected(this.itemId);
+                //console.log('Id : '+ props.itemId);
+                props.setIdSelected(props.itemId);
             },
             onPanResponderMove: (evt, gestureState) => { //To apply all along the interaction
                 //console.log(gestureState.y0);
                 let touches = evt.nativeEvent.touches;
                 if (touches.length == 1) {
+                    var realHeight = this.itemDim.height + 8;
+                    var semiHeight = realHeight/2;
+                    var move = Math.floor(gestureState.dy/semiHeight);
+                    //console.log(move);
+                    if (move)
+                    {
+                        props.swapLists(move);
+                    }
+                    //var nbIndex;
                     this.setState({
                     topPosition: touches[0].pageY - gestureState.y0,
                     })
@@ -37,19 +47,23 @@ class PanMoveHandler extends Component {
                 var deltaAbs = Math.abs(gestureState.dy); //Absolute value of the distance run by the component compared to its original coordonate y0.
                 var nbIndex;
 
+                this.setState({
+                    topPosition: 0,
+                    }) 
+
                 /*- Component has to run at least the half of its height to change index.
                 - If it is the case we add 1 to the index move and substract height/2 to the considered distance run.
                 - Then we computed the equivalent distance in terms of entire item height
                 - If this latter value is not an integer, we add the total found to the index move.
                 - Else, the total-1 .*/
 
-                if (Math.floor(deltaAbs/semiHeight))
+                /*if (Math.floor(deltaAbs/semiHeight))
                     {
                         nbIndex = 1 + Math.floor((deltaAbs - semiHeight)/realHeight) - 1 + ((deltaAbs - semiHeight)%realHeight > 0);
                         
                         //console.log(nbIndex); //Display the absolute number of index the item has to move.
                         
-                        props.swapLists(nbIndex);
+                        //props.swapLists(nbIndex);
                         this.setState({
                             topPosition: 0,
                             }) 
@@ -60,7 +74,15 @@ class PanMoveHandler extends Component {
                         topPosition: 0,
                         
                     })
-                }
+                }*/
+                /*var realHeight = this.itemDim.height + 8;
+                var semiHeight = realHeight/2;
+                var move = Math.floor(gestureState.dy/semiHeight);
+                //console.log(move);
+                if (move)
+                    {
+                        props.swapLists(move);
+                    }*/
             },
         })
     }

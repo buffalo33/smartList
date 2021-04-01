@@ -100,13 +100,24 @@ export default function listReducer(state = initialState, action) {
     }
 
     case 'SWAP_LISTS':
-      /*var Tmp = state.lists;
-      var save = Tmp[action.payload.idx + action.payload.move];
-      Tmp[action.payload.idx + action.payload.move] = Tmp[action.payload.idx ];
-      Tmp[action.payload.idx ] = save;*/
-      //console.log("hey");
+      var Tmp = [...state.lists];
+      var index;
+      for (let i = 0; i < Tmp.length; i++) {
+        if (Tmp[i].id == state.lastIdSelected) {
+          index = i;
+        }
+      }
+      //console.log(action.payload);
+      //console.log(index);
+      //console.log(index + action.payload);
+      //console.log(Tmp[index + action.payload]);
+      var save = Tmp[index + action.payload];
+      //console.log(save);
+      Tmp[index + action.payload] = Tmp[index];
+      Tmp[index] = save;
+      console.log(Tmp);
       return {
-        lists: [...state.lists],
+        lists: [...Tmp],
         lastIdSelected: state.lastIdSelected
       }
 

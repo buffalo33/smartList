@@ -86,7 +86,7 @@ const ListesScreen = (props) => {
     );
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     const messagesListener = firebase.firestore().collection("users")
       .doc(firebase.auth().currentUser.uid).collection('User').onSnapshot(querySnapshot => {
         const messages = querySnapshot.docs.map(doc => {
@@ -97,7 +97,7 @@ const ListesScreen = (props) => {
       });
 
     return () => messagesListener();
-  }, []);
+  }, []);*/
 
 
   return (
