@@ -14,23 +14,35 @@ class PanMoveHandler extends Component {
         super(props)
         this.state = {
           topPosition: 0, //Value of the Y axe position of the item.
-          zPosition: 0 
+          myPadding: 20,
         }
         var itemDim;
+        var time0
 
         this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (evt, gestureState) => true, //Detection of event (touch interaction) enabled.
+            onStartShouldSetPanResponder: (evt, gestureState) => { //Detection of event (touch interaction) enabled. 
+                return true;
+            }, 
             onPanResponderStart: (evt, gestureState) => { //To apply only at the begining of the interaction.
-                //console.log('Id : '+ props.itemId);
+                this.time0 = evt.timeStamp;
+                setTimeout(
+                () => {
+                    this.setState({
+                        myPadding: 40,
+                        })
+                    }, 
+                700);
                 props.setIdSelected(props.itemId);
             },
             onPanResponderMove: (evt, gestureState) => { //To apply all along the interaction
                 let touches = evt.nativeEvent.touches;
-                if (touches.length == 1) {   
-                    this.setState({
-                    topPosition: touches[0].pageY - gestureState.y0,
-                    zPosition: 10
-                    })
+                //console.log(evt.timeStamp);
+                if (touches.length == 1) { 
+                    if (evt.timeStamp - this.time0 >= 500){  
+                        this.setState({
+                        topPosition: touches[0].pageY - gestureState.y0,
+                        })
+                    }
                 }
             },
             onPanResponderEnd: (evt, gestureState) => {  ////To apply at the end of the interaction
@@ -46,8 +58,18 @@ class PanMoveHandler extends Component {
                 - Else, the total-1 .*/
                 
                 //console.log(styles.item.marginVertical);
-
-                if (Math.floor(deltaAbs/semiHeight))
+                if (evt.timeStamp - this.time0 < 500)
+                {
+                    setTimeout(
+                        () => {
+                            this.setState({
+                                myPadding: 20,
+                                })
+                            }, 
+                        705 - (evt.timeStamp - this.time0) );//- evt.timeStamp);
+                    props.myPress();
+                }
+                else if (Math.floor(deltaAbs/semiHeight))
                     {
                         nbIndex = 1 + Math.floor((deltaAbs - semiHeight)/realHeight) - 1 + ((deltaAbs - semiHeight)%realHeight > 0);
                         
@@ -59,17 +81,39 @@ class PanMoveHandler extends Component {
                         
                         this.setState({
                             topPosition: 0,
+                            myPadding: 20,
                             }) 
                     }
                 else {
                     this.setState({
                         topPosition: 0,
-                        
+                        myPadding: 20,
                     })
                 }
             },
         })
     }
+
+/*<View
+            onLayout = {(event) => {
+                this.itemDim = event.nativeEvent.layout; //add in itemDim the dimensions and the particulars.
+            }}
+            {...this.panResponder.panHandlers}
+            style={[styles.item,this.props.transmit, { top: this.state.topPosition}]}
+            >
+            {this.props.children} 
+            </View>*/
+
+/*<TouchableOpacity
+            onLayout = {(event) => {
+                this.itemDim = event.nativeEvent.layout; //add in itemDim the dimensions and the particulars.
+            }}
+            {...this.panResponder.panHandlers}
+            onPress={() => {}}
+            style={[styles.item,this.props.transmit, { top: this.state.topPosition}]}
+            >
+            {this.props.children} 
+            </TouchableOpacity>*/
 
     render() {
         return (
@@ -78,7 +122,7 @@ class PanMoveHandler extends Component {
                 this.itemDim = event.nativeEvent.layout; //add in itemDim the dimensions and the particulars.
             }}
             {...this.panResponder.panHandlers}
-            style={[styles.item,this.props.transmit, { top: this.state.topPosition, zIndex: this.state.zPosition}]}
+            style={[styles.item,this.props.transmit, { top: this.state.topPosition, padding: this.state.myPadding}]}
             >
             {this.props.children} 
             </View>

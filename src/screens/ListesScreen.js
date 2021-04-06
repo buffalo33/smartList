@@ -30,6 +30,7 @@ const Item = ({ item, onPress, style, props }) => (
 <PanMoveHandler transmit={style}
 itemId={item.id}
 props = {props}
+myPress = {onPress}
 >
     <Text style={styles.title}>{item.title}</Text>
     <View style={styles.options}>
