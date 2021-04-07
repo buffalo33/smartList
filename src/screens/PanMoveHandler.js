@@ -31,7 +31,7 @@ class PanMoveHandler extends Component {
                         myPadding: 40,
                         })
                     }, 
-                700);
+                700); //At 700 ms, the item grows to show the shift to the moving feature.
                 props.setIdSelected(props.itemId);
             },
             onPanResponderMove: (evt, gestureState) => { //To apply all along the interaction
@@ -58,7 +58,7 @@ class PanMoveHandler extends Component {
                 - Else, the total-1 .*/
                 
                 //console.log(styles.item.marginVertical);
-                if (evt.timeStamp - this.time0 < 500)
+                if (evt.timeStamp - this.time0 < 700) //Either the press lasted less than 700 ms. In this case we want to enter in the item. Otherwise, we want to move the item
                 {
                     setTimeout(
                         () => {
@@ -66,16 +66,16 @@ class PanMoveHandler extends Component {
                                 myPadding: 20,
                                 })
                             }, 
-                        705 - (evt.timeStamp - this.time0) );//- evt.timeStamp);
+                        705 - (evt.timeStamp - this.time0) );//If user stays want tu use the navigation feature, then item comes back to a normal size. The calculation is tought so that this instruction came after the previous enlargement in onPanResponderStart.
                     props.myPress();
                 }
-                else if (Math.floor(deltaAbs/semiHeight))
+                else if (Math.floor(deltaAbs/semiHeight)) //Check that the item move more than this calculated threshold.
                     {
-                        nbIndex = 1 + Math.floor((deltaAbs - semiHeight)/realHeight) - 1 + ((deltaAbs - semiHeight)%realHeight > 0);
+                        nbIndex = 1 + Math.floor((deltaAbs - semiHeight)/realHeight) - 1 + ((deltaAbs - semiHeight)%realHeight > 0); //The absolute number of move in cases unite
                         
                         //console.log(Math.pow(-1,(gestureState.dy <= 0))*nbIndex); //Display the absolute number of index the item has to move.
                         
-                        var final = Math.pow(-1,(gestureState.dy <= 0))*nbIndex;
+                        var final = Math.pow(-1,(gestureState.dy <= 0))*nbIndex; //We compute the direction thank to the sign.
 
                         props.swapLists(final);
                         
