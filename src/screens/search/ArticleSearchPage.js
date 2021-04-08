@@ -36,7 +36,7 @@ const Item = ({product_name, product_image}) => (
 const numColumns = 3; // number of elements to show in columns
 const marginHoriz = 5; // margins between elements in the column
 const itemWidth =
-  (Dimensions.get('window').width - (numColumns - 1) * marginHoriz) /
+  (Dimensions.get('window').width - (numColumns + 3) * marginHoriz) /
   numColumns; // width of each single item elements
 
 // Collapsing Search Bar
@@ -49,6 +49,7 @@ const offsetAnim = new Animated.Value(0);
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const AnimatedSearchbar = Animated.createAnimatedComponent(Searchbar);
 const AnimatedInputGroup = Animated.createAnimatedComponent(InputGroup);
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
 /**
  * Component that implements the search feature using scan
@@ -219,6 +220,19 @@ class ArticleSearchPage extends Component {
             }}
             style={[styles.product_name, {opacity: navbarOpacity}]}
           />
+          <AnimatedTouchable style={[styles.icon, {opacity: navbarOpacity}]}>
+            <Icon
+              name="barcode-scan"
+              type="material-community"
+              color="black"
+              size={30}
+              onPress={() =>
+                this.props.navigation.navigate('Scanner', {
+                  id_list: this.props.route.params.id_list,
+                })
+              }
+            />
+          </AnimatedTouchable>
         </AnimatedInputGroup>
       </View>
     );
@@ -234,7 +248,7 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     position: 'absolute',
-    top: 0,
+    top: 15,
     left: 0,
     right: 0,
     alignItems: 'center',
@@ -242,8 +256,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#dedede',
     borderBottomWidth: 1,
     height: searchbarHeight,
-    justifyContent: 'center',
+    //justifyContent: 'center',
     paddingTop: navbarHeight - 30,
+    flex: 1,
+    flexDirection: 'row',
   },
   item: {
     backgroundColor: 'white',
@@ -264,15 +280,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   product_name: {
+    position: 'absolute',
+    bottom: -10,
+    left: 5,
     fontSize: 12,
     color: 'grey',
     fontWeight: 'bold',
     flexWrap: 'wrap',
+    width: '80%',
   },
   product_image: {
     width: itemWidth / 1.3,
     height: itemWidth / 1.3,
     resizeMode: 'cover',
+    flexShrink: 1,
+  },
+  icon: {
+    position: 'absolute',
+    width: '20%',
+    bottom: 0,
+    right: 0,
+    paddingLeft: 10,
+    flex: 1,
     flexShrink: 1,
   },
 });
