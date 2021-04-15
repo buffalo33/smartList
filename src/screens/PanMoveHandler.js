@@ -14,10 +14,10 @@ class PanMoveHandler extends Component {
         super(props)
         this.state = {
           topPosition: 0, //Value of the Y axe position of the item.
-          myPadding: 20,
+          myColor: 'white',
         }
-        var itemDim;
-        var time0
+        
+        var time0;
 
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (evt, gestureState) => { //Detection of event (touch interaction) enabled. 
@@ -25,10 +25,11 @@ class PanMoveHandler extends Component {
             }, 
             onPanResponderStart: (evt, gestureState) => { //To apply only at the begining of the interaction.
                 this.time0 = evt.timeStamp;
+                console.log("hey");
                 setTimeout(
                 () => {
                     this.setState({
-                        myPadding: 40,
+                        myColor: 'lightgrey',
                         })
                     }, 
                 700); //At 700 ms, the item grows to show the shift to the moving feature.
@@ -36,7 +37,6 @@ class PanMoveHandler extends Component {
             },
             onPanResponderMove: (evt, gestureState) => { //To apply all along the interaction
                 let touches = evt.nativeEvent.touches;
-                //console.log(evt.timeStamp);
                 if (touches.length == 1) { 
                     if (evt.timeStamp - this.time0 >= 500){  
                         this.setState({
@@ -63,7 +63,7 @@ class PanMoveHandler extends Component {
                     setTimeout(
                         () => {
                             this.setState({
-                                myPadding: 20,
+                                myColor: 'white',
                                 })
                             }, 
                         705 - (evt.timeStamp - this.time0) );//If user stays want tu use the navigation feature, then item comes back to a normal size. The calculation is tought so that this instruction came after the previous enlargement in onPanResponderStart.
@@ -81,39 +81,20 @@ class PanMoveHandler extends Component {
                         
                         this.setState({
                             topPosition: 0,
-                            myPadding: 20,
+                            myColor: 'white',
                             }) 
                     }
                 else {
                     this.setState({
                         topPosition: 0,
-                        myPadding: 20,
+                        myColor: 'white',
                     })
                 }
             },
         })
     }
 
-/*<View
-            onLayout = {(event) => {
-                this.itemDim = event.nativeEvent.layout; //add in itemDim the dimensions and the particulars.
-            }}
-            {...this.panResponder.panHandlers}
-            style={[styles.item,this.props.transmit, { top: this.state.topPosition}]}
-            >
-            {this.props.children} 
-            </View>*/
 
-/*<TouchableOpacity
-            onLayout = {(event) => {
-                this.itemDim = event.nativeEvent.layout; //add in itemDim the dimensions and the particulars.
-            }}
-            {...this.panResponder.panHandlers}
-            onPress={() => {}}
-            style={[styles.item,this.props.transmit, { top: this.state.topPosition}]}
-            >
-            {this.props.children} 
-            </TouchableOpacity>*/
 
     render() {
         return (
@@ -122,7 +103,7 @@ class PanMoveHandler extends Component {
                 this.itemDim = event.nativeEvent.layout; //add in itemDim the dimensions and the particulars.
             }}
             {...this.panResponder.panHandlers}
-            style={[styles.item,this.props.transmit, { top: this.state.topPosition, padding: this.state.myPadding}]}
+            style={[styles.item, { top: this.state.topPosition, backgroundColor: this.state.myColor}]}
             >
             {this.props.children} 
             </View>
