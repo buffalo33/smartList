@@ -25,7 +25,6 @@ class PanMoveHandler extends Component {
             }, 
             onPanResponderStart: (evt, gestureState) => { //To apply only at the begining of the interaction.
                 this.time0 = evt.timeStamp;
-                console.log("hey");
                 setTimeout(
                 () => {
                     this.setState({

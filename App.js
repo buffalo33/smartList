@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Component } from 'react';
-import SignInScreen from './src/screens/Authentification/SignInScreen'
+import SignInScreen from './src/screens/authentification/SignInScreen'
 import firebase from 'firebase'
 import LoadingScreen from './src/screens/LoadingScreen'
 import { Provider } from 'react-redux'

@@ -45,7 +45,6 @@ myPress = {onPress}
         <MenuOptions customStyles={{ optionsContainer: { marginTop: -90 } }}>
           <MenuOption value="Partager" text="Partager" />
           <MenuOption value="Renommer" text="Renommer" onSelect={() => {
-            console.log(item.id);
             props.setIdSelected(item.id);
             props.setDialogRenameVisible(true);
 

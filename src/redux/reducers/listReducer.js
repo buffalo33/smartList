@@ -81,12 +81,10 @@ export default function listReducer(state = initialState, action) {
 
       var Tmp = state.lists;
       for (let i = 0; i < Tmp.length; i++) {
-        console.log(Tmp[i].id);
-        console.log(state.lastIdSelected);
+
 
         if (Tmp[i].id == state.lastIdSelected) {
-          console.log('im heeeere');
-          console.log(Tmp[i].cart.filter(x => x.id != action.payload.id));
+
 
           Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
         }
