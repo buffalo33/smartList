@@ -50,11 +50,13 @@ class PanMoveHandler extends Component {
                 var deltaAbs = Math.abs(gestureState.dy); //Absolute value of the distance run by the component compared to its original coordonate y0.
                 var nbIndex;
 
-                /*- Component has to run at least the half of its height to change index.
-                - If it is the case we add 1 to the index move and substract height/2 to the considered distance run.
-                - Then we computed the equivalent distance in terms of entire item height
-                - If this latter value is not an integer, we add the total found to the index move.
-                - Else, the total-1 .*/
+                /**
+                 * Component has to run at least the half of its height to change index.
+                 *If it is the case we add 1 to the index move and substract height/2 to the considered distance run.
+                 * Then we computed the equivalent distance in terms of entire item height
+                 * If this latter value is not an integer, we add the total found to the index move.
+                 * Else, the total-1 .
+                 */
                 
                 //console.log(styles.item.marginVertical);
                 if (evt.timeStamp - this.time0 < 700) //Either the press lasted less than 700 ms. In this case we want to enter in the item. Otherwise, we want to move the item
