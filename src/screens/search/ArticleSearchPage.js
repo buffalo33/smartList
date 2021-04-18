@@ -218,7 +218,7 @@ class ArticleSearchPage extends Component {
             onChangeText={(text) => {
               this.fetchData(text);
             }}
-            style={[styles.product_name, {opacity: navbarOpacity}]}
+            style={[styles.searchbar_name, {opacity: navbarOpacity}]}
           />
           <AnimatedTouchable style={[styles.icon, {opacity: navbarOpacity}]}>
             <Icon
@@ -280,6 +280,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   product_name: {
+    fontSize: 12,
+    color: 'grey',
+    fontWeight: 'bold',
+    flexWrap: 'wrap',
+    flex: 1,
+  },
+  searchbar_name: {
     position: 'absolute',
     bottom: -10,
     left: 5,
@@ -287,12 +294,13 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontWeight: 'bold',
     flexWrap: 'wrap',
-    width: '80%',
+    width: '85%',
   },
   product_image: {
+    paddingTop: 5,
     width: itemWidth / 1.3,
     height: itemWidth / 1.3,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     flexShrink: 1,
   },
   icon: {
