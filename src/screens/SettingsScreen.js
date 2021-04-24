@@ -6,6 +6,7 @@ import ReactNativeSettingsPage, {
   SwitchRow,
 } from 'react-native-settings-page';
 import { connect } from 'react-redux'
+import firebase from 'firebase'
 
 import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
 
