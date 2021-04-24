@@ -27,6 +27,10 @@ export function fetchUser() {
 export function mapDispatchToProps(dispatch) {
   return {
     loadListsFromCloud: () => dispatch(fetchUser()),
+    saveToCloud: (isSetSync) => dispatch({
+      type: 'SAVE_TO_CLOUD',
+      payload:isSetSync
+    }),
     addToLists: (newItem) => dispatch({
       type: 'ADD_TO_LISTS',
       payload: newItem
@@ -61,5 +65,9 @@ export function mapDispatchToProps(dispatch) {
       type: 'SWAP_LISTS',
       payload: infoMove
     }),
+    checkUncheckItem: (item, value) => dispatch({
+      type: 'CHECK_UNCHECK_ITEM',
+      payload: { item, value }
+    })
   }
 }

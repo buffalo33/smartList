@@ -1,14 +1,73 @@
 import React from 'react'
-import { Text, View, Button, TouchableOpacity } from 'react-native'
-import firebase from 'firebase'
+import { Text, View, Button, TouchableOpacity, StyleSheet } from 'react-native'
+import ReactNativeSettingsPage, {
+  SectionRow,
+  NavigateRow,
+  SwitchRow,
+} from 'react-native-settings-page';
+import { connect } from 'react-redux'
 
+import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
 
-export default function SettingsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableOpacity style={{ padding: 20 }} onPress={() => firebase.auth().signOut()} >
-        <Text style={{ color: '#1B9CFC' }} >Logout</Text>
-      </TouchableOpacity>
-    </View>
-  );
+class Settings extends React.Component {
+  // TODO: implement your navigationOptions
+  state = {
+    check: false,
+    switch: true,
+    value: 40,
+    isSetSync: true,
+
+  }
+  _navigateToScreen = () => {
+    const { navigation } = this.props
+    navigation.navigate('ShoppingList');
+  }
+  render() {
+    return (
+
+      <ReactNativeSettingsPage style={styles.container}>
+
+        <SectionRow >
+          <NavigateRow
+            text='Compte'
+            iconName='key'
+            width={100}
+            onPressCallback={() => firebase.auth().signOut()} />
+
+          <SwitchRow
+            text='Synchronisation'
+            iconName='cloud-upload'
+            _value={this.props.isSetSync}
+            _onValueChange={() => {
+              this.setState({ switch: !this.props.isSetSync });
+              this.props.setSync(!this.state.switch)
+            }} />
+
+          <NavigateRow
+            text='Déconnexion'
+            iconName='sign-out'
+            width={100}
+            onPressCallback={() => firebase.auth().signOut()} />
+
+        </SectionRow>
+
+      </ReactNativeSettingsPage>
+    )
+  }
 }
+
+export default connect(mapStateToPropsSettings, mapDispatchToPropsSettings)(Settings)
+
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    width: 10,
+    height: 10,
+    backgroundColor: '#E0E0E0',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+
+});

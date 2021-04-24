@@ -20,16 +20,30 @@ export default function listReducer(state = initialState, action) {
       }
 
     case 'ADD_TO_LISTS': {
-      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        //.collection("User").doc("user").update({ lists: [action.payload, ...state.lists] });
+
+
       return {
         lists: [action.payload, ...state.lists],
+        lastIdSelected: state.lastIdSelected
+
       }
     }
 
     case 'LOAD_LISTS_CLOUD': {
+
       return {
         lists: [...action.payload.lists],
+        lastIdSelected: state.lastIdSelected
+
+      }
+    }
+    case 'SAVE_TO_CLOUD': {
+        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+       .collection("User").doc("user").update({ lists: [...state.lists] });
+      return {
+        lists: [...state.lists],
+        lastIdSelected: state.lastIdSelected
+
       }
     }
 
@@ -42,10 +56,12 @@ export default function listReducer(state = initialState, action) {
         }
       }
       //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        //.collection("User").doc("user").update({ lists: [...Tmp] });
+      //.collection("User").doc("user").update({ lists: [...Tmp] });
 
       return {
         lists: [...Tmp],
+        lastIdSelected: state.lastIdSelected
+
       }
 
     case 'RENAME_ITEM_LIST':
@@ -56,47 +72,80 @@ export default function listReducer(state = initialState, action) {
         }
       }
       //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        //.collection("User").doc("user").update({ lists: [...Tmp] });
+      //.collection("User").doc("user").update({ lists: [...Tmp] });
 
       return {
         lists: [...Tmp],
+        lastIdSelected: state.lastIdSelected
+
       }
 
     case 'ADD_TO_CART':
       var addItem = state.lists.filter(x => x.id == action.payload.id_list).map((y) => {
         y.cart.push(action.payload.newItem);
+        y.numberItems += 1;
         return y;
       })
-
       var otherLists = state.lists.filter(x => x.id != action.payload.id_list)
-      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        //.collection("User").doc("user").update({ lists: [...addItem, ...otherLists] });
 
       return {
-        lists: [...addItem, ...otherLists]
-      };
+        lists: [...addItem, ...otherLists],
+        lastIdSelected: state.lastIdSelected
 
+      };
 
     case 'DELETE_ITEM_CART': {
 
       var Tmp = state.lists;
       for (let i = 0; i < Tmp.length; i++) {
-
-
         if (Tmp[i].id == state.lastIdSelected) {
-
-
           Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
+          Tmp[i].cart.numberItems -= 1;
+
         }
       }
-      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        //.collection("User").doc("user").update({ lists: [...Tmp] });
+
 
       return {
         lists: [...Tmp],
+        lastIdSelected: state.lastIdSelected
+
       }
     }
+    case 'CHECK_UNCHECK_ITEM': {
 
+      var Tmp = state.lists;
+      // TODO: reduire la complexite de l'algorithme
+      for (let i = 0; i < Tmp.length; i++) {
+        if (Tmp[i].id == state.lastIdSelected) {
+
+          for (let k = 0; k < Tmp[i].cart.length; k++) {
+
+            if (Tmp[i].cart[k].id == action.payload.item.id) {
+
+              if (action.payload.item.isSelected == false) {
+
+                Tmp[i].cart[k].isSelected = true;
+                Tmp[i].numberChecked += 1;
+              }
+
+              else {
+                Tmp[i].cart[k].isSelected = false;
+                Tmp[i].numberChecked -= 1;
+
+
+              }
+            }
+          }
+        }
+      }
+
+
+      return {
+        lists: [...Tmp],
+        lastIdSelected: state.lastIdSelected
+      }
+    }
     case 'SWAP_LISTS':
       var Tmp = [...state.lists];
       var index;
@@ -109,23 +158,19 @@ export default function listReducer(state = initialState, action) {
         }
       }
       var nbMove = action.payload;
-      if (index + action.payload < 0)
-      {
+      if (index + action.payload < 0) {
         nbMove = -index;
       }
-      if (index + action.payload >= Tmp.length)
-      {
+      if (index + action.payload >= Tmp.length) {
         nbMove = Tmp.length - 1 - index;
       }
       var save = Tmp[index];
-      if (nbMove >= 0)
-      {
+      if (nbMove >= 0) {
         for (let i = index; i < index + nbMove; i++) {
-        Tmp[i] = Tmp[i + 1];
+          Tmp[i] = Tmp[i + 1];
         }
       }
-      else
-      {
+      else {
         for (let i = index; i > index + nbMove; i--) {
           Tmp[i] = Tmp[i - 1];
         }

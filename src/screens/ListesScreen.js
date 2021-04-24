@@ -1,8 +1,6 @@
-import React, { useState, useEffect, setState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Alert, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Icon } from 'react-native-elements'
-import { FAB } from 'react-native-paper';
-import { Button } from 'react-native'
 import DialogInput from 'react-native-dialog-input';
 import { connect } from 'react-redux'
 import * as Random from 'expo-random';
@@ -12,52 +10,46 @@ import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActi
 import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import FloatingActionButton from "react-native-floating-action-button";
 import NetInfo from '@react-native-community/netinfo';
-import PanMoveHandler from '../components/PanMoveHandler'
-
-/*class NetworkUtils {
-  static async isNetworkAvailable() {
-    const response = await NetInfo.fetch();
-    return response.isConnected;
-  }
-}*/
-
-//<TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-//  <PanMoveHandler transmit={style}>
-
-
+import { Container, Content, InputGroup, Input } from 'native-base';
 
 const Item = ({ item, onPress, style, props }) => (
-<PanMoveHandler transmit={style}
-itemId={item.id}
-props = {props}
-myPress = {onPress}
->
+
+  <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+
     <Text style={styles.title}>{item.title}</Text>
     <View style={styles.options}>
+      <Text style={styles.trackNumber}>{item.numberChecked}/{item.numberItems}</Text>
+
       <Menu onSelect={value => Alert.alert(value)}>
+
         <MenuTrigger >
           <Icon
             name='ellipsis-vertical'
             type='ionicon'
             color='tomato' />
-
         </MenuTrigger>
+
         <MenuOptions customStyles={{ optionsContainer: { marginTop: -90 } }}>
+
           <MenuOption value="Partager" text="Partager" />
           <MenuOption value="Renommer" text="Renommer" onSelect={() => {
+
             props.setIdSelected(item.id);
             props.setDialogRenameVisible(true);
 
           }} />
+
           <MenuOption value="Supprimer" text="Supprimer" onSelect={() => {
-            //console.log(props);
-            //console.log(item.id);
             props.removeToLists(item.id);
           }} />
+
         </MenuOptions>
+
       </Menu>
+
     </View>
-    </PanMoveHandler>
+
+  </TouchableOpacity>
 );
 
 /**
@@ -71,37 +63,40 @@ const ListesScreen = (props) => {
   const [selectedId, setSelectedId] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
-
   const renderItem = ({ item }) => {
     // modify that to match the spec colors
-    const backgroundColor = item.id === selectedId ? "white" : "white";
 
+    const backgroundColor = item.id === selectedId ? "white" : "white";
     return (
       <Item
         item={item}
-        onPress={() => props.navigation.navigate('ListArticleScreen', { id_list: item.id })}
+        onPress={() => {
+          props.setIdSelected(item.id);
+          props.navigation.navigate('ListArticleScreen', { id_list: item.id })
+        }}
         style={{ backgroundColor }}
         props={props}
       />
     );
   };
 
-  /*useEffect(() => {
-    const messagesListener = firebase.firestore().collection("users")
-      .doc(firebase.auth().currentUser.uid).collection('User').onSnapshot(querySnapshot => {
-        const messages = querySnapshot.docs.map(doc => {
-          const firebaseData = doc.data();
-          console.log(doc.data());
-        });
-        props.loadListsFromCloud();
-      });
 
-    return () => messagesListener();
-  }, []);*/
 
 
   return (
     <SafeAreaView style={styles.container}>
+      <InputGroup style={styles.groupContainer}>
+        <Text style={styles.textContainer}>
+          Mes Listes
+         </Text>
+
+
+
+
+      </InputGroup>
+
+
+
       <MenuProvider style={styles.container}>
 
         <FlatList
@@ -119,7 +114,9 @@ const ListesScreen = (props) => {
             props.addToLists({
               id: Random.getRandomBytes(2).toString(),
               title: inputText,
-              cart: []
+              cart: [],
+              numberItems: 0,
+              numberChecked: 0
             }) && setIsDialogVisible(false)
           }}
           closeDialog={() => setIsDialogVisible(false)}>
@@ -157,6 +154,20 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
+  textContainer: {
+    textAlign: 'left',
+    paddingLeft: 10,
+    color: 'black',
+    fontSize: 30,
+    alignSelf: 'flex-start'
+
+  },
+
+  groupContainer: {
+    justifyContent: 'space-between',
+
+  },
+
   item: {
     padding: 20,
     marginVertical: 8,
@@ -164,15 +175,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+
   options: {
     marginVertical: 8,
     marginHorizontal: -10,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+
   title: {
     fontSize: 32,
   },
+
   trackNumber: {
     fontSize: 20,
 

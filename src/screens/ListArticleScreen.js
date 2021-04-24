@@ -1,22 +1,17 @@
 import React, { Component, useState } from 'react'
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Searchbar } from 'react-native-paper';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import CheckBox from '@react-native-community/checkbox';
-import { useLinkProps, useNavigation } from '@react-navigation/native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 import AddButton from '../components/AddButton';
 import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
-
-const Tab = createBottomTabNavigator();
-
+import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
 
 
-const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
+const Item = ({ image_front_thumb_url, product_name, nutriscore_grade, props, item }) => {
   const info = { image_front_thumb_url, product_name, nutriscore_grade };
-  const [isSelected, setSelection] = useState(false);
+  const [isSelected, setSelection] = useState(item.isSelected);
   const navigation = useNavigation();
 
   return (
@@ -25,11 +20,12 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
         <CheckBox
           value={isSelected}
           onValueChange={setSelection}
+          onChange={() =>
+            props.checkUncheckItem(item, isSelected)}
           style={styles.checkbox}
         />
       </View>
       <View style={styles.description}
-
       ><TouchableOpacity style={styles.description}
         onPress={() => { navigation.navigate("MoreInfoScreen", info) }}>
           <View style={styles.description}>
@@ -43,7 +39,6 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade }) => {
   );
 
 };
-
 /**
  * A class that implements the cart of the user.
  *  It gathers all the products added in a Flat(List Component.
@@ -52,9 +47,17 @@ class ListArticleScreen extends Component {
   constructor(props) {
     super(props);
   }
+
+  componentWillUnmount() {
+    if (this.props.isSetSync) {
+      this.props.saveToCloud();
+    }
+
+  }
+
   renderItem = ({ item }) => (
     <Item image_front_thumb_url={item.image_front_thumb_url}
-      nutriscore_grade={item.nutriscore_grade} product_name={item.product_name} />
+      nutriscore_grade={item.nutriscore_grade} product_name={item.product_name} props={this.props} item={item} />
 
   );
   renderHiddenItem = ({ item }) => {
@@ -70,7 +73,6 @@ class ListArticleScreen extends Component {
   }
 
   render() {
-    //.log(this.props.lists.filter(x => x.id == this.props.route.params.id_list)[0].cart)
     return (
       <SafeAreaView style={styles.container}>
         <SwipeListView style={styles.list}
@@ -97,37 +99,23 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // paddingBottom: 20
-
-    //marginTop: StatusBar.currentHeight || 0,
   },
 
   item: {
     backgroundColor: 'white',
     padding: 20,
-    //backgroundColor: 'white', 
-    //justifyContent: 'space-around',
-    // marginVertical: 8,
-    //marginHorizontal: 16,
     borderWidth: 0.7,
     flexDirection: 'row',
   },
   image_front_thumb_url: {
     height: 90,
     width: 35,
-    // borderRadius: 120 / 2
 
   },
   product_name: {
-    // flex: 10,
     fontSize: 20,
-    //flexDirection: 'row',
-    //alignItems: 'center',
-    // justifyContent: 'center',
-
   },
   checkbox: {
-    //flex:2,
     alignSelf: "center",
     width: 50
 
@@ -178,5 +166,6 @@ const styles = StyleSheet.create({
     right: 0,
   },
 });
-export default connect(mapStateToProps, mapDispatchToProps)(ListArticleScreen)
-
+export default connect(mapStateToProps, mapDispatchToProps)
+  (connect(mapStateToPropsSettings, mapDispatchToPropsSettings)(ListArticleScreen)
+  )

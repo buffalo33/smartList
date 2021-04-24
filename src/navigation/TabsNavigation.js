@@ -1,10 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import ScannerScreen from '../screens/ScannerScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Component } from 'react'
 import ListesScreen from '../screens/ListesScreen'
 import GardeMangerScreen from '../screens/GardeManger'
+import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
+import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
+import { connect } from 'react-redux'
 
 const Tab = createBottomTabNavigator();
 
@@ -13,6 +15,15 @@ const Tab = createBottomTabNavigator();
  * 
  */
 class Tabs extends Component {
+  componentWillUnmount() {
+    //  this.props.saveToCloud();
+
+  }
+  componentDidMount() {
+    if (this.props.isSetSync) {
+       this.props.loadListsFromCloud();
+    }
+  }
 
   render() {
     return (
@@ -69,6 +80,7 @@ class Tabs extends Component {
 }
 
 
-export default Tabs
+export default connect(mapStateToProps, mapDispatchToProps)
+  (connect(mapStateToPropsSettings, mapDispatchToPropsSettings)(Tabs))
 
 

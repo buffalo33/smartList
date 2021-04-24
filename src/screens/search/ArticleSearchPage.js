@@ -121,6 +121,9 @@ class ArticleSearchPage extends Component {
     fetch(url)
       .then((response) => response.json())
       .then((responseJson) => {
+        for (let i = 0; i < responseJson.products.length; i++) {
+          responseJson.products[i]["isSelected"] = false;
+        }
         if (pageCount === 0) {
           this.setState({
             dataSource: responseJson.products, // if new request, make a new array
@@ -130,7 +133,7 @@ class ArticleSearchPage extends Component {
             dataSource: [...this.state.dataSource, ...responseJson.products], // appends new fetched data to the previous one
           });
         }
-        // console.warn(responseJson.count)
+        //console.warn(responseJson.products[0]["isSelected"])
       })
       .catch((error) => {
         console.log(error);
