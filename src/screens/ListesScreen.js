@@ -10,6 +10,7 @@ import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActi
 import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import FloatingActionButton from "react-native-floating-action-button";
 import NetInfo from '@react-native-community/netinfo';
+import PanMoveHandler from '../components/PanMoveHandler'
 import { Container, Content, InputGroup, Input } from 'native-base';
 
 const Item = ({ item, onPress, style, props }) => (
