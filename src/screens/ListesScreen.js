@@ -66,8 +66,11 @@ const ListesScreen = (props) => {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const renderItem = ({ item }) => {
     // modify that to match the spec colors
-
+    console.log("START");
+    console.log(props);
+    console.log("END");
     const backgroundColor = item.id === selectedId ? "white" : "white";
+
     return (
       <Item
         item={item}
