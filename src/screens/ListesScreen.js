@@ -11,11 +11,14 @@ import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-
 import FloatingActionButton from "react-native-floating-action-button";
 import NetInfo from '@react-native-community/netinfo';
 import { Container, Content, InputGroup, Input } from 'native-base';
-
+import PanMoveHandler from '../components/PanMoveHandler'
 const Item = ({ item, onPress, style, props }) => (
 
-  <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-
+  <PanMoveHandler transmit={style}
+    itemId={item.id}
+    props={props}
+    myPress={onPress}
+  >
     <Text style={styles.title}>{item.title}</Text>
     <View style={styles.options}>
       <Text style={styles.trackNumber}>{item.numberChecked}/{item.numberItems}</Text>
@@ -44,12 +47,9 @@ const Item = ({ item, onPress, style, props }) => (
           }} />
 
         </MenuOptions>
-
       </Menu>
-
     </View>
-
-  </TouchableOpacity>
+  </PanMoveHandler>
 );
 
 /**
