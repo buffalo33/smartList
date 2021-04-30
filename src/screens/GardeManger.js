@@ -63,27 +63,12 @@ const itemWidth =
     super(props);
     this.state = {
       selectionMode: false,
-      dataSource: [],
       deleteArray: [],
       allSelected: false,
     };
   }
 
-  componentDidMount() {
-    fetch(
-      'https://world.openfoodfacts.org/cgi/search.pl?&json=true&page_size=21&page=1&search_terms=eau',
-    )
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          dataSource: [...responseJson.products],
-        });
-        //console.warn(responseJson.products[0]["isSelected"])
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  componentDidMount() {}
 
   handlerClick = () => {
     //handler for Long Click
@@ -97,22 +82,23 @@ const itemWidth =
 
   // delete everything
   deleteAllItems() {
-    this.setState({dataSource: []});
+    this.props.setGardeManger([]);
   }
 
   // delete given item
   deleteItem(item) {
-    let helperArray = this.state.dataSource;
+    let helperArray = this.props.gardeManger;
     let helperArray2 = this.state.deleteArray;
     let itemIndex = helperArray.indexOf(item);
     helperArray.splice(itemIndex, 1);
     let nextItemIndex = helperArray2.indexOf(itemIndex);
     helperArray2.splice(nextItemIndex, 1);
-    this.setState({dataSource: helperArray, deleteArray: helperArray2});
+    this.setState({deleteArray: helperArray2});
+    this.props.setGardeManger(helperArray);
   }
 
   deleteSelectedItems() {
-    let helperArray = this.state.dataSource;
+    let helperArray = this.props.gardeManger;
     let helperArray2 = this.state.deleteArray;
     for (let i = helperArray2.length - 1; i >= 0; i--) {
       let item = helperArray.indexOf(helperArray2[i]);
@@ -120,16 +106,16 @@ const itemWidth =
       helperArray2.splice(i, 1);
     }
     this.setState({
-      dataSource: helperArray,
       deleteArray: helperArray2,
       selectionMode: helperArray.length == 0 ? true : false,
       allSelected: false,
     });
+    this.props.setGardeManger(helperArray);
   }
 
   selectAll() {
     let helperArray = [];
-    this.state.dataSource.map((data) => {
+    this.props.gardeManger.map((data) => {
       if (!this.state.allSelected) {
         helperArray.push(data);
       } else if (this.state.allSelected) {
@@ -141,7 +127,6 @@ const itemWidth =
       selectionMode: !this.state.allSelected,
       allSelected: !this.state.allSelected,
     });
-    console.log('length : ' + helperArray.length);
   }
 
   selectItemLongPress(item) {
@@ -156,7 +141,7 @@ const itemWidth =
       }
     } else {
       helperArray.push(item);
-      if (helperArray.length == this.state.dataSource.length) {
+      if (helperArray.length == this.props.gardeManger.length) {
         this.setState({allSelected: true});
       }
     }
@@ -190,7 +175,7 @@ const itemWidth =
   );
 
   handleLoadMore = () => {
-    console.log('asking for more : ');
+    //console.log('asking for more : ');
   };
 
   render() {
@@ -199,34 +184,37 @@ const itemWidth =
     return (
       <Container>
         <Header>
-          <Body>
-            <Title> Garde Manger </Title>
-            <Subtitle>
+          <View>
+            <Text style={{alignSelf: 'center', fontSize: 25, color: 'white'}}>
+              {' '}
+              Garde Manger{' '}
+            </Text>
+            <Text style={{alignSelf: 'center', fontSize: 15, color: 'white'}}>
               {this.state.selectionMode
                 ? 'Sélectionnés : ' + this.state.deleteArray.length
                 : ''}
-            </Subtitle>
-          </Body>
+            </Text>
+          </View>
         </Header>
         <Segment>
           <Button first onPress={() => this.deleteSelectedItems()}>
             {' '}
-            <Text>Delete Selected</Text>
+            <Text style={{color: 'tomato'}}>Delete Selected</Text>
           </Button>
           <Button onPress={() => this.selectAll()}>
             {' '}
-            <Text>
+            <Text style={{color: 'tomato'}}>
               {this.state.allSelected ? 'Unselect All' : 'Select All'}
             </Text>
           </Button>
           <Button last onPress={() => this.deleteAllItems()}>
             {' '}
-            <Text>Delete All</Text>
+            <Text style={{color: 'tomato'}}>Delete All</Text>
           </Button>
         </Segment>
         <View style={styles.container}>
           <FlatList
-            data={this.state.dataSource}
+            data={this.props.gardeManger}
             renderItem={this.renderItem}
             keyExtractor={(item) => item._id}
             numColumns={numColumns}
