@@ -38,8 +38,8 @@ export default function listReducer(state = initialState, action) {
       }
     }
     case 'SAVE_TO_CLOUD': {
-        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-       .collection("User").doc("user").update({ lists: [...state.lists] });
+      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+        .collection("User").doc("user").update({ lists: [...state.lists] });
       return {
         lists: [...state.lists],
         lastIdSelected: state.lastIdSelected
@@ -81,9 +81,32 @@ export default function listReducer(state = initialState, action) {
       }
 
     case 'ADD_TO_CART':
+      action.payload.newItem["product_quantity"] = action.payload.quantity;
+      let found = 0;
       var addItem = state.lists.filter(x => x.id == action.payload.id_list).map((y) => {
-        y.cart.push(action.payload.newItem);
-        y.numberItems += 1;
+        //console.warn(action.payload.newItem.id)
+
+
+        for (let i = 0; i < y.cart.length; i++) {
+
+          if (action.payload.newItem.id == y.cart[i].id) {
+            // console.warn("im here");
+            found = 1;
+            action.payload.newItem.quantity += action.payload.quantity;
+            y.numberItems += action.payload.quantity;
+            y.cart[i].product_quantity += action.payload.quantity;
+            // console.warn(action.payload.newItem.quantity)
+          }
+
+        }
+        if (found == 0) {
+          //  console.warn("didn't push");
+          y.cart.push(action.payload.newItem);
+          y.numberItems += 1;
+
+        }
+        console.warn(y.cart[0].product_quantity);
+
         return y;
       })
       var otherLists = state.lists.filter(x => x.id != action.payload.id_list)
@@ -101,6 +124,7 @@ export default function listReducer(state = initialState, action) {
         if (Tmp[i].id == state.lastIdSelected) {
           Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
           Tmp[i].cart.numberItems -= 1;
+
 
         }
       }
@@ -126,7 +150,7 @@ export default function listReducer(state = initialState, action) {
               if (action.payload.item.isSelected == false) {
 
                 Tmp[i].cart[k].isSelected = true;
-                Tmp[i].numberChecked += 1;
+                Tmp[i].numberChecked += 1; //Tmp[i].cart[k].product_quantity
               }
 
               else {

@@ -34,6 +34,7 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade, props, it
         </TouchableOpacity>
 
       </View>
+      <Text style={styles.counter_product}> x{item.product_quantity}</Text>
 
     </View>
   );
@@ -65,7 +66,13 @@ class ListArticleScreen extends Component {
       <View style={styles.rowBack}>
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnRight]}
-          onPress={() => this.props.setIdSelected(this.props.route.params.id_list) & this.props.deleteItemCart(item.id, this.props.route.params.id_list)}>
+          onPress={() => {
+            this.props.setIdSelected(this.props.route.params.id_list);
+            this.props.deleteItemCart(item.id, this.props.route.params.id_list)
+            if (item.isSelected == true) {
+              this.checkUncheckItem(item, item.isSelected)
+            }
+          }}>
           <Text style={styles.backTextWhite}>Delete</Text>
         </TouchableOpacity>
       </View>
@@ -113,6 +120,9 @@ const styles = StyleSheet.create({
 
   },
   product_name: {
+    fontSize: 20,
+  },
+  counter_product: {
     fontSize: 20,
   },
   checkbox: {

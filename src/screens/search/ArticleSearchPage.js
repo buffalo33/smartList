@@ -263,7 +263,7 @@ class ArticleSearchPage extends Component {
         cancelText="Annuler"
         initValueTextInput={"1"}
         submitInput={(inputText) => {
-          //this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
+          this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
           this.setState({ dialogIsVisible: false});
         }}
         closeDialog={(inputText) => {
