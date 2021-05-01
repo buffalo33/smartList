@@ -12,6 +12,7 @@ import {
   Modal,
   Animated,
 } from 'react-native';
+import DialogInput from 'react-native-dialog-input';
 import firebase from 'firebase';
 import {Button, Searchbar} from 'react-native-paper';
 import {connect} from 'react-redux';
@@ -67,6 +68,7 @@ class ArticleSearchPage extends Component {
     this.state = {
       text: '',
       lastProductSelected: {},
+      dialogIsVisible: false,
       dataSource: [],
       indexChecked: '0',
       ModalState: false,
@@ -247,15 +249,27 @@ class ArticleSearchPage extends Component {
           <View style={styles.container}>
             <View style={styles.modalContainer}>
               <AwesomeButton progress type="primary" width={150} onPress={() => {
-                this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list);
                 this.setState({ ModalState: false });
+                this.setState({ dialogIsVisible: true});
               }}>Ajouter</AwesomeButton>
               <AwesomeButton type="secondary" width={150} onPress={() => this.setState({ ModalState: false })}>Plus d'infos</AwesomeButton>
               <AwesomeButton type="secondary" width={150} onPress={() => this.setState({ ModalState: false })}>Annuler</AwesomeButton>
             </View>
           </View>
         </Modal>
-
+        <DialogInput isDialogVisible={this.state.dialogIsVisible} 
+        title="Quantité" hintInput="1,2,..."
+        submitText="Ajouter" 
+        cancelText="Annuler"
+        initValueTextInput={"1"}
+        submitInput={(inputText) => {
+          //this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
+          this.setState({ dialogIsVisible: false});
+        }}
+        closeDialog={(inputText) => {
+          this.setState({ dialogIsVisible: false});
+        }}
+        />
       </View>
     );
   }
