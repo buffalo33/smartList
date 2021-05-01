@@ -183,7 +183,7 @@ const itemWidth =
 
     return (
       <Container>
-        <Header>
+        <Header style={{backgroundColor: 'tomato'}}>
           <View>
             <Text style={{alignSelf: 'center', fontSize: 25, color: 'white'}}>
               {' '}
@@ -196,20 +196,20 @@ const itemWidth =
             </Text>
           </View>
         </Header>
-        <Segment>
+        <Segment style={{backgroundColor: 'tomato'}}>
           <Button first onPress={() => this.deleteSelectedItems()}>
             {' '}
-            <Text style={{color: 'tomato'}}>Delete Selected</Text>
+            <Text style={{color: 'white'}}>Delete Selected</Text>
           </Button>
           <Button onPress={() => this.selectAll()}>
             {' '}
-            <Text style={{color: 'tomato'}}>
+            <Text style={{color: 'white'}}>
               {this.state.allSelected ? 'Unselect All' : 'Select All'}
             </Text>
           </Button>
           <Button last onPress={() => this.deleteAllItems()}>
             {' '}
-            <Text style={{color: 'tomato'}}>Delete All</Text>
+            <Text style={{color: 'white'}}>Delete All</Text>
           </Button>
         </Segment>
         <View style={styles.container}>

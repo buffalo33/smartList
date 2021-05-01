@@ -72,6 +72,18 @@ const Item = ({item, onPress, style, props}) => (
               }
             }}
           />
+
+          <MenuOption
+            value="Ajouter selection au garde manger"
+            text="Ajouter selection au garde manger"
+            onSelect={() => {
+              for (let i of props.lists
+                .filter((x) => x.id == item.id)[0]
+                .cart.filter((y) => y.isSelected)) {
+                props.addToGardeManger(i);
+              }
+            }}
+          />
         </MenuOptions>
       </Menu>
     </View>
