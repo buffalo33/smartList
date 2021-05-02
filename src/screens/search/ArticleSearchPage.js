@@ -9,6 +9,7 @@ import {
   FlatList,
   StatusBar,
   Image,
+  Modal,
   Animated,
 } from 'react-native';
 import firebase from 'firebase';
@@ -24,6 +25,7 @@ import {
   mapDispatchToProps,
 } from '../../redux/actions/listesActions';
 import {Dimensions} from 'react-native';
+import AwesomeButton from 'react-native-really-awesome-button';
 import {ScrollView} from 'react-native-gesture-handler';
 import * as Random from 'expo-random';
 
@@ -66,16 +68,14 @@ class ArticleSearchPage extends Component {
    */
   constructor(props) {
     super(props);
-    this.state = {text: ''};
     this.state = {
+      text: '',
+      lastProductSelected: {},
       dataSource: [],
-    };
-    this.state = {
       indexChecked: '0',
-    };
-    this.state = {searchTerms: ''}; // need the terms to reconstruct the search for the next page
-    this.state = {pageCount: 0}; // keep track of the current page of the elements shown to constantly fetch the next page
-    this.state = {
+      ModalState: false,
+      searchTerms: '',
+      pageCount: 0,
       scrollAnim,
       offsetAnim,
       clampedScroll: Animated.diffClamp(
@@ -95,9 +95,13 @@ class ArticleSearchPage extends Component {
 
   renderItem = ({item}) => (
     <TouchableOpacity
-      onPress={() =>
-        this.props.addToCart(item, this.props.route.params.id_list)
-      }>
+      onPress={
+        () => {
+          this.setState({ lastProductSelected: item })
+          this.setState({ ModalState: true })
+
+        }}
+    >
       <Item
         product_name={item.product_name}
         product_image={item.image_front_thumb_url}
@@ -279,6 +283,21 @@ class ArticleSearchPage extends Component {
             />
           </AnimatedTouchable>
         </AnimatedInputGroup>
+
+        <Modal visible={this.state.ModalState} transparent={true}
+          animationType="slide" style={styles.modal} coverScreen={false}>
+          <View style={styles.container}>
+            <View style={styles.modalContainer}>
+              <AwesomeButton progress type="primary" width={150} onPress={() => {
+                this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list);
+                this.setState({ ModalState: false });
+              }}>Ajouter</AwesomeButton>
+              <AwesomeButton type="secondary" width={150} onPress={() => this.setState({ ModalState: false })}>Plus d'infos</AwesomeButton>
+              <AwesomeButton type="secondary" width={150} onPress={() => this.setState({ ModalState: false })}>Annuler</AwesomeButton>
+            </View>
+          </View>
+        </Modal>
+
       </View>
     );
   }
@@ -324,6 +343,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
+  modalContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    width: 250,
+    height: 300
+  },
   product_name: {
     fontSize: 12,
     color: 'grey',
@@ -356,6 +382,12 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     flex: 1,
     flexShrink: 1,
+  },
+  modal: {
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    alignItems: 'center',
+    margin: 20
   },
 });
 
