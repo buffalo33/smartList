@@ -25,10 +25,14 @@ import {
 } from '../../redux/actions/listesActions';
 import {Dimensions} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import * as Random from 'expo-random';
 
 const Item = ({product_name, product_image}) => (
   <View style={styles.item}>
-    <Image source={{uri: product_image}} style={styles.product_image} />
+    <Image
+      source={{uri: product_image == '' ? null : product_image}}
+      style={styles.product_image}
+    />
     <Text style={styles.product_name}>{product_name}</Text>
   </View>
 );
@@ -109,6 +113,9 @@ class ArticleSearchPage extends Component {
    * @param {Int} pageCount
    */
   getNextPage({text, pageCount}) {
+    if (text == '') {
+      return;
+    }
     const nextPage = pageCount + 1;
     this.setState({pageCount: nextPage});
     //const url = 'https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&json=true&search_terms=';
@@ -122,6 +129,10 @@ class ArticleSearchPage extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         if (pageCount === 0) {
+          for (let i = 0; i < responseJson.products.length; i++) {
+            responseJson.products[i]['isSelected'] = false;
+            responseJson.products[i]['isUserProduct'] = false;
+          }
           this.setState({
             dataSource: responseJson.products, // if new request, make a new array
           });
@@ -135,6 +146,22 @@ class ArticleSearchPage extends Component {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  saveNewUserItem(userItemName) {
+    if (userItemName == '') {
+      return;
+    }
+    const customData = {
+      product_name: userItemName,
+      isSelected: false,
+      isUserProduct: true,
+      id: Random.getRandomBytes(8).toString(),
+      image_front_thumb_url: '',
+    };
+    //console.log('custom data : ' + JSON.stringify(customData));
+    //console.log('OFF data : ' + JSON.stringify(this.state.dataSource[0]));
+    this.props.addToCart(customData, this.props.route.params.id_list);
   }
 
   /**
@@ -220,7 +247,25 @@ class ArticleSearchPage extends Component {
             }}
             style={[styles.searchbar_name, {opacity: navbarOpacity}]}
           />
-          <AnimatedTouchable style={[styles.icon, {opacity: navbarOpacity}]}>
+          <AnimatedTouchable
+            style={[
+              styles.icon,
+              {
+                opacity: navbarOpacity,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: 8,
+              },
+            ]}>
+            <Icon
+              name="add"
+              type="ionicons"
+              color="black"
+              size={30}
+              onPress={() => {
+                this.saveNewUserItem(this.state.searchTerms);
+              }}
+            />
             <Icon
               name="barcode-scan"
               type="material-community"
@@ -294,7 +339,7 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontWeight: 'bold',
     flexWrap: 'wrap',
-    width: '85%',
+    width: '79%',
   },
   product_image: {
     paddingTop: 5,
@@ -305,7 +350,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    width: '20%',
+    width: '19%',
     bottom: 0,
     right: 0,
     paddingLeft: 10,
