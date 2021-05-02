@@ -1,16 +1,41 @@
-import React, { Component, useState } from 'react'
-import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux'
-import { SwipeListView } from 'react-native-swipe-list-view';
+import React, {Component, useState} from 'react';
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {connect} from 'react-redux';
+import {SwipeListView} from 'react-native-swipe-list-view';
 import CheckBox from '@react-native-community/checkbox';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import AddButton from '../components/AddButton';
-import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
-import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
+import {
+  mapStateToProps,
+  mapDispatchToProps,
+} from '../redux/actions/listesActions';
+import {
+  mapStateToPropsSettings,
+  mapDispatchToPropsSettings,
+} from '../redux/actions/settingsActions';
 
-
-const Item = ({ image_front_thumb_url, product_name, nutriscore_grade, props, item }) => {
-  const info = { image_front_thumb_url, product_name, nutriscore_grade };
+const Item = ({
+  image_front_thumb_url,
+  product_name,
+  nutriscore_grade,
+  isUserProduct,
+  product_desc,
+  props,
+  item,
+}) => {
+  const info = {
+    image_front_thumb_url,
+    product_name,
+    nutriscore_grade,
+    isUserProduct,
+    product_desc,
+  };
   const [isSelected, setSelection] = useState(item.isSelected);
   const navigation = useNavigation();
 
@@ -20,24 +45,23 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade, props, it
         <CheckBox
           value={isSelected}
           onValueChange={setSelection}
-          onChange={() =>
-            props.checkUncheckItem(item, isSelected)}
+          onChange={() => props.checkUncheckItem(item, isSelected)}
           style={styles.checkbox}
         />
       </View>
-      <View style={styles.description}
-      ><TouchableOpacity style={styles.description}
-        onPress={() => { navigation.navigate("MoreInfoScreen", info) }}>
+      <View style={styles.description}>
+        <TouchableOpacity
+          style={styles.description}
+          onPress={() => {
+            navigation.navigate('MoreInfoScreen', info);
+          }}>
           <View style={styles.description}>
             <Text style={styles.product_name}>{info.product_name}</Text>
           </View>
         </TouchableOpacity>
-
       </View>
-
     </View>
   );
-
 };
 /**
  * A class that implements the cart of the user.
@@ -52,51 +76,62 @@ class ListArticleScreen extends Component {
     if (this.props.isSetSync) {
       this.props.saveToCloud();
     }
-
   }
 
-  renderItem = ({ item }) => (
-    <Item image_front_thumb_url={item.image_front_thumb_url}
-      nutriscore_grade={item.nutriscore_grade} product_name={item.product_name} props={this.props} item={item} />
-
+  renderItem = ({item}) => (
+    <Item
+      image_front_thumb_url={item.image_front_thumb_url}
+      nutriscore_grade={item.nutriscore_grade}
+      product_name={item.product_name}
+      isUserProduct={item.isUserProduct}
+      product_desc={item.product_desc}
+      props={this.props}
+      item={item}
+    />
   );
-  renderHiddenItem = ({ item }) => {
+  renderHiddenItem = ({item}) => {
     return (
       <View style={styles.rowBack}>
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnRight]}
-          onPress={() => this.props.setIdSelected(this.props.route.params.id_list) & this.props.deleteItemCart(item.id, this.props.route.params.id_list)}>
+          onPress={() =>
+            this.props.setIdSelected(this.props.route.params.id_list) &
+            this.props.deleteItemCart(item.id, this.props.route.params.id_list)
+          }>
           <Text style={styles.backTextWhite}>Delete</Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <SwipeListView style={styles.list}
-          data={this.props.lists.filter(x => x.id == this.props.route.params.id_list)[0].cart}
+        <SwipeListView
+          style={styles.list}
+          data={
+            this.props.lists.filter(
+              (x) => x.id == this.props.route.params.id_list,
+            )[0].cart
+          }
           renderItem={this.renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           renderHiddenItem={this.renderHiddenItem}
           leftOpenValue={0}
           rightOpenValue={-75}
           previewRowKey={'0'}
           previewOpenValue={-40}
           previewOpenDelay={3000}
-        // onRowDidOpen={onRowDidOpen}
+          // onRowDidOpen={onRowDidOpen}
         />
         <AddButton data={this.props} />
       </SafeAreaView>
-    )
+    );
   }
 }
 
-
 const styles = StyleSheet.create({
-  list: {
-  },
+  list: {},
   container: {
     flex: 1,
   },
@@ -110,25 +145,21 @@ const styles = StyleSheet.create({
   image_front_thumb_url: {
     height: 90,
     width: 35,
-
   },
   product_name: {
     fontSize: 20,
   },
   checkbox: {
-    alignSelf: "center",
-    width: 50
-
+    alignSelf: 'center',
+    width: 50,
   },
   checkBoxContainer: {
-    alignSelf: "center",
-
+    alignSelf: 'center',
   },
   description: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-
   },
   nutriscore_grade: {
     flex: 1,
@@ -166,6 +197,12 @@ const styles = StyleSheet.create({
     right: 0,
   },
 });
-export default connect(mapStateToProps, mapDispatchToProps)
-  (connect(mapStateToPropsSettings, mapDispatchToPropsSettings)(ListArticleScreen)
-  )
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(
+  connect(
+    mapStateToPropsSettings,
+    mapDispatchToPropsSettings,
+  )(ListArticleScreen),
+);

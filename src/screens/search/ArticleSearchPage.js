@@ -74,6 +74,9 @@ class ArticleSearchPage extends Component {
       dataSource: [],
       indexChecked: '0',
       ModalState: false,
+      UserItemModalState: false,
+      UserItemName: '',
+      UserItemDesc: '',
       searchTerms: '',
       pageCount: 0,
       scrollAnim,
@@ -149,12 +152,13 @@ class ArticleSearchPage extends Component {
       });
   }
 
-  saveNewUserItem(userItemName) {
+  saveNewUserItem(userItemName, userItemDesc) {
     if (userItemName == '') {
       return;
     }
     const customData = {
       product_name: userItemName,
+      product_desc: userItemDesc,
       isSelected: false,
       isUserProduct: true,
       id: Random.getRandomBytes(8).toString(),
@@ -264,7 +268,11 @@ class ArticleSearchPage extends Component {
               color="black"
               size={30}
               onPress={() => {
-                this.saveNewUserItem(this.state.searchTerms);
+                if (this.state.searchTerms != '')
+                  this.setState({
+                    UserItemModalState: true,
+                    UserItemName: this.state.searchTerms,
+                  });
               }}
             />
             <Icon
@@ -280,6 +288,73 @@ class ArticleSearchPage extends Component {
             />
           </AnimatedTouchable>
         </AnimatedInputGroup>
+
+        <Modal
+          visible={this.state.UserItemModalState}
+          transparent={true}
+          animationType="slide"
+          style={styles.modal}
+          coverScreen={false}>
+          <View style={styles.container}>
+            <View style={styles.modalContainer}>
+              <TextInput
+                value={this.state.UserItemName}
+                onChangeText={(value) => this.setState({UserItemName: value})}
+                style={{
+                  color: 'white',
+                  backgroundColor: 'tomato',
+                  borderBottomColor: 'white',
+                  borderBottomWidth: 2,
+                }}
+              />
+              <TextInput
+                multiline
+                numberOfLines={4}
+                value={this.state.UserItemDesc}
+                onChangeText={(value) => this.setState({UserItemDesc: value})}
+                placeholder="Description"
+                placeholderTextColor="grey"
+                editable
+                maxLength={120}
+                style={{
+                  color: 'white',
+                  backgroundColor: 'tomato',
+                  borderBottomColor: 'white',
+                  borderBottomWidth: 2,
+                }}
+              />
+              <AwesomeButton
+                progress
+                type="primary"
+                width={150}
+                onPress={() => {
+                  this.saveNewUserItem(
+                    this.state.UserItemName,
+                    this.state.UserItemDesc,
+                  );
+                  this.setState({
+                    UserItemModalState: false,
+                    UserItemName: '',
+                    UserItemDesc: '',
+                  });
+                }}>
+                Ajouter
+              </AwesomeButton>
+              <AwesomeButton
+                type="secondary"
+                width={150}
+                onPress={() =>
+                  this.setState({
+                    UserItemModalState: false,
+                    UserItemName: '',
+                    UserItemDesc: '',
+                  })
+                }>
+                Annuler
+              </AwesomeButton>
+            </View>
+          </View>
+        </Modal>
 
         <Modal
           visible={this.state.ModalState}
@@ -365,9 +440,11 @@ const styles = StyleSheet.create({
   modalContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'tomato',
     width: 250,
-    height: 300,
+    height: 250,
+    borderRadius: 12,
   },
   product_name: {
     fontSize: 12,
