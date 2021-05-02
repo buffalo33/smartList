@@ -95,13 +95,10 @@ class ArticleSearchPage extends Component {
 
   renderItem = ({item}) => (
     <TouchableOpacity
-      onPress={
-        () => {
-          this.setState({ lastProductSelected: item })
-          this.setState({ ModalState: true })
-
-        }}
-    >
+      onPress={() => {
+        this.setState({lastProductSelected: item});
+        this.setState({ModalState: true});
+      }}>
       <Item
         product_name={item.product_name}
         product_image={item.image_front_thumb_url}
@@ -284,20 +281,42 @@ class ArticleSearchPage extends Component {
           </AnimatedTouchable>
         </AnimatedInputGroup>
 
-        <Modal visible={this.state.ModalState} transparent={true}
-          animationType="slide" style={styles.modal} coverScreen={false}>
+        <Modal
+          visible={this.state.ModalState}
+          transparent={true}
+          animationType="slide"
+          style={styles.modal}
+          coverScreen={false}>
           <View style={styles.container}>
             <View style={styles.modalContainer}>
-              <AwesomeButton progress type="primary" width={150} onPress={() => {
-                this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list);
-                this.setState({ ModalState: false });
-              }}>Ajouter</AwesomeButton>
-              <AwesomeButton type="secondary" width={150} onPress={() => this.setState({ ModalState: false })}>Plus d'infos</AwesomeButton>
-              <AwesomeButton type="secondary" width={150} onPress={() => this.setState({ ModalState: false })}>Annuler</AwesomeButton>
+              <AwesomeButton
+                progress
+                type="primary"
+                width={150}
+                onPress={() => {
+                  this.props.addToCart(
+                    this.state.lastProductSelected,
+                    this.props.route.params.id_list,
+                  );
+                  this.setState({ModalState: false});
+                }}>
+                Ajouter
+              </AwesomeButton>
+              <AwesomeButton
+                type="secondary"
+                width={150}
+                onPress={() => this.setState({ModalState: false})}>
+                Plus d'infos
+              </AwesomeButton>
+              <AwesomeButton
+                type="secondary"
+                width={150}
+                onPress={() => this.setState({ModalState: false})}>
+                Annuler
+              </AwesomeButton>
             </View>
           </View>
         </Modal>
-
       </View>
     );
   }
@@ -348,7 +367,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     width: 250,
-    height: 300
+    height: 300,
   },
   product_name: {
     fontSize: 12,
@@ -387,7 +406,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignSelf: 'center',
     alignItems: 'center',
-    margin: 20
+    margin: 20,
   },
 });
 

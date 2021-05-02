@@ -41,7 +41,10 @@ import {ScrollView} from 'react-native-gesture-handler';
 
 const Item = ({product_name, product_image}) => (
   <View style={styles.item}>
-    <Image source={{uri: product_image}} style={styles.product_image} />
+    <Image
+      source={{uri: product_image == '' ? null : product_image}}
+      style={styles.product_image}
+    />
     <Text style={styles.product_name}>{product_name}</Text>
   </View>
 );
