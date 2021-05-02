@@ -128,9 +128,6 @@ class ArticleSearchPage extends Component {
     fetch(url)
       .then((response) => response.json())
       .then((responseJson) => {
-        for (let i = 0; i < responseJson.products.length; i++) {
-          responseJson.products[i]["isSelected"] = false;
-        }
         if (pageCount === 0) {
           for (let i = 0; i < responseJson.products.length; i++) {
             responseJson.products[i]['isSelected'] = false;
