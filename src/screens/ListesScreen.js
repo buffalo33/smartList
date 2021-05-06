@@ -28,6 +28,7 @@ import {
 } from 'react-native-popup-menu';
 import FloatingActionButton from 'react-native-floating-action-button';
 import NetInfo from '@react-native-community/netinfo';
+
 import {Container, Content, InputGroup, Input} from 'native-base';
 import PanMoveHandler from '../components/PanMoveHandler';
 const Item = ({item, onPress, style, props}) => (
@@ -36,6 +37,7 @@ const Item = ({item, onPress, style, props}) => (
     itemId={item.id}
     props={props}
     myPress={onPress}>
+
     <Text style={styles.title}>{item.title}</Text>
     <View style={styles.options}>
       <Text style={styles.trackNumber}>
@@ -109,6 +111,7 @@ const ListesScreen = (props) => {
     // modify that to match the spec colors
 
     const backgroundColor = item.id === selectedId ? 'white' : 'white';
+
     return (
       <Item
         item={item}

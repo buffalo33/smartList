@@ -7,6 +7,8 @@ import GardeMangerScreen from '../screens/GardeManger'
 import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
 import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
 import { connect } from 'react-redux'
+import InternNavigation from './InternNavigation'
+import {TouchableOpacity} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -62,7 +64,9 @@ class Tabs extends Component {
               default:
                 break;
             }
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return (
+              <Ionicons name={iconName} size={size} color={color} />
+            );
           },
         })}
         tabBarOptions={{
@@ -70,9 +74,9 @@ class Tabs extends Component {
           inactiveTintColor: 'gray',
         }}>
 
-        <Tab.Screen name="Listes" component={ListesScreen} />
+        <Tab.Screen name="Listes" children={() =><InternNavigation entry="Listes"/>}/>
 
-        <Tab.Screen name="Garde-Manger" component={GardeMangerScreen} />
+        <Tab.Screen name="Garde-Manger" children={() =><InternNavigation entry="Garde-Manger"/>}/>
 
       </Tab.Navigator>
     );

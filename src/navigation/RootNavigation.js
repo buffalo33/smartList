@@ -38,10 +38,13 @@ class RootNavigation extends Component {
                   <Ionicons
                     name="reorder-four-outline"
                     size={36}
+                    color="white"
                     onPress={() => navigation.navigate("Settings")}
                   />
                 </TouchableOpacity>
               ),
+              headerTintColor: 'white',
+              headerStyle: { backgroundColor: 'tomato' },
             })} />
 
           <Stack.Screen name="HomeSearch" component={ArticleSearchPage} />
