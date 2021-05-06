@@ -40,9 +40,9 @@ class InternNavigation extends Component {
 
   render() {
     return (
-        <Stack.Navigator initialRouteName="Intern" headerMode="none">
+        <Stack.Navigator initialRouteName="Intern" screenOptions={{title: 'Retour', headerTintColor: 'tomato'}}>
 
-          <Stack.Screen name="ListesScreen" children={(navigation) => this.entryComponent(navigation)} />
+          <Stack.Screen options={{headerShown: false}} name="ListesScreen" children={(navigation) => this.entryComponent(navigation)}/>
 
           <Stack.Screen name="HomeSearch" component={ArticleSearchPage} />
 
