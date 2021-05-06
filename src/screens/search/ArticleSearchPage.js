@@ -81,6 +81,7 @@ class ArticleSearchPage extends Component {
       pageCount: 0,
       scrollAnim,
       offsetAnim,
+      confirmVisible: false,
       clampedScroll: Animated.diffClamp(
         Animated.add(
           scrollAnim.interpolate({
@@ -336,6 +337,7 @@ class ArticleSearchPage extends Component {
                     UserItemModalState: false,
                     UserItemName: '',
                     UserItemDesc: '',
+                    confirmVisible: true,
                   });
                 }}>
                 Ajouter
@@ -373,7 +375,7 @@ class ArticleSearchPage extends Component {
                     this.state.lastProductSelected,
                     this.props.route.params.id_list,
                   );
-                  this.setState({ModalState: false});
+                  this.setState({ModalState: false, confirmVisible: true});
                 }}>
                 Ajouter
               </AwesomeButton>
@@ -389,6 +391,31 @@ class ArticleSearchPage extends Component {
                 onPress={() => this.setState({ModalState: false})}>
                 Annuler
               </AwesomeButton>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={this.state.confirmVisible}
+        onRequestClose={() => {this.setState({confirmVisible: false})}}
+        onShow={() => {
+          setTimeout(() => {
+            this.setState({confirmVisible: false})}, 
+            700);
+          }
+        }
+        > 
+          <View style={styles.container}>
+            <View style={styles.modalConfirm}>
+              <Text>Article ajouté !</Text>
+              <Icon
+              name="check-circle"
+              type="material-community"
+              color="tomato"
+              size={50}
+              onPress={() => {}}
+            />
             </View>
           </View>
         </Modal>
@@ -445,6 +472,16 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     borderRadius: 12,
+  },
+  modalConfirm: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'white',
+    width: 200,
+    height: 200,
+    borderRadius: 12,
+    borderWidth: 3,
   },
   product_name: {
     fontSize: 12,
