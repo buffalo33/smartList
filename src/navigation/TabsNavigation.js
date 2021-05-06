@@ -74,9 +74,9 @@ class Tabs extends Component {
           inactiveTintColor: 'gray',
         }}>
 
-        <Tab.Screen name="Listes" children={() =><InternNavigation entry="Listes"/>} /*component={InternNavigation}*/ />
+        <Tab.Screen name="Listes" children={() =><InternNavigation entry="Listes"/>}/>
 
-        <Tab.Screen name="Garde-Manger" children={() =><InternNavigation entry="Garde-Manger"/>} /*component={GardeMangerScreen}*//>
+        <Tab.Screen name="Garde-Manger" children={() =><InternNavigation entry="Garde-Manger"/>}/>
 
       </Tab.Navigator>
     );

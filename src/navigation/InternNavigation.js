@@ -26,9 +26,6 @@ class InternNavigation extends Component {
   }
 
   entryComponent = (navigation) => {
-    /*console.log("START");
-    console.log(navigation);
-    console.log("END");*/
     if (this.props.entry == "Listes") {
       return(
         <ListesScreen {...navigation}/>
@@ -43,21 +40,17 @@ class InternNavigation extends Component {
 
   render() {
     return (
-        <Stack.Navigator initialRouteName="Intern"  >
+        <Stack.Navigator initialRouteName="Intern" headerMode="none">
 
           <Stack.Screen name="ListesScreen" children={(navigation) => this.entryComponent(navigation)} />
 
           <Stack.Screen name="HomeSearch" component={ArticleSearchPage} />
-
-          <Stack.Screen name="SignInScreen" component={SignInScreen} params={this.props} />
 
           <Stack.Screen name="MoreInfoScreen" component={MoreInfoProduct} />
 
           <Stack.Screen name="ListArticleScreen" component={ListArticleScreen} />
 
           <Stack.Screen name="Scanner" component={ScannerScreen} />
-
-          <Stack.Screen name="Settings" component={SettingsScreen} />
 
         </Stack.Navigator>
 
