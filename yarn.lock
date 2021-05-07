@@ -9213,6 +9213,11 @@ react-native-ratings@^7.3.0:
     lodash "^4.17.15"
     prop-types "^15.7.2"
 
+react-native-really-awesome-button@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.nlark.com/react-native-really-awesome-button/download/react-native-really-awesome-button-1.6.0.tgz#71700f960aa6d419058beff177c7b6cf18694ef7"
+  integrity sha1-cXAPlgqm1BkFi+/xd8e2zxhpTvc=
+
 react-native-reanimated@~1.13.0:
   version "1.13.3"
   resolved "https://registry.npm.taobao.org/react-native-reanimated/download/react-native-reanimated-1.13.3.tgz#fb0e1d582c8866015140f2159e147ffe6e798a3a"

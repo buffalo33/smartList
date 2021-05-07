@@ -186,8 +186,8 @@ const itemWidth =
 
     return (
       <Container>
-        <Header style={{backgroundColor: 'tomato'}}>
-          <View>
+        <View style={{backgroundColor: 'tomato'}}>
+          <View >
             <Text style={{alignSelf: 'center', fontSize: 25, color: 'white'}}>
               {' '}
               Garde Manger{' '}
@@ -198,7 +198,7 @@ const itemWidth =
                 : ''}
             </Text>
           </View>
-        </Header>
+        </View>
         <Segment style={{backgroundColor: 'tomato'}}>
           <Button first onPress={() => this.deleteSelectedItems()}>
             {' '}

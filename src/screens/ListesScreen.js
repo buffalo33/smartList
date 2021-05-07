@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Alert,
@@ -9,9 +9,9 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import {Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import DialogInput from 'react-native-dialog-input';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as Random from 'expo-random';
 import firebase from 'firebase';
 import 'firebase/firestore';
@@ -29,9 +29,9 @@ import {
 import FloatingActionButton from 'react-native-floating-action-button';
 import NetInfo from '@react-native-community/netinfo';
 
-import {Container, Content, InputGroup, Input} from 'native-base';
+import { Container, Content, InputGroup, Input } from 'native-base';
 import PanMoveHandler from '../components/PanMoveHandler';
-const Item = ({item, onPress, style, props}) => (
+const Item = ({ item, onPress, style, props }) => (
   <PanMoveHandler
     transmit={style}
     itemId={item.id}
@@ -49,22 +49,14 @@ const Item = ({item, onPress, style, props}) => (
           <Icon name="ellipsis-vertical" type="ionicon" color="tomato" />
         </MenuTrigger>
 
-        <MenuOptions customStyles={{optionsContainer: {marginTop: -90}}}>
-          <MenuOption value="Partager" text="Partager" />
-          <MenuOption
-            value="Renommer"
-            text="Renommer"
-            onSelect={() => {
-              props.setIdSelected(item.id);
-              props.setDialogRenameVisible(true);
-            }}
-          />
+        <MenuOptions customStyles={{ optionsContainer: { marginTop: -90 } }}>
 
           <MenuOption
             value="Supprimer"
             text="Supprimer"
             onSelect={() => {
               props.removeToLists(item.id);
+              props.saveToCloud();
             }}
           />
 
@@ -107,7 +99,7 @@ const ListesScreen = (props) => {
   const [selectedId, setSelectedId] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     // modify that to match the spec colors
 
     const backgroundColor = item.id === selectedId ? 'white' : 'white';
@@ -117,9 +109,9 @@ const ListesScreen = (props) => {
         item={item}
         onPress={() => {
           props.setIdSelected(item.id);
-          props.navigation.navigate('ListArticleScreen', {id_list: item.id});
+          props.navigation.navigate('ListArticleScreen', { id_list: item.id });
         }}
-        style={{backgroundColor}}
+        style={{ backgroundColor }}
         props={props}
       />
     );
