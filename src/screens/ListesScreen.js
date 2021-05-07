@@ -120,7 +120,7 @@ const ListesScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <InputGroup style={styles.groupContainer}>
-        <Text style={styles.textContainer}>Mes Listes</Text>
+        <Text style={styles.textContainer}> Listes</Text>
       </InputGroup>
 
       <MenuProvider style={styles.container}>

@@ -39,7 +39,7 @@ class RootNavigation extends Component {
                     name="reorder-four-outline"
                     size={36}
                     color="white"
-                    onPress={() => navigation.navigate("Settings")}
+                    onPress={() => navigation.navigate("Règlages")}
                   />
                 </TouchableOpacity>
               ),
@@ -57,7 +57,10 @@ class RootNavigation extends Component {
 
           <Stack.Screen name="Scanner" component={ScannerScreen} />
 
-          <Stack.Screen name="Settings" component={SettingsScreen} />
+          <Stack.Screen name="Règlages" component={SettingsScreen} options={({ navigation }) => ({
+            headerTintColor: 'white',
+            headerStyle: { backgroundColor: 'tomato' },
+          })} />
 
         </Stack.Navigator>
 
