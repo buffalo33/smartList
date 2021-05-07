@@ -29,12 +29,7 @@ class Settings extends React.Component {
       <ReactNativeSettingsPage style={styles.container}>
 
         <SectionRow >
-          <NavigateRow
-            text='Compte'
-            iconName='key'
-            width={100}
-            onPressCallback={() => firebase.auth().signOut()} />
-
+  
           <SwitchRow
             text='Synchronisation'
             iconName='cloud-upload'
