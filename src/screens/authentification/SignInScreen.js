@@ -111,13 +111,13 @@ class SignInScreen extends Component {
             onPress={() => {            
               this.onLoginPress();}}
             testID={"TEST_ID_BUTTON_SUBMIT"}>
-            <Text style={styles.buttonText}>Login</Text>
+            <Text style={styles.buttonText}>S'identifier</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.registerContainer}
             onPress={() => this.setState({ isDialogVisible: true })}
             testID={"TEST_ID_BUTTON_REGISTER"}>
-            <Text style={styles.buttonText}>Register</Text>
+            <Text style={styles.buttonText}>Créer un compte</Text>
           </TouchableOpacity>
 
 
