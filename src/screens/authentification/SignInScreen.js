@@ -19,7 +19,10 @@ class SignInScreen extends Component {
       email: '',
       password: '',
       name: '',
-      isDialogVisible: false
+      newEmail: '',
+      newPassword: '',
+      isDialogVisible: false,
+      isRegisterVisible: false,
     }
     this.onRegister = this.onRegister.bind(this)
   }
@@ -27,8 +30,20 @@ class SignInScreen extends Component {
   onLoginPress = () => {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(this.onLoginSuccess)
-      .catch(err => {
-        Alert.alert(err.message)
+      .catch(error => {
+        console.log(error);
+        if (error.code == "auth/invalid-email"){
+          Alert.alert("Erreur","Adresse mail invalide");
+        }
+        else if (error.code == "auth/user-disabled"){
+          Alert.alert("Erreur","Utilisateur désactivé");
+        }
+        else if (error.code == "auth/user-not-found"){
+          Alert.alert("Erreur","Utilisateur introuvable");
+        }
+        else if (error.code == "auth/wrong-password"){
+          Alert.alert("Erreur","Mot de passe incorrect");
+        }
       })
   }
 
@@ -40,14 +55,29 @@ class SignInScreen extends Component {
   }
 
   async onRegister(inputText) {
-    const { email, password } = this.state;
-    await this.setState({ name: inputText })
-    var name = this.state.name;
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+    //const { newEmail, newPassword } = this.state;
+    const newEmail = this.state.newEmail;
+    await this.setState({newPassword: inputText});
+    var name = this.state.newEmail;
+    var newPassword = this.state.newPassword;
+    firebase.auth().createUserWithEmailAndPassword(newEmail, newPassword)
       .then((result) => {
-        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).collection("User").doc("user").set({ name, email })
+        firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).collection("User").doc("user").set({ name, newEmail })
       }).catch((error) => {
-        console.log(error)
+        console.log("hey");
+        console.log(newPassword);
+        if (error.code == 'auth/email-already-in-use'){
+          Alert.alert("Erreur","Adresse mail déjà utilisée");
+        }
+        else if (error.code == "auth/invalid-email"){
+          Alert.alert("Erreur","Adresse mail invalide");
+        }
+        else if (error.code == "auth/operation-not-allowed"){
+          Alert.alert("Erreur","Opération invalide");
+        }
+        else if (error.code == "auth/weak-password"){
+          Alert.alert("Erreur","Le mot de passe doit comporter au moins 6 caractères.");
+        }
       })
   }
 
@@ -60,7 +90,7 @@ class SignInScreen extends Component {
         <View style={styles.container}>
 
           <TextInput
-            placeholder="email"
+            placeholder="Nom d'utilisateur"
             style={styles.input}
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
@@ -68,7 +98,7 @@ class SignInScreen extends Component {
           />
 
           <TextInput
-            placeholder="password"
+            placeholder="Mot de passe"
             style={styles.input}
             secureTextEntry
             value={this.state.password}
@@ -78,27 +108,45 @@ class SignInScreen extends Component {
           />
 
           <TouchableOpacity style={styles.loginContainer}
-            onPress={this.onLoginPress}
+            onPress={() => {            
+              this.onLoginPress();}}
             testID={"TEST_ID_BUTTON_SUBMIT"}>
-            <Text style={styles.buttonText}>Login</Text>
+            <Text style={styles.buttonText}>S'identifier</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.registerContainer}
             onPress={() => this.setState({ isDialogVisible: true })}
             testID={"TEST_ID_BUTTON_REGISTER"}>
-            <Text style={styles.buttonText}>Register</Text>
+            <Text style={styles.buttonText}>Créer un compte</Text>
           </TouchableOpacity>
 
 
           <DialogInput isDialogVisible={this.state.isDialogVisible}
-            title={"Remplir"}
-            message={"Entrer votre nom"}
-            hintInput={"Name"}
-            submitInput={(inputText) => {
-              this.onRegister(inputText)
+            title={"Nom d'utilisateur"}
+            message={"Choisissez un nom d'utilisateur \n(adresse mail)"}
+            hintInput={"Adresse mail"}
+            submitInput={(userName) => {
+              this.setState({newEmail: userName});
+              this.setState({ isDialogVisible: false });
+              this.setState({ isRegisterVisible: true });
             }}
-            closeDialog={() => this.setState({ isDialogVisible: false })}>
+            closeDialog={() => {
+              this.setState({ isDialogVisible: false });
+              }}>
           </DialogInput>
+          
+          <DialogInput isDialogVisible={this.state.isRegisterVisible}
+            title={"Mot de passe"}
+            message={"Choisissez un mot de passe"}
+            hintInput={"Mot de passe"}
+            textInputProps={{secureTextEntry:true}}
+            submitInput={(userPwd) => {
+              this.onRegister(userPwd);
+              this.setState({ isRegisterVisible: false });
+            }}
+            closeDialog={() => {this.setState({ isRegisterVisible: false })}}>
+          </DialogInput>
+          
           <Text style={styles.errorText} >
             {this.state.error}
           </Text>
