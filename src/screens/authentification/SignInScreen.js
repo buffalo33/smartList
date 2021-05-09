@@ -90,7 +90,7 @@ class SignInScreen extends Component {
         <View style={styles.container}>
 
           <TextInput
-            placeholder="email"
+            placeholder="Nom d'utilisateur"
             style={styles.input}
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
@@ -98,7 +98,7 @@ class SignInScreen extends Component {
           />
 
           <TextInput
-            placeholder="password"
+            placeholder="Mot de passe"
             style={styles.input}
             secureTextEntry
             value={this.state.password}
