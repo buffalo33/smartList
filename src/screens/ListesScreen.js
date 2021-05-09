@@ -50,7 +50,14 @@ const Item = ({ item, onPress, style, props }) => (
         </MenuTrigger>
 
         <MenuOptions customStyles={{ optionsContainer: { marginTop: -90 } }}>
-
+          <MenuOption
+            value="Renommer"
+            text="Renommer"
+            onSelect={() => {
+              props.setIdSelected(item.id);
+              props.setDialogRenameVisible(true);
+            }}
+          />
           <MenuOption
             value="Supprimer"
             text="Supprimer"
