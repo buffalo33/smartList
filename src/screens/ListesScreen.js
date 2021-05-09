@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import DialogInput from 'react-native-dialog-input';
@@ -31,7 +32,7 @@ import NetInfo from '@react-native-community/netinfo';
 
 import { Container, Content, InputGroup, Input } from 'native-base';
 import PanMoveHandler from '../components/PanMoveHandler';
-const Item = ({ item, onPress, style, props }) => (
+const Item = ({ item, onPress, style, props, setconfirmVisible }) => (
   <PanMoveHandler
     transmit={style}
     itemId={item.id}
@@ -74,6 +75,9 @@ const Item = ({ item, onPress, style, props }) => (
               for (let i of props.lists.filter((x) => x.id == item.id)[0]
                 .cart) {
                 props.addToGardeManger(i);
+                //props.setconfirmVisible(true);
+                //console.log(setconfirmVisible);
+                setconfirmVisible(true);
               }
             }}
           />
@@ -86,6 +90,7 @@ const Item = ({ item, onPress, style, props }) => (
                 .filter((x) => x.id == item.id)[0]
                 .cart.filter((y) => y.isSelected)) {
                 props.addToGardeManger(i);
+                setconfirmVisible(true);
               }
             }}
           />
@@ -106,10 +111,13 @@ const ListesScreen = (props) => {
   const [selectedId, setSelectedId] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const [confirmVisible, setconfirmVisible] = useState(false);
   const renderItem = ({ item }) => {
     // modify that to match the spec colors
 
     const backgroundColor = item.id === selectedId ? 'white' : 'white';
+
+    //props[setconfirmVisible] = setconfirmVisible();
 
     return (
       <Item
@@ -120,6 +128,7 @@ const ListesScreen = (props) => {
         }}
         style={{ backgroundColor }}
         props={props}
+        setconfirmVisible = {setconfirmVisible}
       />
     );
   };
@@ -174,6 +183,31 @@ const ListesScreen = (props) => {
           onPress={() => setIsDialogVisible(true)}
         />
       </MenuProvider>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={confirmVisible}
+        onRequestClose={() => {setconfirmVisible(false)}}
+        onShow={() => {
+          setTimeout(() => {
+            setconfirmVisible(false)}, 
+            1200);
+          }
+        }
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalConfirm}>
+              <Text style={styles.textConfirm}>Articles ajoutés au Garde Manger !</Text>
+              <Icon
+              name="check-circle"
+              type="material-community"
+              color="tomato"
+              size={50}
+              onPress={() => {}}
+            />
+            </View>
+          </View>
+        </Modal>
     </SafeAreaView>
   );
 };
@@ -183,11 +217,34 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
+  modalContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  modalConfirm: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'white',
+    width: 200,
+    height: 200,
+    borderRadius: 12,
+    borderWidth: 3,
+  },
   textContainer: {
     textAlign: 'left',
     paddingLeft: 10,
     color: 'black',
     fontSize: 30,
+    alignSelf: 'flex-start',
+  },
+
+  textConfirm: {
+    textAlign: 'center',
+    //paddingLeft: 10,
+    color: 'black',
+    fontSize: 20,
     alignSelf: 'flex-start',
   },
 
