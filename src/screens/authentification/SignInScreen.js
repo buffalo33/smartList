@@ -117,7 +117,7 @@ class SignInScreen extends Component {
           <TouchableOpacity style={styles.registerContainer}
             onPress={() => this.setState({ isDialogVisible: true })}
             testID={"TEST_ID_BUTTON_REGISTER"}>
-            <Text style={styles.buttonText}>Créer un compte</Text>
+            <Text style={styles.buttonTextRegister}>Créer un compte</Text>
           </TouchableOpacity>
 
 
@@ -125,6 +125,8 @@ class SignInScreen extends Component {
             title={"Nom d'utilisateur"}
             message={"Choisissez un nom d'utilisateur \n(adresse mail)"}
             hintInput={"Adresse mail"}
+            cancelText={'Annuler'}
+            submitText={'Créer'}
             submitInput={(userName) => {
               this.setState({newEmail: userName});
               this.setState({ isDialogVisible: false });
@@ -139,6 +141,8 @@ class SignInScreen extends Component {
             title={"Mot de passe"}
             message={"Choisissez un mot de passe"}
             hintInput={"Mot de passe"}
+            cancelText={'Annuler'}
+            submitText={'Créer'}
             textInputProps={{secureTextEntry:true}}
             submitInput={(userPwd) => {
               this.onRegister(userPwd);
@@ -197,16 +201,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     //paddingBottom:19,
   },
+  buttonTextRegister: {
+    color: 'tomato',
+    textAlign: 'center',
+    fontSize: 15,
+  },
   loginContainer: {
-    backgroundColor: '#3B3B98',
+    backgroundColor: 'tomato',
     padding: 10,
-    //paddingBottom:50,
+    marginBottom:25,
+    marginTop:10,
     borderRadius: 8
   },
   registerContainer: {
-    backgroundColor: '#3B3B98',
+    backgroundColor: 'white',
     padding: 10,
-    //  paddingBottom:10,
     borderRadius: 8
   }
 });

@@ -80,7 +80,7 @@ const itemWidth =
 
   deleteSelected = () => {
     //handler for Long Click
-    alert('delete Selected');
+    alert('supprimer la sélection');
   };
 
   // delete everything
@@ -157,11 +157,12 @@ const itemWidth =
       onPress={this.handlerClick}
       //activeOpacity={0.6}
       style={{
-        backgroundColor:
+        backgroundColor: '#F0F0F0',
+        borderColor:
           this.state.selectionMode && this.state.deleteArray.includes(item)
             ? 'tomato'
-            : 'white',
-        top: 5,
+            : '#F0F0F0',
+          borderWidth: 1,
       }}>
       <Icon
         name="checkmark-circle"
@@ -185,36 +186,36 @@ const itemWidth =
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 
     return (
-      <Container>
-        <View style={{backgroundColor: 'tomato'}}>
-          <View >
-            <Text style={{alignSelf: 'center', fontSize: 25, color: 'white'}}>
+      <Container style={{backgroundColor: '#F0F0F0'}}>
+        <View style={{paddingLeft: 10, paddingRight: 10,borderBottomWidth:0.5}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'space-between', paddingBottom : 10, marginTop:20}}>
+            <Text style={{fontSize: 30, color: 'tomato'}}>
               {' '}
-              Garde Manger{' '}
+              Garde-Manger{' '}
             </Text>
-            <Text style={{alignSelf: 'center', fontSize: 15, color: 'white'}}>
+            <Text style={{ fontSize: 15, color: 'grey'}}>
               {this.state.selectionMode
                 ? 'Sélectionnés : ' + this.state.deleteArray.length
-                : ''}
+                : 'Aucune sélection'}
             </Text>
           </View>
         </View>
-        <Segment style={{backgroundColor: 'tomato'}}>
+        <View style={{display:'flex', flexDirection:'row', flexWrap:'wrap-reverse', justifyContent:'center',borderBottomColor:'tomato', borderBottomWidth:0.60}}>
           <Button first onPress={() => this.deleteSelectedItems()}>
             {' '}
-            <Text style={{color: 'white'}}>Delete Selected</Text>
+            <Text style={{color: 'grey'}}>Supprimer la sélection</Text>
           </Button>
           <Button onPress={() => this.selectAll()}>
             {' '}
-            <Text style={{color: 'white'}}>
-              {this.state.allSelected ? 'Unselect All' : 'Select All'}
+            <Text style={{color: 'grey'}}>
+              {this.state.allSelected ? 'Tout déselectionner' : 'Tout sélectionner'}
             </Text>
           </Button>
           <Button last onPress={() => this.deleteAllItems()}>
             {' '}
-            <Text style={{color: 'white'}}>Delete All</Text>
+            <Text style={{color: 'grey'}}>Tout supprimer</Text>
           </Button>
-        </Segment>
+        </View>
         <View style={styles.container}>
           <FlatList
             data={this.props.gardeManger}
@@ -239,35 +240,25 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: 'white',
-    borderRadius: 4,
-    marginTop: 4,
-    marginBottom: 4,
-    marginHorizontal: marginHoriz,
+    padding: marginHoriz,
     height: itemWidth, // get a square
-    width: itemWidth,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    width: itemWidth ,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
   },
   product_name: {
+    paddingTop : 2,
     fontSize: 12,
-    color: 'grey',
-    fontWeight: 'bold',
+    color: '#505050',
+    textAlign: 'center',
     flexWrap: 'wrap',
     flex: 1,
   },
   product_image: {
     paddingTop: 5,
-    width: itemWidth / 1.3,
-    height: itemWidth / 1.3,
+    width: itemWidth / 1.5,
+    height: itemWidth / 1.5,
     resizeMode: 'contain',
     flexShrink: 1,
   },

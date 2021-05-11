@@ -32,6 +32,7 @@ import NetInfo from '@react-native-community/netinfo';
 
 import { Container, Content, InputGroup, Input } from 'native-base';
 import PanMoveHandler from '../components/PanMoveHandler';
+import colors from 'react-native-floating-action-button/lib/src/components/styles/colors';
 const Item = ({ item, onPress, style, props, setconfirmVisible }) => (
   <PanMoveHandler
     transmit={style}
@@ -150,7 +151,9 @@ const ListesScreen = (props) => {
           isDialogVisible={isDialogVisible}
           title={'Nouvelle liste'}
           message={'Entrer le nom de la liste'}
-          hintInput={'Name'}
+          hintInput={'Nom'}
+          cancelText={'Annuler'}
+          submitText={'Créer'}
           submitInput={(inputText) => {
             props.addToLists({
               id: Random.getRandomBytes(2).toString(),
@@ -215,7 +218,7 @@ const ListesScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    marginTop: 20,
   },
   modalContainer: {
     alignItems: 'center',
@@ -235,14 +238,14 @@ const styles = StyleSheet.create({
   textContainer: {
     textAlign: 'left',
     paddingLeft: 10,
-    color: 'black',
+    color: 'tomato',
     fontSize: 30,
     alignSelf: 'flex-start',
+    paddingBottom : 10,
   },
 
   textConfirm: {
     textAlign: 'center',
-    //paddingLeft: 10,
     color: 'black',
     fontSize: 20,
     alignSelf: 'flex-start',

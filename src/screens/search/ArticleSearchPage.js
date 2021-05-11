@@ -247,7 +247,7 @@ class ArticleSearchPage extends Component {
             {transform: [{translateY: navbarTranslate}]},
           ]}>
           <AnimatedSearchbar
-            placeholder="Search for a product"
+            placeholder="Rechercher un produit"
             onChangeText={(text) => {
               this.fetchData(text);
             }}
