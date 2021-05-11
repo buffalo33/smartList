@@ -31,7 +31,7 @@ class RootNavigation extends Component {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home" >
 
-          <Stack.Screen name="ShoppingList" component={Tabs}
+          <Stack.Screen name="SMARTLIST" component={Tabs}
             options={({ navigation }) => ({
               headerRight: ({ navigate }) => (
                 <TouchableOpacity>

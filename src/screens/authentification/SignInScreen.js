@@ -83,7 +83,6 @@ class SignInScreen extends Component {
 
 
   render() {
-    //console.log(this.props);
     return (
       <View style={styles.generalContainer}>
         <Logo />
@@ -166,11 +165,10 @@ const styles = StyleSheet.create({
   generalContainer: {
     flex: 1,
     marginTop: 50,
-    padding: 20
+    padding: 20,
   },
   container: {
     flex: 1,
-    marginTop: 50,
     padding: 20
   },
 

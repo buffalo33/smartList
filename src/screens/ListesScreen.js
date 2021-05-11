@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 32,
+    fontSize: 22,
   },
 
   trackNumber: {
