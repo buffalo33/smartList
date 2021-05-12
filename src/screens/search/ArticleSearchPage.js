@@ -264,12 +264,12 @@ class ArticleSearchPage extends Component {
         title="Quantité" hintInput="1,2,..."
         submitText="Ajouter" 
         cancelText="Annuler"
-        initValueTextInput={"1"}
-        submitInput={(inputText) => {
+          submitInput={(inputText) => {
+          console.log("quantity selected", inputText)
           this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
           this.setState({ dialogIsVisible: false});
         }}
-        closeDialog={(inputText) => {
+        closeDialog={() => {
           this.setState({ dialogIsVisible: false});
         }}
         />

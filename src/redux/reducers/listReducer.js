@@ -81,6 +81,8 @@ export default function listReducer(state = initialState, action) {
       }
 
     case 'ADD_TO_CART':
+      console.log("quantity selected add to cart: ", action.payload.quantity);
+
       action.payload.newItem["product_quantity"] = action.payload.quantity;
       let found = 0;
       var addItem = state.lists.filter(x => x.id == action.payload.id_list).map((y) => {
@@ -93,7 +95,6 @@ export default function listReducer(state = initialState, action) {
             // console.warn("im here");
             found = 1;
             action.payload.newItem.quantity += action.payload.quantity;
-            y.numberItems += action.payload.quantity;
             y.cart[i].product_quantity += action.payload.quantity;
             // console.warn(action.payload.newItem.quantity)
           }
@@ -105,7 +106,7 @@ export default function listReducer(state = initialState, action) {
           y.numberItems += 1;
 
         }
-        console.warn(y.cart[0].product_quantity);
+        console.log("quantity entered", y.cart[0].product_quantity);
 
         return y;
       })
@@ -122,10 +123,14 @@ export default function listReducer(state = initialState, action) {
       var Tmp = state.lists;
       for (let i = 0; i < Tmp.length; i++) {
         if (Tmp[i].id == state.lastIdSelected) {
+
           for (let j = 0; j < Tmp[i].cart.length; j++){
             if (Tmp[i].cart[j].id == action.payload.id) {              
               if (Tmp[i].cart[j].isSelected) {
                 Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
+                Tmp[i].numberItems -= 1;
+                Tmp[i].numberChecked -= 1;
+
 
               }
               else {
@@ -135,7 +140,7 @@ export default function listReducer(state = initialState, action) {
                 else {
 
                   Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
-
+                  Tmp[i].numberItems -= 1;
 
                 }
               }
@@ -171,7 +176,7 @@ export default function listReducer(state = initialState, action) {
               if (action.payload.item.isSelected == false) {
 
                 Tmp[i].cart[k].isSelected = true;
-                Tmp[i].numberChecked += 1; //Tmp[i].cart[k].product_quantity
+                Tmp[i].numberChecked += 1; 
               }
 
               else {
