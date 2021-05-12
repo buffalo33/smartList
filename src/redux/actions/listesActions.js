@@ -3,6 +3,7 @@ import firebase, {firestore} from 'firebase';
 export function mapStateToProps(state) {
   return {
     lists: state.listReducer.lists,
+    lastIdSelected: state.listReducer.lastIdSelected,
     cart: state.listReducer.cart,
     gardeManger: state.gardeMangerReducer.gardeManger,
     isRenameVisible: state.dialogRenameReducer.isRenameVisible,
