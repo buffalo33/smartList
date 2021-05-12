@@ -122,7 +122,28 @@ export default function listReducer(state = initialState, action) {
       var Tmp = state.lists;
       for (let i = 0; i < Tmp.length; i++) {
         if (Tmp[i].id == state.lastIdSelected) {
-          Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
+          for (let j = 0; j < Tmp[i].cart.length; j++){
+            if (Tmp[i].cart[j].id == action.payload.id) {              
+              if (Tmp[i].cart[j].isSelected) {
+                Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
+
+              }
+              else {
+                if (Tmp[i].cart[j].product_quantity > 1) {
+                  Tmp[i].cart[j].product_quantity -= 1;
+                }
+                else {
+
+                  Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
+
+
+                }
+              }
+             
+            }
+          }
+
+         // Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
           Tmp[i].cart.numberItems -= 1;
 
 

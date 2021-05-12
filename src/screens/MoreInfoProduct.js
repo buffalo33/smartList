@@ -34,7 +34,7 @@ class MoreInfoProduct extends Component {
   }
 
   render() {
-
+    console.log(this.props.route.params.product_name);
     return (
       <View style={styles.MainContainer}>
         <Image source={{ uri: this.ImageURI }} style={{

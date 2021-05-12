@@ -9,8 +9,7 @@ import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActi
 import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
 
 
-const Item = ({ image_front_thumb_url, product_name, nutriscore_grade, props, item }) => {
-  const info = { image_front_thumb_url, product_name, nutriscore_grade };
+const Item = ({props, item }) => {
   const [isSelected, setSelection] = useState(item.isSelected);
   const navigation = useNavigation();
 
@@ -27,9 +26,9 @@ const Item = ({ image_front_thumb_url, product_name, nutriscore_grade, props, it
       </View>
       <View style={styles.description}
       ><TouchableOpacity style={styles.description}
-        onPress={() => { navigation.navigate("MoreInfoScreen", info) }}>
+        onPress={() => { navigation.navigate("MoreInfoScreen", item) }}>
           <View style={styles.description}>
-            <Text style={styles.product_name}>{info.product_name}</Text>
+            <Text style={styles.product_name}>{item.product_name}</Text>
           </View>
         </TouchableOpacity>
 
@@ -57,8 +56,7 @@ class ListArticleScreen extends Component {
   }
 
   renderItem = ({ item }) => (
-    <Item image_front_thumb_url={item.image_front_thumb_url}
-      nutriscore_grade={item.nutriscore_grade} product_name={item.product_name} props={this.props} item={item} />
+    <Item  props={this.props} item={item} />
 
   );
   renderHiddenItem = ({ item }) => {
@@ -70,7 +68,7 @@ class ListArticleScreen extends Component {
             this.props.setIdSelected(this.props.route.params.id_list);
             this.props.deleteItemCart(item.id, this.props.route.params.id_list)
             if (item.isSelected == true) {
-              this.checkUncheckItem(item, item.isSelected)
+              this.props.checkUncheckItem(item, item.isSelected)
             }
           }}>
           <Text style={styles.backTextWhite}>Delete</Text>

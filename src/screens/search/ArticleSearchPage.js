@@ -252,7 +252,10 @@ class ArticleSearchPage extends Component {
                 this.setState({ ModalState: false });
                 this.setState({ dialogIsVisible: true});
               }}>Ajouter</AwesomeButton>
-              <AwesomeButton type="secondary" width={150} onPress={() => this.setState({ ModalState: false })}>Plus d'infos</AwesomeButton>
+              <AwesomeButton type="secondary" width={150} onPress={() =>{ 
+                        this.setState({ ModalState: false });
+                        this.props.navigation.navigate("MoreInfoScreen", this.state.lastProductSelected);
+                      }}>Plus d'infos</AwesomeButton>
               <AwesomeButton type="secondary" width={150} onPress={() => this.setState({ ModalState: false })}>Annuler</AwesomeButton>
             </View>
           </View>
