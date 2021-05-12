@@ -49,17 +49,16 @@ const Item = ({
           style={styles.checkbox}
         />
       </View>
-      <View style={styles.description}>
-        <TouchableOpacity
-          style={styles.description}
-          onPress={() => {
-            navigation.navigate('MoreInfoScreen', info);
-          }}>
+      <View style={styles.description}
+      ><TouchableOpacity style={styles.description}
+        onPress={() => { navigation.navigate("MoreInfoScreen", item) }}>
           <View style={styles.description}>
-            <Text style={styles.product_name}>{info.product_name}</Text>
+            <Text style={styles.product_name}>{item.product_name}</Text>
           </View>
         </TouchableOpacity>
       </View>
+      <Text style={styles.counter_product}> x{item.product_quantity}</Text>
+
     </View>
   );
 };
@@ -78,26 +77,22 @@ class ListArticleScreen extends Component {
     }
   }
 
-  renderItem = ({item}) => (
-    <Item
-      image_front_thumb_url={item.image_front_thumb_url}
-      nutriscore_grade={item.nutriscore_grade}
-      product_name={item.product_name}
-      isUserProduct={item.isUserProduct}
-      product_desc={item.product_desc}
-      props={this.props}
-      item={item}
-    />
+  renderItem = ({ item }) => (
+    <Item  props={this.props} item={item} />
+
   );
   renderHiddenItem = ({item}) => {
     return (
       <View style={styles.rowBack}>
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnRight]}
-          onPress={() =>
-            this.props.setIdSelected(this.props.route.params.id_list) &
+          onPress={() => {
+            this.props.setIdSelected(this.props.route.params.id_list);
             this.props.deleteItemCart(item.id, this.props.route.params.id_list)
-          }>
+            if (item.isSelected == true) {
+              this.props.checkUncheckItem(item, item.isSelected)
+            }
+          }}>
           <Text style={styles.backTextWhite}>Delete</Text>
         </TouchableOpacity>
       </View>
@@ -147,6 +142,9 @@ const styles = StyleSheet.create({
     width: 35,
   },
   product_name: {
+    fontSize: 20,
+  },
+  counter_product: {
     fontSize: 20,
   },
   checkbox: {

@@ -36,6 +36,7 @@ class MoreInfoProduct extends Component {
   }
 
   render() {
+
     return (
       <View style={styles.MainContainer}>
         <Image
