@@ -48,7 +48,12 @@ class InternNavigation extends Component {
   }
 
   displayTitle = () => {
-    return this.props.lists.find(this.checkId).title
+    if (this.props.lists.find(this.checkId) == null){
+      return ""
+    }
+    else {
+      return this.props.lists.find(this.checkId).title
+    }
   }
 
   render() {
