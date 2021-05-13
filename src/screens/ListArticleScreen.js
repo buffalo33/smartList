@@ -93,7 +93,7 @@ class ListArticleScreen extends Component {
               this.props.checkUncheckItem(item, item.isSelected)
             }
           }}>
-          <Text style={styles.backTextWhite}>Delete</Text>
+          <Text style={styles.backTextWhite}>Supprimer</Text>
         </TouchableOpacity>
       </View>
     );

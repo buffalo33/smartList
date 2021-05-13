@@ -164,12 +164,14 @@ class ArticleSearchPage extends Component {
       product_desc: userItemDesc,
       isSelected: false,
       isUserProduct: true,
-      id: Random.getRandomBytes(8).toString(),
+      id: "user" + userItemName,//Random.getRandomBytes(8).toString(),
       image_front_thumb_url: '',
     };
     //console.log('custom data : ' + JSON.stringify(customData));
     //console.log('OFF data : ' + JSON.stringify(this.state.dataSource[0]));
-    this.props.addToCart(customData, this.props.route.params.id_list);
+    
+    //this.props.addToCart(customData, this.props.route.params.id_list);
+    this.setState({lastProductSelected: customData});
   }
 
   /**
@@ -333,9 +335,9 @@ class ArticleSearchPage extends Component {
                   );
                   this.setState({
                     UserItemModalState: false,
-                    UserItemName: '',
+                    /*UserItemName: '',
                     UserItemDesc: '',
-                    confirmVisible: true,
+                    confirmVisible: true,*/
                   });
                   this.setState({
                     dialogIsVisible: true
