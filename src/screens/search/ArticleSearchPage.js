@@ -12,27 +12,28 @@ import {
   Modal,
   Animated,
 } from 'react-native';
+import DialogInput from 'react-native-dialog-input';
 import firebase from 'firebase';
-import {Button, Searchbar} from 'react-native-paper';
-import {connect} from 'react-redux';
-import {Icon} from 'react-native-elements';
-import {Container, Content, InputGroup, Input} from 'native-base';
-import {LogBox} from 'react-native';
-import {Component} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Button, Searchbar } from 'react-native-paper';
+import { connect } from 'react-redux';
+import { Icon } from 'react-native-elements';
+import { Container, Content, InputGroup, Input } from 'native-base';
+import { LogBox } from 'react-native';
+import { Component } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   mapStateToProps,
   mapDispatchToProps,
 } from '../../redux/actions/listesActions';
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 import AwesomeButton from 'react-native-really-awesome-button';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import * as Random from 'expo-random';
 
-const Item = ({product_name, product_image}) => (
+const Item = ({ product_name, product_image }) => (
   <View style={styles.item}>
     <Image
-      source={{uri: product_image == '' ? null : product_image}}
+      source={{ uri: product_image == '' ? null : product_image }}
       style={styles.product_image}
     />
     <Text style={styles.product_name}>{product_name}</Text>
@@ -71,6 +72,7 @@ class ArticleSearchPage extends Component {
     this.state = {
       text: '',
       lastProductSelected: {},
+      dialogIsVisible: false,
       dataSource: [],
       indexChecked: '0',
       ModalState: false,
@@ -97,11 +99,11 @@ class ArticleSearchPage extends Component {
     };
   }
 
-  renderItem = ({item}) => (
+  renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        this.setState({lastProductSelected: item});
-        this.setState({ModalState: true});
+        this.setState({ lastProductSelected: item });
+        this.setState({ ModalState: true });
       }}>
       <Item
         product_name={item.product_name}
@@ -117,12 +119,12 @@ class ArticleSearchPage extends Component {
    * @param {String} text
    * @param {Int} pageCount
    */
-  getNextPage({text, pageCount}) {
+  getNextPage({ text, pageCount }) {
     if (text == '') {
       return;
     }
     const nextPage = pageCount + 1;
-    this.setState({pageCount: nextPage});
+    this.setState({ pageCount: nextPage });
     //const url = 'https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&json=true&search_terms=';
     const url =
       'https://world.openfoodfacts.org/cgi/search.pl?&json=true&page_size=21&page=' +
@@ -176,9 +178,9 @@ class ArticleSearchPage extends Component {
    * @param {String} text
    */
   fetchData(text) {
-    this.setState({pageCount: 0}); // at each new request, reset page counter to 0
-    this.setState({searchTerms: text}); // save search terms
-    this.getNextPage({text: text, pageCount: 0});
+    this.setState({ pageCount: 0 }); // at each new request, reset page counter to 0
+    this.setState({ searchTerms: text }); // save search terms
+    this.getNextPage({ text: text, pageCount: 0 });
   }
 
   handleLoadMore = () => {
@@ -209,7 +211,7 @@ class ArticleSearchPage extends Component {
   render() {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     // console.log(this.props.route.params.id_list)
-    const {clampedScroll} = this.state;
+    const { clampedScroll } = this.state;
 
     const navbarTranslate = clampedScroll.interpolate({
       inputRange: [0, navbarHeight - searchbarHeight],
@@ -232,26 +234,26 @@ class ArticleSearchPage extends Component {
           onEndReached={this.handleLoadMore}
           scrollEventThrottle={1}
           onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {y: this.state.scrollAnim}}}],
-            {useNativeDriver: false},
+            [{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }],
+            { useNativeDriver: false },
           )}
           onMomentumScrollBegin={this._onMomentumScrollBegin}
           onMomentumScrollEnd={this._onMomentumScrollEnd}
           onScrollEndDrag={this._onScrollEndDrag}
-          style={{paddingTop: navbarHeight}}
+          style={{ paddingTop: navbarHeight }}
         />
 
         <AnimatedInputGroup
           style={[
             styles.searchbar,
-            {transform: [{translateY: navbarTranslate}]},
+            { transform: [{ translateY: navbarTranslate }] },
           ]}>
           <AnimatedSearchbar
             placeholder="Rechercher un produit"
             onChangeText={(text) => {
               this.fetchData(text);
             }}
-            style={[styles.searchbar_name, {opacity: navbarOpacity}]}
+            style={[styles.searchbar_name, { opacity: navbarOpacity }]}
           />
           <AnimatedTouchable
             style={[
@@ -300,7 +302,7 @@ class ArticleSearchPage extends Component {
             <View style={styles.modalContainer}>
               <TextInput
                 value={this.state.UserItemName}
-                onChangeText={(value) => this.setState({UserItemName: value})}
+                onChangeText={(value) => this.setState({ UserItemName: value })}
                 style={{
                   color: 'white',
                   backgroundColor: 'tomato',
@@ -312,7 +314,7 @@ class ArticleSearchPage extends Component {
                 multiline
                 numberOfLines={4}
                 value={this.state.UserItemDesc}
-                onChangeText={(value) => this.setState({UserItemDesc: value})}
+                onChangeText={(value) => this.setState({ UserItemDesc: value })}
                 placeholder="Description"
                 placeholderTextColor="grey"
                 editable
@@ -338,6 +340,9 @@ class ArticleSearchPage extends Component {
                     UserItemName: '',
                     UserItemDesc: '',
                     confirmVisible: true,
+                  });
+                  this.setState({
+                    dialogIsVisible: true
                   });
                 }}>
                 Ajouter
@@ -366,60 +371,60 @@ class ArticleSearchPage extends Component {
           coverScreen={false}>
           <View style={styles.container}>
             <View style={styles.modalContainer}>
-              <AwesomeButton
-                progress
-                type="primary"
-                width={150}
-                onPress={() => {
-                  this.props.addToCart(
-                    this.state.lastProductSelected,
-                    this.props.route.params.id_list,
-                  );
-                  this.setState({ModalState: false, confirmVisible: true});
-                }}>
-                Ajouter
-              </AwesomeButton>
-              <AwesomeButton
-                type="secondary"
-                width={150}
-                onPress={() => this.setState({ModalState: false})}>
-                Plus d'infos
-              </AwesomeButton>
-              <AwesomeButton
-                type="secondary"
-                width={150}
-                onPress={() => this.setState({ModalState: false})}>
-                Annuler
-              </AwesomeButton>
+              <AwesomeButton progress type="primary" width={150} onPress={() => {
+                this.setState({ ModalState: false });
+                this.setState({ dialogIsVisible: true });
+              }}>Ajouter</AwesomeButton>
+              <AwesomeButton type="secondary" width={150} onPress={() => {
+                this.setState({ ModalState: false });
+                this.props.navigation.navigate("MoreInfoScreen", this.state.lastProductSelected);
+              }}>Plus d'infos</AwesomeButton>
+              <AwesomeButton type="secondary" width={150} onPress={() => this.setState({ ModalState: false })}>Annuler</AwesomeButton>
             </View>
           </View>
         </Modal>
+        <DialogInput
+          isDialogVisible={this.state.dialogIsVisible}
+          title="Quantité" hintInput="1,2,..."
+          submitText="Ajouter"
+          cancelText="Annuler"
+          submitInput={(inputText) => {
+            console.log("quantity selected", inputText)
+            this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
+            this.setState({ dialogIsVisible: false });
+            this.setState({ confirmVisible: true });
+          }}
+          closeDialog={() => {
+            this.setState({ dialogIsVisible: false });
+          }}
+        />
         <Modal
-        animationType="slide"
-        transparent={true}
-        visible={this.state.confirmVisible}
-        onRequestClose={() => {this.setState({confirmVisible: false})}}
-        onShow={() => {
-          setTimeout(() => {
-            this.setState({confirmVisible: false})}, 
-            700);
+          animationType="slide"
+          transparent={true}
+          visible={this.state.confirmVisible}
+          onRequestClose={() => { this.setState({ confirmVisible: false }) }}
+          onShow={() => {
+            setTimeout(() => {
+              this.setState({ confirmVisible: false })
+            },
+              700);
           }
-        }
-        > 
+          }
+        >
           <View style={styles.container}>
             <View style={styles.modalConfirm}>
               <Text>Article ajouté !</Text>
               <Icon
-              name="check-circle"
-              type="material-community"
-              color="tomato"
-              size={50}
-              onPress={() => {}}
-            />
+                name="check-circle"
+                type="material-community"
+                color="tomato"
+                size={50}
+                onPress={() => { }}
+              />
             </View>
           </View>
         </Modal>
-      </View>
+      </View >
     );
   }
 }
