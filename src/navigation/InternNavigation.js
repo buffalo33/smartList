@@ -68,7 +68,7 @@ class InternNavigation extends Component {
 
           <Stack.Screen options={{title: this.displayTitle()}} name="ListArticleScreen" component={ListArticleScreen} />
 
-          <Stack.Screen name="Scanner" component={ScannerScreen} />
+          <Stack.Screen options={{title: this.displayTitle()}} name="Scanner" component={ScannerScreen} />
 
         </Stack.Navigator>
 
