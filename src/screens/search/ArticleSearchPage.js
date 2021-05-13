@@ -304,10 +304,8 @@ class ArticleSearchPage extends Component {
                 value={this.state.UserItemName}
                 onChangeText={(value) => this.setState({ UserItemName: value })}
                 style={{
-                  color: 'white',
-                  backgroundColor: 'tomato',
-                  borderBottomColor: 'white',
-                  borderBottomWidth: 2,
+                  color: 'tomato',
+                  fontSize: 30
                 }}
               />
               <TextInput
@@ -320,10 +318,8 @@ class ArticleSearchPage extends Component {
                 editable
                 maxLength={120}
                 style={{
-                  color: 'white',
-                  backgroundColor: 'tomato',
-                  borderBottomColor: 'white',
-                  borderBottomWidth: 2,
+                  color: 'black',
+                  fontSize : 18
                 }}
               />
               <AwesomeButton
@@ -473,10 +469,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: 'tomato',
-    width: 250,
-    height: 250,
-    borderRadius: 12,
+    backgroundColor: 'white',
+    width: 300,
+    height: 300,
+    borderRadius: 2,
   },
   modalConfirm: {
     alignItems: 'center',

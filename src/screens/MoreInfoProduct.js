@@ -39,21 +39,12 @@ class MoreInfoProduct extends Component {
 
     return (
       <View style={styles.MainContainer}>
-        <Image
-          source={{uri: this.ImageURI == '' ? null : this.ImageURI}}
-          style={{
-            resizeMode: 'cover',
-            width: this.state.ImageWidth,
-            height: this.state.ImageHeight,
-          }}
-        />
-
         <View style={{alignItems: 'center'}}>
-          <Text style={styles.TextStyle}>
+          <Text style={styles.TitleStyle}>
             {this.props.route.params.product_name}{' '}
           </Text>
           <Text style={styles.TextStyle}>
-            Nutriscore: {this.props.route.params.nutriscore_grade}{' '}
+            Nutriscore : {this.props.route.params.nutriscore_grade}{' '}
           </Text>
           <Text style={styles.TextStyle}>
             {this.props.route.params.isUserProduct &&
@@ -61,6 +52,14 @@ class MoreInfoProduct extends Component {
               ? 'Description : ' + this.props.route.params.product_desc
               : null}{' '}
           </Text>
+          <Image
+          source={{uri: this.ImageURI == '' ? null : this.ImageURI}}
+          style={{
+            resizeMode: 'cover',
+            width: this.state.ImageWidth,
+            height: this.state.ImageHeight,
+          }}
+        />
         </View>
       </View>
     );
@@ -79,6 +78,12 @@ const styles = StyleSheet.create({
   TextStyle: {
     fontSize: 18,
     color: '#000',
+    textAlign: 'center',
+  },
+
+  TitleStyle: {
+    fontSize: 30,
+    color: 'tomato',
     textAlign: 'center',
   },
 });
