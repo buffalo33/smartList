@@ -70,12 +70,9 @@ class PanMoveHandler extends Component {
                         705 - (evt.timeStamp - this.time0) );//If user stays want tu use the navigation feature, then item comes back to a normal size. The calculation is tought so that this instruction came after the previous enlargement in onPanResponderStart.
                     props.myPress();
                 }
-                else if (Math.floor(deltaAbs/semiHeight)) //Check that the item move more than this calculated threshold.
+                else //Check that the item move more than this calculated threshold.
                     {
-                        nbIndex = 1 + Math.floor((deltaAbs - semiHeight)/realHeight) - 1 + ((deltaAbs - semiHeight)%realHeight > 0); //The absolute number of move in cases unite
-                        
-                        //console.log(Math.pow(-1,(gestureState.dy <= 0))*nbIndex); //Display the absolute number of index the item has to move.
-                        
+                        nbIndex = Math.floor((deltaAbs)/realHeight) ; //The absolute number of move in cases unite
                         var final = Math.pow(-1,(gestureState.dy <= 0))*nbIndex; //We compute the direction thank to the sign.
 
                         props.swapLists(final);
@@ -85,12 +82,6 @@ class PanMoveHandler extends Component {
                             myColor: 'white',
                             }) 
                     }
-                else {
-                    this.setState({
-                        topPosition: 0,
-                        myColor: 'white',
-                    })
-                }
             },
         })
     }
