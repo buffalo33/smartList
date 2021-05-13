@@ -9,6 +9,11 @@ import ScannerScreen from '../screens/ScannerScreen';
 import SettingsScreen from '../screens/SettingsScreen'
 import ListesScreen from '../screens/ListesScreen';
 import GardeMangerScreen from '../screens/GardeManger'
+import { connect } from 'react-redux'
+import {
+  mapStateToProps,
+  mapDispatchToProps,
+} from '../redux/actions/listesActions';
 
 
 
@@ -38,17 +43,30 @@ class InternNavigation extends Component {
     }
   }
 
+  checkId = (list) => {
+    return this.props.lastIdSelected == list.id;
+  }
+
+  displayTitle = () => {
+    if (this.props.lists.find(this.checkId) == null){
+      return ""
+    }
+    else {
+      return this.props.lists.find(this.checkId).title
+    }
+  }
+
   render() {
     return (
-        <Stack.Navigator initialRouteName="Intern" screenOptions={{title: "test", headerTintColor: 'tomato'}}>
+        <Stack.Navigator initialRouteName="Intern" screenOptions={{headerTintColor: 'tomato'}}>
           
           <Stack.Screen options={{headerShown: false}} name="ListesScreen" children={(navigation) => this.entryComponent(navigation)}/>
 
-          <Stack.Screen name="HomeSearch" component={ArticleSearchPage} />
+          <Stack.Screen options={{title: this.displayTitle()}} name="HomeSearch" component={ArticleSearchPage} />
 
           <Stack.Screen name="MoreInfoScreen" component={MoreInfoProduct} />
 
-          <Stack.Screen name="ListArticleScreen" component={ListArticleScreen} />
+          <Stack.Screen options={{title: this.displayTitle()}} name="ListArticleScreen" component={ListArticleScreen} />
 
           <Stack.Screen name="Scanner" component={ScannerScreen} />
 
@@ -58,4 +76,4 @@ class InternNavigation extends Component {
   }
 }
 
-export default InternNavigation;
+export default connect(mapStateToProps, mapDispatchToProps)(InternNavigation);

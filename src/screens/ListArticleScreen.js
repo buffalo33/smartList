@@ -134,7 +134,8 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
     padding: 20,
-    borderWidth: 0.7,
+    borderBottomWidth: 0.7,
+    borderBottomColor: 'lightgrey',
     flexDirection: 'row',
   },
   image_front_thumb_url: {
@@ -150,6 +151,7 @@ const styles = StyleSheet.create({
   checkbox: {
     alignSelf: 'center',
     width: 50,
+    color:'tomato'
   },
   checkBoxContainer: {
     alignSelf: 'center',
