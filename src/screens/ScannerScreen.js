@@ -77,10 +77,14 @@ class ScannerScreen extends React.Component {
         />
         <DialogInput
           isDialogVisible={this.state.dialogIsVisible}
-          title="Quantité" hintInput="1,2,..."
+          title="Quantité" hintInput="1"
           submitText="Ajouter"
           cancelText="Annuler"
+          textInputProps={{ keyboardType: 'numeric' }}
           submitInput={(inputText) => {
+            if (inputText == NaN | inputText == undefined | inputText == "") {
+              inputText = 1;
+            }
             console.log("quantity selected", inputText)
             this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
             this.setState({ dialogIsVisible: false });
