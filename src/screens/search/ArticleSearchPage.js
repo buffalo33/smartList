@@ -169,9 +169,9 @@ class ArticleSearchPage extends Component {
     };
     //console.log('custom data : ' + JSON.stringify(customData));
     //console.log('OFF data : ' + JSON.stringify(this.state.dataSource[0]));
-    
+
     //this.props.addToCart(customData, this.props.route.params.id_list);
-    this.setState({lastProductSelected: customData});
+    this.setState({ lastProductSelected: customData });
   }
 
   /**
@@ -321,7 +321,7 @@ class ArticleSearchPage extends Component {
                 maxLength={120}
                 style={{
                   color: 'black',
-                  fontSize : 18
+                  fontSize: 18
                 }}
               />
               <AwesomeButton
@@ -389,8 +389,10 @@ class ArticleSearchPage extends Component {
 
           textInputProps={{ keyboardType: 'numeric' }}
           submitInput={(inputText) => {
-  
-            this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText=1, 10));
+            if (inputText == NaN | inputText==undefined) {
+              inputText = 1;
+            }
+            this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
             this.setState({ dialogIsVisible: false });
             this.setState({ confirmVisible: true });
           }}
