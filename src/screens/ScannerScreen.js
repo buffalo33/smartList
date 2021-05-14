@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Text, View, StyleSheet, Modal, Button } from 'react-native';
+import { Alert, Text, View, StyleSheet, Modal,Button } from 'react-native';
 import Constants from 'expo-constants';
 import DialogInput from 'react-native-dialog-input';
 import * as Permissions from 'expo-permissions';
@@ -40,7 +40,7 @@ class ScannerScreen extends React.Component {
 
   backToList = () => {
     Alert.alert(
-      "Produit détecté",
+      "Produit ajouté",
       "Souhaitez-vous retourner dans la liste ?",
       [
         {
@@ -109,18 +109,7 @@ class ScannerScreen extends React.Component {
           }
           }
         >
-          <View style={styles.container}>
-            <View style={styles.modalConfirm}>
-              <Text>Article ajouté !</Text>
-              <Icon
-                name="check-circle"
-                type="material-community"
-                color="tomato"
-                size={50}
-                onPress={() => { }}
-              />
-            </View>
-          </View>
+         
         </Modal>
 
       </View>
@@ -138,10 +127,9 @@ class ScannerScreen extends React.Component {
     const product = await openFoodFactsApi.findProductByBarcode(data);
     product['isSelected'] = false;
     product['isUserProduct'] = false;
-
     this.setState({ product: product });
     //console.log(this.state.product);
-    this.setState({ lastProductSelected: product, dialogIsVisible: true })
+    this.setState({lastProductSelected: product, dialogIsVisible: true})
     //this.props.addToCart(product, this.props.route.params.id_list,1);
     /*Alert.alert(
       "Produit détecté",
