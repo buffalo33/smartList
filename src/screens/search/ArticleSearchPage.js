@@ -389,9 +389,10 @@ class ArticleSearchPage extends Component {
 
           textInputProps={{ keyboardType: 'numeric' }}
           submitInput={(inputText) => {
-            if (inputText == NaN | inputText==undefined) {
+            if (inputText == NaN | inputText==undefined | inputText=="") {
               inputText = 1;
             }
+            console.warn(inputText)
             this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
             this.setState({ dialogIsVisible: false });
             this.setState({ confirmVisible: true });
