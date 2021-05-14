@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Text, View, StyleSheet, Modal,Button } from 'react-native';
+import { Alert, Text, View, StyleSheet, Modal, Button } from 'react-native';
 import Constants from 'expo-constants';
 import DialogInput from 'react-native-dialog-input';
 import * as Permissions from 'expo-permissions';
@@ -132,9 +132,12 @@ class ScannerScreen extends React.Component {
   handleBarCodeScanned = async ({ type, data }) => {
     this.setState({ scanned: true });
     const product = await openFoodFactsApi.findProductByBarcode(data);
+    product['isSelected'] = false;
+    product['isUserProduct'] = false;
+
     this.setState({ product: product });
     //console.log(this.state.product);
-    this.setState({lastProductSelected: product, dialogIsVisible: true})
+    this.setState({ lastProductSelected: product, dialogIsVisible: true })
     //this.props.addToCart(product, this.props.route.params.id_list,1);
     /*Alert.alert(
       "Produit détecté",

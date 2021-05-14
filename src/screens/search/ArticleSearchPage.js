@@ -383,17 +383,14 @@ class ArticleSearchPage extends Component {
         </Modal>
         <DialogInput
           isDialogVisible={this.state.dialogIsVisible}
-          title="Quantité" hintInput="1,2,..."
+          title="Quantité" hintInput="1"
           submitText="Ajouter"
           cancelText="Annuler"
-          defaultValue="coucou"
+
+          textInputProps={{ keyboardType: 'numeric' }}
           submitInput={(inputText) => {
-            console.log("quantity selected", inputText)
-            quantity = parseInt(inputText, 10);
-            if (isNaN(quantity)){
-              quantity = 1
-            }
-            this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, quantity);
+  
+            this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText=1, 10));
             this.setState({ dialogIsVisible: false });
             this.setState({ confirmVisible: true });
           }}
