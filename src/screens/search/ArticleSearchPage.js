@@ -386,9 +386,14 @@ class ArticleSearchPage extends Component {
           title="Quantité" hintInput="1,2,..."
           submitText="Ajouter"
           cancelText="Annuler"
+          defaultValue="coucou"
           submitInput={(inputText) => {
             console.log("quantity selected", inputText)
-            this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
+            quantity = parseInt(inputText, 10);
+            if (isNaN(quantity)){
+              quantity = 1
+            }
+            this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, quantity);
             this.setState({ dialogIsVisible: false });
             this.setState({ confirmVisible: true });
           }}
