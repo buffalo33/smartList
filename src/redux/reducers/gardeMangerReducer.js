@@ -20,8 +20,9 @@ export default function gardeMangerReducer(state = initialState, action) {
           gardeManger: [...stock],
         };
       }
+      let it = action.payload.newItem
       return {
-        gardeManger: [action.payload.newItem, ...stock],
+        gardeManger: [it, ...stock],
       };
 
     case 'SET_GARDEMANGER':

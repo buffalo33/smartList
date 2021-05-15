@@ -392,7 +392,7 @@ class ArticleSearchPage extends Component {
             if (inputText == NaN | inputText==undefined | inputText=="") {
               inputText = 1;
             }
-            console.warn(inputText)
+           // console.warn(inputText)
             this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
             this.setState({ dialogIsVisible: false });
             this.setState({ confirmVisible: true });

@@ -38,6 +38,7 @@ import {
 } from '../redux/actions/listesActions';
 import { Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import cloneDeep from 'lodash/cloneDeep';
 
 const Item = ({ item }) => (
   <View style={styles.item}>
@@ -97,52 +98,52 @@ const itemWidth =
   }
 
   // delete given item
-   deleteItem(item) {
-     let helperArray = this.props.gardeManger;
-     let helperArray2 = this.state.deleteArray;
-     let itemIndex = helperArray.indexOf(item);
-     helperArray.splice(itemIndex, 1);
-     let nextItemIndex = helperArray2.indexOf(itemIndex);
-     helperArray2.splice(nextItemIndex, 1);
-     this.setState({ deleteArray: helperArray2 });
-     this.props.setGardeManger(helperArray);
-   }
-   deleteSelectedGroupItems() {
-     let helperArray = this.props.gardeManger;
-     let helperArray2 = this.state.deleteArray;
-     for (let i = helperArray2.length - 1; i >= 0; i--) {
-       let item = helperArray.indexOf(helperArray2[i]);
-       helperArray.splice(item, 1);
-       helperArray2.splice(i, 1);
-     }
-     this.setState({
-       deleteArray: helperArray2,
-       selectionMode: helperArray.length == 0 ? true : false,
-       allSelected: false,
-     });
-     this.props.setGardeManger(helperArray);
-   }
+  deleteItem(item) {
+    let helperArray = this.props.gardeManger;
+    let helperArray2 = this.state.deleteArray;
+    let itemIndex = helperArray.indexOf(item);
+    helperArray.splice(itemIndex, 1);
+    let nextItemIndex = helperArray2.indexOf(itemIndex);
+    helperArray2.splice(nextItemIndex, 1);
+    this.setState({ deleteArray: helperArray2 });
+    this.props.setGardeManger(helperArray);
+  }
+  deleteSelectedGroupItems() {
+    let helperArray = this.props.gardeManger;
+    let helperArray2 = this.state.deleteArray;
+    for (let i = helperArray2.length - 1; i >= 0; i--) {
+      let item = helperArray.indexOf(helperArray2[i]);
+      helperArray.splice(item, 1);
+      helperArray2.splice(i, 1);
+    }
+    this.setState({
+      deleteArray: helperArray2,
+      selectionMode: helperArray.length == 0 ? true : false,
+      allSelected: false,
+    });
+    this.props.setGardeManger(helperArray);
+  }
   deleteSelectedItems() {
-    let item = this.state.lastItemSelected;
+    let item = cloneDeep(this.state.lastItemSelected);
     this.setState({ allSelected: false });
     if (this.state.lastItemSelected.product_quantity > 1) {
-      let helperArray2 = this.state.deleteArray;
+      let helperArray2 = cloneDeep(this.state.deleteArray);
 
-      let helperArray = this.props.gardeManger;
+      let helperArray = cloneDeep(this.props.gardeManger);
       for (let k = 0; k < helperArray.length; k++) {
         if (helperArray[k].id == item.id) {
           helperArray[k].product_quantity -= 1;
-          this.setState({ deleteArray: helperArray });
+          this.setState({ deleteArray: cloneDeep(helperArray) });
           //this.setState({ allSelected: false });
 
         }
         this.setState({
-          deleteArray: helperArray2,
+          deleteArray: cloneDeep(helperArray2),
           selectionMode: helperArray.length == 0 ? true : false,
           allSelected: false,
         });
       }
-      this.props.setGardeManger(helperArray);
+      this.props.setGardeManger(cloneDeep(helperArray));
     }
     else {
       let helperArray = this.props.gardeManger;
@@ -191,7 +192,7 @@ const itemWidth =
       helperArray.push(item);
 
       if (helperArray.length == this.props.gardeManger.length) {
-        this.setState({ allSelected: false});
+        this.setState({ allSelected: false });
       }
 
     }

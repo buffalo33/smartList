@@ -23,7 +23,7 @@ export default function listReducer(state = initialState, action) {
 
      // console.warn(firebase.auth().currentUser.uid);
       if (action.payload.title == NaN | action.payload.title == undefined | action.payload.title == "") {
-        action.payload.title="List"
+        action.payload.title="Liste"
       }
       return {
         lists: [action.payload, ...state.lists],
