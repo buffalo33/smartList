@@ -40,7 +40,23 @@ class ScannerScreen extends React.Component {
 
   backToList = () => {
     Alert.alert(
-      "Produit ajouté",
+      this.state.product.product_name + " ajouté",
+      "Souhaitez-vous retourner dans la liste ?",
+      [
+        {
+          text: "Annuler",
+          onPress: () => this.setState({ scanned: false }),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => this.props.navigation.navigate('ListArticleScreen') }
+      ],
+      { cancelable: false }
+    )
+  }
+
+  backToListNoAddition = () => {
+    Alert.alert(
+      "Action annulée",
       "Souhaitez-vous retourner dans la liste ?",
       [
         {
@@ -55,7 +71,6 @@ class ScannerScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.route.params.id_list)
     const { hasCameraPermission, scanned, notAdded } = this.state;
 
     if (hasCameraPermission === null) {
@@ -85,7 +100,6 @@ class ScannerScreen extends React.Component {
             if (inputText == NaN | inputText == undefined | inputText == "") {
               inputText = 1;
             }
-            console.log("quantity selected", inputText)
             this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
             this.setState({ dialogIsVisible: false });
             this.setState({ confirmVisible: true });
@@ -93,7 +107,7 @@ class ScannerScreen extends React.Component {
           }}
           closeDialog={() => {
             this.setState({ dialogIsVisible: false });
-            this.backToList();
+            this.backToListNoAddition();
           }}
         />
         <Modal
@@ -127,8 +141,7 @@ class ScannerScreen extends React.Component {
     const product = await openFoodFactsApi.findProductByBarcode(data);
     product['isSelected'] = false;
     product['isUserProduct'] = false;
-    this.setState({ product: product });
-    //console.log(this.state.product);
+    await this.setState({ product: product });
     this.setState({lastProductSelected: product, dialogIsVisible: true})
     //this.props.addToCart(product, this.props.route.params.id_list,1);
     /*Alert.alert(
