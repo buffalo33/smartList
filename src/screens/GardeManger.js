@@ -130,6 +130,11 @@ const itemWidth =
       let helperArray2 = cloneDeep(this.state.deleteArray);
 
       let helperArray = cloneDeep(this.props.gardeManger);
+      for (let i = helperArray2.length - 1; i >= 0; i--) {
+        let item = helperArray.indexOf(helperArray2[i]);
+        //helperArray.splice(item, 1);
+        helperArray2.splice(i, 1);
+      }
       for (let k = 0; k < helperArray.length; k++) {
         if (helperArray[k].id == item.id) {
           helperArray[k].product_quantity -= 1;
