@@ -12,9 +12,9 @@ import {
   Animated,
 } from 'react-native';
 import firebase from 'firebase';
-import {Button, Searchbar} from 'react-native-paper';
-import {connect} from 'react-redux';
-import {Icon} from 'react-native-elements';
+import { Button, Searchbar } from 'react-native-paper';
+import { connect } from 'react-redux';
+import { Icon } from 'react-native-elements';
 import {
   Container,
   Content,
@@ -29,27 +29,32 @@ import {
   Segment,
   CheckBox,
 } from 'native-base';
-import {LogBox} from 'react-native';
-import {Component} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { LogBox } from 'react-native';
+import { Component } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   mapStateToProps,
   mapDispatchToProps,
 } from '../redux/actions/listesActions';
-import {Dimensions} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import { Dimensions } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
-const Item = ({product_name, product_image}) => (
+const Item = ({ item }) => (
   <View style={styles.item}>
+
+    <Text style={styles.product_name}>{item.product_name}</Text>
+
     <Image
-      source={{uri: product_image == '' ? null : product_image}}
+      source={{ uri: item.product_image == '' ? null : item.image_front_thumb_url }}
       style={styles.product_image}
     />
-    <Text style={styles.product_name}>{product_name}</Text>
+    <Text>
+      Quantité: {item.product_quantity}
+    </Text>
   </View>
 );
 
-const numColumns = 3; // number of elements to show in columns
+const numColumns = 2; // number of elements to show in columns
 const marginHoriz = 5; // margins between elements in the column
 const itemWidth =
   (Dimensions.get('window').width - (numColumns + 3) * marginHoriz) /
@@ -68,10 +73,13 @@ const itemWidth =
       selectionMode: false,
       deleteArray: [],
       allSelected: false,
+      lastItemSelected: {}
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
+
+
 
   handlerClick = () => {
     //handler for Long Click
@@ -89,31 +97,68 @@ const itemWidth =
   }
 
   // delete given item
-  deleteItem(item) {
-    let helperArray = this.props.gardeManger;
-    let helperArray2 = this.state.deleteArray;
-    let itemIndex = helperArray.indexOf(item);
-    helperArray.splice(itemIndex, 1);
-    let nextItemIndex = helperArray2.indexOf(itemIndex);
-    helperArray2.splice(nextItemIndex, 1);
-    this.setState({deleteArray: helperArray2});
-    this.props.setGardeManger(helperArray);
-  }
-
+   deleteItem(item) {
+     let helperArray = this.props.gardeManger;
+     let helperArray2 = this.state.deleteArray;
+     let itemIndex = helperArray.indexOf(item);
+     helperArray.splice(itemIndex, 1);
+     let nextItemIndex = helperArray2.indexOf(itemIndex);
+     helperArray2.splice(nextItemIndex, 1);
+     this.setState({ deleteArray: helperArray2 });
+     this.props.setGardeManger(helperArray);
+   }
+   deleteSelectedGroupItems() {
+     let helperArray = this.props.gardeManger;
+     let helperArray2 = this.state.deleteArray;
+     for (let i = helperArray2.length - 1; i >= 0; i--) {
+       let item = helperArray.indexOf(helperArray2[i]);
+       helperArray.splice(item, 1);
+       helperArray2.splice(i, 1);
+     }
+     this.setState({
+       deleteArray: helperArray2,
+       selectionMode: helperArray.length == 0 ? true : false,
+       allSelected: false,
+     });
+     this.props.setGardeManger(helperArray);
+   }
   deleteSelectedItems() {
-    let helperArray = this.props.gardeManger;
-    let helperArray2 = this.state.deleteArray;
-    for (let i = helperArray2.length - 1; i >= 0; i--) {
-      let item = helperArray.indexOf(helperArray2[i]);
-      helperArray.splice(item, 1);
-      helperArray2.splice(i, 1);
+    let item = this.state.lastItemSelected;
+    this.setState({ allSelected: false });
+    if (this.state.lastItemSelected.product_quantity > 1) {
+      let helperArray2 = this.state.deleteArray;
+
+      let helperArray = this.props.gardeManger;
+      for (let k = 0; k < helperArray.length; k++) {
+        if (helperArray[k].id == item.id) {
+          helperArray[k].product_quantity -= 1;
+          this.setState({ deleteArray: helperArray });
+          //this.setState({ allSelected: false });
+
+        }
+        this.setState({
+          deleteArray: helperArray2,
+          selectionMode: helperArray.length == 0 ? true : false,
+          allSelected: false,
+        });
+      }
+      this.props.setGardeManger(helperArray);
     }
-    this.setState({
-      deleteArray: helperArray2,
-      selectionMode: helperArray.length == 0 ? true : false,
-      allSelected: false,
-    });
-    this.props.setGardeManger(helperArray);
+    else {
+      let helperArray = this.props.gardeManger;
+      let helperArray2 = this.state.deleteArray;
+      for (let i = helperArray2.length - 1; i >= 0; i--) {
+        let item = helperArray.indexOf(helperArray2[i]);
+        helperArray.splice(item, 1);
+        helperArray2.splice(i, 1);
+      }
+      this.setState({
+        deleteArray: helperArray2,
+        selectionMode: helperArray.length == 0 ? true : false,
+        allSelected: false,
+      });
+      this.props.setGardeManger(helperArray);
+    }
   }
 
   selectAll() {
@@ -133,27 +178,33 @@ const itemWidth =
   }
 
   selectItemLongPress(item) {
-    this.setState({selectionMode: true});
+    this.setState({ selectionMode: true });
     let helperArray = this.state.deleteArray;
     let itemIndex = helperArray.indexOf(item);
     if (helperArray.includes(item)) {
       helperArray.splice(itemIndex, 1);
-      this.setState({allSelected: false});
+      this.setState({ allSelected: false });
       if (helperArray.length == 0) {
-        this.setState({selectionMode: false});
+        this.setState({ selectionMode: false });
       }
     } else {
       helperArray.push(item);
+
       if (helperArray.length == this.props.gardeManger.length) {
-        this.setState({allSelected: true});
+        this.setState({ allSelected: false});
       }
+
     }
-    this.setState({deleteArray: helperArray});
+    //this.setState({ deleteArray: helperArray });
   }
 
-  renderItem = ({item}) => (
+  renderItem = ({ item }) => (
     <TouchableOpacity
-      onLongPress={() => this.selectItemLongPress(item)}
+      onLongPress={() => {
+        this.selectItemLongPress(item);
+        this.setState({ lastItemSelected: item });
+        //console.warn("last Item is: ", this.state.lastItemSelected)
+      }}
       onPress={this.handlerClick}
       //activeOpacity={0.6}
       style={{
@@ -162,7 +213,7 @@ const itemWidth =
           this.state.selectionMode && this.state.deleteArray.includes(item)
             ? 'tomato'
             : '#F0F0F0',
-          borderWidth: 1,
+        borderWidth: 1,
       }}>
       <Icon
         name="checkmark-circle"
@@ -171,9 +222,7 @@ const itemWidth =
         style={[styles.icon_check, {}]}
       />
       <Item
-        product_name={item.product_name}
-        product_image={item.image_front_thumb_url}
-        //product_checked={this.state.selectionMode && this.state.deleteArray.includes(item)}
+        item={item}
       />
     </TouchableOpacity>
   );
@@ -186,34 +235,38 @@ const itemWidth =
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 
     return (
-      <Container style={{backgroundColor: '#F0F0F0'}}>
-        <View style={{paddingLeft: 10, paddingRight: 10,borderBottomWidth:0.5}}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'space-between', paddingBottom : 10, marginTop:20}}>
-            <Text style={{fontSize: 30, color: 'tomato'}}>
+      <Container style={{ backgroundColor: '#F0F0F0' }}>
+        <View style={{ paddingLeft: 10, paddingRight: 10, borderBottomWidth: 0.5 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 10, marginTop: 20 }}>
+            <Text style={{ fontSize: 30, color: 'tomato' }}>
               {' '}
               Garde-Manger{' '}
             </Text>
-            <Text style={{ fontSize: 15, color: 'grey'}}>
+            <Text style={{ fontSize: 15, color: 'grey' }}>
               {this.state.selectionMode
                 ? 'Sélectionnés : ' + this.state.deleteArray.length
                 : 'Aucune sélection'}
             </Text>
           </View>
         </View>
-        <View style={{display:'flex', flexDirection:'row', flexWrap:'wrap-reverse', justifyContent:'center',borderBottomColor:'tomato', borderBottomWidth:0.60}}>
+        <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap-reverse', justifyContent: 'center', borderBottomColor: 'tomato', borderBottomWidth: 0.60 }}>
           <Button first onPress={() => this.deleteSelectedItems()}>
             {' '}
-            <Text style={{color: 'grey'}}>Supprimer la sélection</Text>
+            <Text style={{ color: 'grey' }}>Supprimer unité</Text>
+          </Button>
+          <Button first onPress={() => this.deleteSelectedGroupItems()}>
+            {' '}
+            <Text style={{ color: 'grey' }}>Supprimer groupe</Text>
           </Button>
           <Button onPress={() => this.selectAll()}>
             {' '}
-            <Text style={{color: 'grey'}}>
+            <Text style={{ color: 'grey' }}>
               {this.state.allSelected ? 'Tout déselectionner' : 'Tout sélectionner'}
             </Text>
           </Button>
           <Button last onPress={() => this.deleteAllItems()}>
             {' '}
-            <Text style={{color: 'grey'}}>Tout supprimer</Text>
+            <Text style={{ color: 'grey' }}>Tout supprimer</Text>
           </Button>
         </View>
         <View style={styles.container}>
@@ -242,13 +295,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: marginHoriz,
     height: itemWidth, // get a square
-    width: itemWidth ,
+    width: itemWidth,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
   },
   product_name: {
-    paddingTop : 2,
+    paddingTop: 2,
     fontSize: 12,
     color: '#505050',
     textAlign: 'center',

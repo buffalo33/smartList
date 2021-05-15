@@ -90,22 +90,18 @@ export default function listReducer(state = initialState, action) {
       action.payload.newItem["product_quantity"] = action.payload.quantity;
       let found = 0;
       var addItem = state.lists.filter(x => x.id == action.payload.id_list).map((y) => {
-        //console.warn(action.payload.newItem.id)
 
 
         for (let i = 0; i < y.cart.length; i++) {
 
           if (action.payload.newItem.id == y.cart[i].id) {
-            // console.warn("im here");
             found = 1;
             action.payload.newItem.quantity += action.payload.quantity;
             y.cart[i].product_quantity += action.payload.quantity;
-            // console.warn(action.payload.newItem.quantity)
           }
 
         }
         if (found == 0) {
-          //  console.warn("didn't push");
           y.cart.push(action.payload.newItem);
           y.numberItems += 1;
 
@@ -169,7 +165,6 @@ export default function listReducer(state = initialState, action) {
     case 'CHECK_UNCHECK_ITEM': {
 
       var Tmp = state.lists;
-      // TODO: reduire la complexite de l'algorithme
       for (let i = 0; i < Tmp.length; i++) {
         if (Tmp[i].id == state.lastIdSelected) {
 

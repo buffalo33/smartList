@@ -7,25 +7,37 @@ const initialState = {
 export default function gardeMangerReducer(state = initialState, action) {
   switch (action.type) {
     case 'ADD_TO_GARDEMANGER':
-
+      let stock = state.gardeManger
+      let found = 0;
+      for (let i = 0; i < stock.length; i++) {
+        if (stock[i].id == action.payload.newItem.id) {
+          found = 1;
+          stock[i].product_quantity += action.payload.newItem.product_quantity;
+        }
+      }
+      if (found == 1) {
+        return {
+          gardeManger: [...stock],
+        };
+      }
       return {
-        gardeManger: [action.payload.newItem, ...state.gardeManger],
+        gardeManger: [action.payload.newItem, ...stock],
       };
 
     case 'SET_GARDEMANGER':
-      console.warn("hey set")
       firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
         .collection("User").doc("user").update({ gardeManger: [...state.gardeManger] });
       return {
         gardeManger: action.payload,
       };
 
-    case 'DELETE_GARDEMANGER': {     
+    case 'DELETE_GARDEMANGER': {
+      let v = state.cart;
       return {
-        gardeManger: [...state.cart.filter((x) => x != action.payload)],
+        gardeManger: [...v],
       };
     }
-    
+
 
     case 'SAVE_TO_CLOUD_GM': {
       //console.warn(firebase.auth().currentUser.uid);
