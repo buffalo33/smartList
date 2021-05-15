@@ -127,7 +127,7 @@ class ArticleSearchPage extends Component {
     this.setState({ pageCount: nextPage });
     //const url = 'https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&json=true&search_terms=';
     const url =
-      'https://world.openfoodfacts.org/cgi/search.pl?&json=true&page_size=21&page=' +
+      'https://fr.openfoodfacts.org/cgi/search.pl?&json=true&page_size=21&page=' +
       nextPage +
       '&search_terms=' +
       text;
@@ -389,10 +389,10 @@ class ArticleSearchPage extends Component {
 
           textInputProps={{ keyboardType: 'numeric' }}
           submitInput={(inputText) => {
-            if (inputText == NaN | inputText==undefined | inputText=="") {
+            if (inputText == NaN | inputText == undefined | inputText == "") {
               inputText = 1;
             }
-           // console.warn(inputText)
+            // console.warn(inputText)
             this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
             this.setState({ dialogIsVisible: false });
             this.setState({ confirmVisible: true });
