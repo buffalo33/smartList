@@ -20,7 +20,10 @@ export function fetchUser() {
       .get()
       .then((snapshot) => {
         if (snapshot.exists) {
+          console.log("dispaaaatching");
           dispatch({ type: 'LOAD_LISTS_CLOUD', payload: snapshot.data() });
+          dispatch({ type: 'LOAD_LISTS_CLOUD_GM', payload: snapshot.data() });
+
         } else {
           console.log('does not exist');
         }
@@ -34,6 +37,11 @@ export function mapDispatchToProps(dispatch) {
     saveToCloud: (isSetSync) =>
       dispatch({
         type: 'SAVE_TO_CLOUD',
+        payload: isSetSync,
+      }),
+    saveToCloudGm: (isSetSync) =>
+      dispatch({
+        type: 'SAVE_TO_CLOUD_GM',
         payload: isSetSync,
       }),
     addToLists: (newItem) =>

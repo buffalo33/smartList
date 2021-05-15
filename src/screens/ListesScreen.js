@@ -79,6 +79,8 @@ const Item = ({ item, onPress, style, props, setconfirmVisible }) => (
                 //props.setconfirmVisible(true);
                 //console.log(setconfirmVisible);
                 setconfirmVisible(true);
+                props.saveToCloudGm();
+
               }
             }}
           />

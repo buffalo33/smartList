@@ -1,3 +1,5 @@
+import firebase, { firestore } from 'firebase'
+
 const initialState = {
   gardeManger: [],
 };
@@ -18,7 +20,24 @@ export default function gardeMangerReducer(state = initialState, action) {
       return {
         gardeManger: [...state.cart.filter((x) => x != action.payload)],
       };
+    
+    case 'SAVE_TO_CLOUD_GM': {
+      //console.warn(firebase.auth().currentUser.uid);
+      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+        .collection("User").doc("user").update({ gardeManger: [...state.gardeManger] });
+      return {
+        gardeManger: [...state.gardeManger],
 
+      }
+    }
+    case 'LOAD_LISTS_CLOUD_GM': {
+
+      return {
+        gardeManger: [...action.payload.gardeManger],
+
+
+      }
+    }
     default:
       return state;
   }
