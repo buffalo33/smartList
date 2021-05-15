@@ -21,7 +21,10 @@ export default function listReducer(state = initialState, action) {
 
     case 'ADD_TO_LISTS': {
 
-
+     // console.warn(firebase.auth().currentUser.uid);
+      if (action.payload.title == NaN | action.payload.title == undefined | action.payload.title == "") {
+        action.payload.title="List"
+      }
       return {
         lists: [action.payload, ...state.lists],
         lastIdSelected: state.lastIdSelected
@@ -38,6 +41,7 @@ export default function listReducer(state = initialState, action) {
       }
     }
     case 'SAVE_TO_CLOUD': {
+      //console.warn(firebase.auth().currentUser.uid);
       firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
         .collection("User").doc("user").update({ lists: [...state.lists] });
       return {
