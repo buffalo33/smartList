@@ -23,6 +23,7 @@ class Tabs extends Component {
    */
   componentDidMount() {
     if (this.props.isSetSync) {
+      this.props.saveToCloud();
        this.props.loadListsFromCloud();
     }
   }
