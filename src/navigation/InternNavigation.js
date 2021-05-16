@@ -65,7 +65,6 @@ class InternNavigation extends Component {
           <Stack.Screen options={{title: this.displayTitle()}} name="HomeSearch" component={ArticleSearchPage} />
 
           <Stack.Screen options={{title: this.displayTitle()}} name="MoreInfoScreen" component={MoreInfoProduct} />
-
           <Stack.Screen options={{title: this.displayTitle()}} name="ListArticleScreen" component={ListArticleScreen} />
 
           <Stack.Screen options={{title: this.displayTitle()}} name="Scanner" component={ScannerScreen} />

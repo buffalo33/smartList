@@ -47,15 +47,8 @@ class RootNavigation extends Component {
               headerStyle: { backgroundColor: 'tomato' },
             })} />
 
-          <Stack.Screen name="HomeSearch" component={ArticleSearchPage} />
 
           <Stack.Screen name="SignInScreen" component={SignInScreen} params={this.props} />
-
-          <Stack.Screen name="MoreInfoScreen" component={MoreInfoProduct} />
-
-          <Stack.Screen name="ListArticleScreen" component={ListArticleScreen} />
-
-          <Stack.Screen name="Scanner" component={ScannerScreen} />
 
           <Stack.Screen name="Réglages" component={SettingsScreen} options={({ navigation }) => ({
             headerTintColor: 'white',
