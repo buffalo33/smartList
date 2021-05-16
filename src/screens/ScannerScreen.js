@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { Alert, Text, View, StyleSheet, Modal,Button } from 'react-native';
+import {Alert, Text, View, StyleSheet, Modal, Button} from 'react-native';
 import Constants from 'expo-constants';
 import DialogInput from 'react-native-dialog-input';
 import * as Permissions from 'expo-permissions';
-import { OpenFoodFactsApi } from 'openfoodfac-ts';
-import { connect } from 'react-redux'
-import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
-import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Icon } from 'react-native-elements';
+import {OpenFoodFactsApi} from 'openfoodfac-ts';
+import {connect} from 'react-redux';
+import {
+  mapStateToProps,
+  mapDispatchToProps,
+} from '../redux/actions/listesActions';
+import {BarCodeScanner} from 'expo-barcode-scanner';
+import {Icon} from 'react-native-elements';
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
@@ -38,28 +41,31 @@ class ScannerScreen extends React.Component {
    * Get permissions from user
    */
   getPermissionsAsync = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCameraPermission: status === 'granted' });
-  }
+    const {status} = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({hasCameraPermission: status === 'granted'});
+  };
 
   /**
    * Alert a modal confirming the addition of the product and asking the user if he wants to come back to his current list.
    */
   backToList = () => {
     Alert.alert(
-      this.state.product.product_name + " ajouté",
-      "Souhaitez-vous retourner dans la liste ?",
+      this.state.product.product_name + ' ajouté',
+      'Souhaitez-vous retourner dans la liste ?',
       [
         {
-          text: "Annuler",
-          onPress: () => this.setState({ scanned: false }),
-          style: "cancel"
+          text: 'Annuler',
+          onPress: () => this.setState({scanned: false}),
+          style: 'cancel',
         },
-        { text: "OK", onPress: () => this.props.navigation.navigate('ListArticleScreen') }
+        {
+          text: 'OK',
+          onPress: () => this.props.navigation.navigate('ListArticleScreen'),
+        },
       ],
-      { cancelable: false }
-    )
-  }
+      {cancelable: false},
+    );
+  };
 
 
   /**
@@ -67,22 +73,25 @@ class ScannerScreen extends React.Component {
    */
   backToListNoAddition = () => {
     Alert.alert(
-      "Action annulée",
-      "Souhaitez-vous retourner dans la liste ?",
+      'Action annulée',
+      'Souhaitez-vous retourner dans la liste ?',
       [
         {
-          text: "Annuler",
-          onPress: () => this.setState({ scanned: false }),
-          style: "cancel"
+          text: 'Annuler',
+          onPress: () => this.setState({scanned: false}),
+          style: 'cancel',
         },
-        { text: "OK", onPress: () => this.props.navigation.navigate('ListArticleScreen') }
+        {
+          text: 'OK',
+          onPress: () => this.props.navigation.navigate('ListArticleScreen'),
+        },
       ],
-      { cancelable: false }
-    )
-  }
+      {cancelable: false},
+    );
+  };
 
   render() {
-    const { hasCameraPermission, scanned, notAdded } = this.state;
+    const {hasCameraPermission, scanned, notAdded} = this.state;
 
     if (hasCameraPermission === null) {
       return <Text>Demande d'autorisation pour utiliser la caméra</Text>;
@@ -103,21 +112,30 @@ class ScannerScreen extends React.Component {
         />
         <DialogInput
           isDialogVisible={this.state.dialogIsVisible}
-          title="Quantité" hintInput="1"
+          title="Quantité"
+          hintInput="1"
           submitText="Ajouter"
           cancelText="Annuler"
-          textInputProps={{ keyboardType: 'numeric' }}
+          textInputProps={{keyboardType: 'numeric'}}
           submitInput={(inputText) => {
-            if (inputText == NaN | inputText == undefined | inputText == "") {
+            if (
+              (inputText == NaN) |
+              (inputText == undefined) |
+              (inputText == '')
+            ) {
               inputText = 1;
             }
-            this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
-            this.setState({ dialogIsVisible: false });
-            this.setState({ confirmVisible: true });
+            this.props.addToCart(
+              this.state.lastProductSelected,
+              this.props.route.params.id_list,
+              parseInt(inputText, 10),
+            );
+            this.setState({dialogIsVisible: false});
+            this.setState({confirmVisible: true});
             this.backToList();
           }}
           closeDialog={() => {
-            this.setState({ dialogIsVisible: false });
+            this.setState({dialogIsVisible: false});
             this.backToListNoAddition();
           }}
         />
@@ -125,35 +143,30 @@ class ScannerScreen extends React.Component {
           animationType="slide"
           transparent={true}
           visible={this.state.confirmVisible}
-          onRequestClose={() => { this.setState({ confirmVisible: false }) }}
+          onRequestClose={() => {
+            this.setState({confirmVisible: false});
+          }}
           onShow={() => {
             setTimeout(() => {
-              this.setState({ confirmVisible: false })
-            },
-              700);
-          }
-          }
-        >
-         
-        </Modal>
-
+              this.setState({confirmVisible: false});
+            }, 700);
+          }}></Modal>
       </View>
     );
   }
 
-
   /**
-   * Connect to openFoodFactsApi via openfoodfac-ts api in order to 
+   * Connect to openFoodFactsApi via openfoodfac-ts api in order to
    * search for the scaned Barcode
    * @param {Object} data
    */
-  handleBarCodeScanned = async ({ type, data }) => {
-    this.setState({ scanned: true });
+  handleBarCodeScanned = async ({type, data}) => {
+    this.setState({scanned: true});
     const product = await openFoodFactsApi.findProductByBarcode(data);
     product['isSelected'] = false;
     product['isUserProduct'] = false;
-    await this.setState({ product: product });
-    this.setState({lastProductSelected: product, dialogIsVisible: true})
+    await this.setState({product: product});
+    this.setState({lastProductSelected: product, dialogIsVisible: true});
   };
 }
 
@@ -174,6 +187,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 3,
   },
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScannerScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(ScannerScreen);
