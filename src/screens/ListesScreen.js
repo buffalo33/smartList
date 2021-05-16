@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Alert,
@@ -10,9 +10,9 @@ import {
   TouchableOpacity,
   Modal,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import DialogInput from 'react-native-dialog-input';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import * as Random from 'expo-random';
 import firebase from 'firebase';
 import 'firebase/firestore';
@@ -30,16 +30,17 @@ import {
 import FloatingActionButton from 'react-native-floating-action-button';
 import NetInfo from '@react-native-community/netinfo';
 
-import { Container, Content, InputGroup, Input } from 'native-base';
+import {Container, Content, InputGroup, Input} from 'native-base';
 import PanMoveHandler from '../components/PanMoveHandler';
 import colors from 'react-native-floating-action-button/lib/src/components/styles/colors';
-const Item = ({ item, onPress, style, props, setconfirmVisible }) => (
+import cloneDeep from 'lodash/cloneDeep';
+
+const Item = ({item, onPress, style, props, setconfirmVisible}) => (
   <PanMoveHandler
     transmit={style}
     itemId={item.id}
     props={props}
     myPress={onPress}>
-
     <Text style={styles.title}>{item.title}</Text>
     <View style={styles.options}>
       <Text style={styles.trackNumber}>
@@ -51,7 +52,7 @@ const Item = ({ item, onPress, style, props, setconfirmVisible }) => (
           <Icon name="ellipsis-vertical" type="ionicon" color="tomato" />
         </MenuTrigger>
 
-        <MenuOptions customStyles={{ optionsContainer: { marginTop: -90 } }}>
+        <MenuOptions customStyles={{optionsContainer: {marginTop: -90}}}>
           <MenuOption
             value="Renommer"
             text="Renommer"
@@ -75,12 +76,11 @@ const Item = ({ item, onPress, style, props, setconfirmVisible }) => (
             onSelect={() => {
               for (let i of props.lists.filter((x) => x.id == item.id)[0]
                 .cart) {
-                props.addToGardeManger(i);
+                props.addToGardeManger(cloneDeep(i));
                 //props.setconfirmVisible(true);
                 //console.log(setconfirmVisible);
                 setconfirmVisible(true);
                 props.saveToCloudGm();
-
               }
             }}
           />
@@ -92,7 +92,7 @@ const Item = ({ item, onPress, style, props, setconfirmVisible }) => (
               for (let i of props.lists
                 .filter((x) => x.id == item.id)[0]
                 .cart.filter((y) => y.isSelected)) {
-                props.addToGardeManger(i);
+                props.addToGardeManger(cloneDeep(i));
                 setconfirmVisible(true);
               }
             }}
@@ -115,7 +115,7 @@ const ListesScreen = (props) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [confirmVisible, setconfirmVisible] = useState(false);
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     // modify that to match the spec colors
 
     const backgroundColor = item.id === selectedId ? 'white' : 'white';
@@ -127,11 +127,11 @@ const ListesScreen = (props) => {
         item={item}
         onPress={() => {
           props.setIdSelected(item.id);
-          props.navigation.navigate('ListArticleScreen', { id_list: item.id });
+          props.navigation.navigate('ListArticleScreen', {id_list: item.id});
         }}
-        style={{ backgroundColor }}
+        style={{backgroundColor}}
         props={props}
-        setconfirmVisible = {setconfirmVisible}
+        setconfirmVisible={setconfirmVisible}
       />
     );
   };
@@ -192,27 +192,29 @@ const ListesScreen = (props) => {
         animationType="slide"
         transparent={true}
         visible={confirmVisible}
-        onRequestClose={() => {setconfirmVisible(false)}}
+        onRequestClose={() => {
+          setconfirmVisible(false);
+        }}
         onShow={() => {
           setTimeout(() => {
-            setconfirmVisible(false)}, 
-            1200);
-          }
-        }
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalConfirm}>
-              <Text style={styles.textConfirm}>Articles ajoutés au Garde Manger !</Text>
-              <Icon
+            setconfirmVisible(false);
+          }, 1200);
+        }}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalConfirm}>
+            <Text style={styles.textConfirm}>
+              Articles ajoutés au Garde Manger !
+            </Text>
+            <Icon
               name="check-circle"
               type="material-community"
               color="tomato"
               size={50}
               onPress={() => {}}
             />
-            </View>
           </View>
-        </Modal>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -243,7 +245,7 @@ const styles = StyleSheet.create({
     color: 'tomato',
     fontSize: 30,
     alignSelf: 'flex-start',
-    paddingBottom : 10,
+    paddingBottom: 10,
   },
 
   textConfirm: {

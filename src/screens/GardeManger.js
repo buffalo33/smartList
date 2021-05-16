@@ -12,9 +12,9 @@ import {
   Animated,
 } from 'react-native';
 import firebase from 'firebase';
-import { Button, Searchbar } from 'react-native-paper';
-import { connect } from 'react-redux';
-import { Icon } from 'react-native-elements';
+import {Button, Searchbar} from 'react-native-paper';
+import {connect} from 'react-redux';
+import {Icon} from 'react-native-elements';
 import {
   Container,
   Content,
@@ -29,29 +29,28 @@ import {
   Segment,
   CheckBox,
 } from 'native-base';
-import { LogBox } from 'react-native';
-import { Component } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {LogBox} from 'react-native';
+import {Component} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   mapStateToProps,
   mapDispatchToProps,
 } from '../redux/actions/listesActions';
-import { Dimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {Dimensions} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import cloneDeep from 'lodash/cloneDeep';
 
-const Item = ({ item }) => (
+const Item = ({item}) => (
   <View style={styles.item}>
-
     <Text style={styles.product_name}>{item.product_name}</Text>
 
     <Image
-      source={{ uri: item.product_image == '' ? null : item.image_front_thumb_url }}
+      source={{
+        uri: item.product_image == '' ? null : item.image_front_thumb_url,
+      }}
       style={styles.product_image}
     />
-    <Text>
-      Quantité: {item.product_quantity}
-    </Text>
+    <Text>Quantité: {item.product_quantity}</Text>
   </View>
 );
 
@@ -74,17 +73,15 @@ const itemWidth =
       selectionMode: false,
       deleteArray: [],
       allSelected: false,
-      lastItemSelected: {}
+      lastItemSelected: {},
     };
   }
 
-  componentDidMount() { }
-
-
+  componentDidMount() {}
 
   handlerClick = () => {
     //handler for Long Click
-    //alert('Button Pressed');
+    alert(' ' + this.state.selectionMode + ' ' + this.state.deleteArray.length);
   };
 
   deleteSelected = () => {
@@ -95,6 +92,11 @@ const itemWidth =
   // delete everything
   deleteAllItems() {
     this.props.setGardeManger([]);
+    this.setState({
+      deleteArray: [],
+      selectionMode: false,
+      allSelected: false,
+    });
   }
 
   // delete given item
@@ -105,7 +107,7 @@ const itemWidth =
     helperArray.splice(itemIndex, 1);
     let nextItemIndex = helperArray2.indexOf(itemIndex);
     helperArray2.splice(nextItemIndex, 1);
-    this.setState({ deleteArray: helperArray2 });
+    this.setState({deleteArray: helperArray2});
     this.props.setGardeManger(helperArray);
   }
   deleteSelectedGroupItems() {
@@ -124,21 +126,40 @@ const itemWidth =
     this.props.setGardeManger(helperArray);
   }
   deleteSelectedItems() {
-    let item = cloneDeep(this.state.lastItemSelected);
-    this.setState({ allSelected: false });
+    let helperArray = this.props.gardeManger;
+    let helperArray2 = this.state.deleteArray;
+    //let item = cloneDeep(this.state.lastItemSelected);
+    //this.setState({allSelected: false});
+    for (let i = helperArray2.length - 1; i >= 0; i--) {
+      let item = helperArray.indexOf(helperArray2[i]);
+      if (helperArray[i].product_quantity <= 1) {
+        helperArray.splice(item, 1);
+        helperArray2.splice(i, 1);
+      } else {
+        //let item2 = cloneDeep(helperArray.indexOf(helperArray2[i]));
+        //item2.product_quantity -= 1;
+        helperArray[i].product_quantity -= 1; // = item2;
+      }
+    }
+    /*
     if (this.state.lastItemSelected.product_quantity > 1) {
       let helperArray2 = cloneDeep(this.state.deleteArray);
 
       let helperArray = cloneDeep(this.props.gardeManger);
       for (let i = helperArray2.length - 1; i >= 0; i--) {
         let item = helperArray.indexOf(helperArray2[i]);
-        //helperArray.splice(item, 1);
+        helperArray.splice(item, 1);
         helperArray2.splice(i, 1);
       }
       for (let k = 0; k < helperArray.length; k++) {
         if (helperArray[k].id == item.id) {
-          helperArray[k].product_quantity -= 1;
-          this.setState({ deleteArray: cloneDeep(helperArray) });
+          if (helperArray[k].product_quantity == 0) {
+
+          } else {
+
+          }
+          //helperArray[k].product_quantity -= 1;
+          //this.setState({ deleteArray: cloneDeep(helperArray) });
           //this.setState({ allSelected: false });
 
         }
@@ -149,6 +170,7 @@ const itemWidth =
         });
       }
       this.props.setGardeManger(cloneDeep(helperArray));
+      
     }
     else {
       let helperArray = this.props.gardeManger;
@@ -165,6 +187,16 @@ const itemWidth =
       });
       this.props.setGardeManger(helperArray);
     }
+    */
+    console.log('empty ? ' + helperArray2.length);
+    console.log(helperArray2.length != 0);
+    this.setState({
+      deleteArray: helperArray2,
+      selectionMode: helperArray2.length != 0,
+      //allSelected: this.state.allSelected && helperArray2.length != 0,
+    });
+    this.props.setGardeManger(helperArray);
+    console.log(this.state.selectionMode);
   }
 
   selectAll() {
@@ -184,32 +216,33 @@ const itemWidth =
   }
 
   selectItemLongPress(item) {
-    this.setState({ selectionMode: true });
+    this.setState({selectionMode: true});
     let helperArray = this.state.deleteArray;
     let itemIndex = helperArray.indexOf(item);
+    console.log('check : ' + helperArray.length); //x.id == item.id).length);
+    console.log('check2 : ' + item.id);
     if (helperArray.includes(item)) {
       helperArray.splice(itemIndex, 1);
-      this.setState({ allSelected: false });
+      this.setState({allSelected: false});
       if (helperArray.length == 0) {
-        this.setState({ selectionMode: false });
+        this.setState({selectionMode: false});
       }
     } else {
       helperArray.push(item);
 
       if (helperArray.length == this.props.gardeManger.length) {
-        this.setState({ allSelected: false });
+        this.setState({allSelected: false});
       }
-
     }
     //this.setState({ deleteArray: helperArray });
   }
 
-  renderItem = ({ item }) => (
+  renderItem = ({item}) => (
     <TouchableOpacity
       onLongPress={() => {
         this.selectItemLongPress(item);
-        this.setState({ lastItemSelected: item });
-        //console.warn("last Item is: ", this.state.lastItemSelected)
+        this.setState({lastItemSelected: item});
+        //console.warn('last Item is: ', this.state.lastItemSelected);
       }}
       onPress={this.handlerClick}
       //activeOpacity={0.6}
@@ -227,9 +260,7 @@ const itemWidth =
         color="tomato"
         style={[styles.icon_check, {}]}
       />
-      <Item
-        item={item}
-      />
+      <Item item={item} />
     </TouchableOpacity>
   );
 
@@ -241,38 +272,53 @@ const itemWidth =
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 
     return (
-      <Container style={{ backgroundColor: '#F0F0F0' }}>
-        <View style={{ paddingLeft: 10, paddingRight: 10, borderBottomWidth: 0.5 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 10, marginTop: 20 }}>
-            <Text style={{ fontSize: 30, color: 'tomato' }}>
-              {' '}
-              Garde-Manger{' '}
-            </Text>
-            <Text style={{ fontSize: 15, color: 'grey' }}>
+      <Container style={{backgroundColor: '#F0F0F0'}}>
+        <View
+          style={{paddingLeft: 10, paddingRight: 10, borderBottomWidth: 0.5}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingBottom: 10,
+              marginTop: 20,
+            }}>
+            <Text style={{fontSize: 30, color: 'tomato'}}> Garde-Manger </Text>
+            <Text style={{fontSize: 15, color: 'grey'}}>
               {this.state.selectionMode
                 ? 'Sélectionnés : ' + this.state.deleteArray.length
                 : 'Aucune sélection'}
             </Text>
           </View>
         </View>
-        <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap-reverse', justifyContent: 'center', borderBottomColor: 'tomato', borderBottomWidth: 0.60 }}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap-reverse',
+            justifyContent: 'center',
+            borderBottomColor: 'tomato',
+            borderBottomWidth: 0.6,
+          }}>
           <Button first onPress={() => this.deleteSelectedItems()}>
             {' '}
-            <Text style={{ color: 'grey' }}>Supprimer unité</Text>
+            <Text style={{color: 'grey'}}>Supprimer unité</Text>
           </Button>
           <Button first onPress={() => this.deleteSelectedGroupItems()}>
             {' '}
-            <Text style={{ color: 'grey' }}>Supprimer groupe</Text>
+            <Text style={{color: 'grey'}}>Supprimer groupe</Text>
           </Button>
           <Button onPress={() => this.selectAll()}>
             {' '}
-            <Text style={{ color: 'grey' }}>
-              {this.state.allSelected ? 'Tout déselectionner' : 'Tout sélectionner'}
+            <Text style={{color: 'grey'}}>
+              {this.state.allSelected
+                ? 'Tout déselectionner'
+                : 'Tout sélectionner'}
             </Text>
           </Button>
           <Button last onPress={() => this.deleteAllItems()}>
             {' '}
-            <Text style={{ color: 'grey' }}>Tout supprimer</Text>
+            <Text style={{color: 'grey'}}>Tout supprimer</Text>
           </Button>
         </View>
         <View style={styles.container}>
