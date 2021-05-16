@@ -132,13 +132,13 @@ const itemWidth =
     //this.setState({allSelected: false});
     for (let i = helperArray2.length - 1; i >= 0; i--) {
       let item = helperArray.indexOf(helperArray2[i]);
-      if (helperArray[i].product_quantity <= 1) {
+      if (helperArray2[i].product_quantity <= 1) {
         helperArray.splice(item, 1);
         helperArray2.splice(i, 1);
       } else {
         //let item2 = cloneDeep(helperArray.indexOf(helperArray2[i]));
         //item2.product_quantity -= 1;
-        helperArray[i].product_quantity -= 1; // = item2;
+        helperArray2[i].product_quantity -= 1; // = item2;
       }
     }
     /*
@@ -193,7 +193,7 @@ const itemWidth =
     this.setState({
       deleteArray: helperArray2,
       selectionMode: helperArray2.length != 0,
-      //allSelected: this.state.allSelected && helperArray2.length != 0,
+      allSelected: this.state.allSelected && helperArray2.length != 0,
     });
     this.props.setGardeManger(helperArray);
     console.log(this.state.selectionMode);
@@ -234,7 +234,7 @@ const itemWidth =
         this.setState({allSelected: false});
       }
     }
-    //this.setState({ deleteArray: helperArray });
+    this.setState({deleteArray: helperArray});
   }
 
   renderItem = ({item}) => (
