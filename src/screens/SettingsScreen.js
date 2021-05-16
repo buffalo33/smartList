@@ -21,7 +21,7 @@ class Settings extends React.Component {
     check: false,
     switch: true,
     value: 40,
-    isSetSync: true,
+    isSetSync: false,
   };
 
   _navigateToScreen = () => {
