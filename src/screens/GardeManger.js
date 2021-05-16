@@ -40,6 +40,11 @@ import {Dimensions} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import cloneDeep from 'lodash/cloneDeep';
 
+/**
+ * Create a card for an item (json object) to show product name and image
+ * @param {Object} item
+ * @returns
+ */
 const Item = ({item}) => (
   <View style={styles.item}>
     <Text style={styles.product_name}>{item.product_name}</Text>
@@ -89,7 +94,9 @@ const itemWidth =
     //alert('supprimer la sélection');
   };
 
-  // delete everything
+  /**
+   * Remove all elements from the garde_manger and deselect everything
+   */
   deleteAllItems() {
     this.props.setGardeManger([]);
     this.setState({
@@ -99,7 +106,10 @@ const itemWidth =
     });
   }
 
-  // delete given item
+  /**
+   * Completely removes an item without taking quantity into account
+   * @param {Object} item
+   */
   deleteItem(item) {
     let helperArray = this.props.gardeManger;
     let helperArray2 = this.state.deleteArray;
@@ -110,6 +120,10 @@ const itemWidth =
     this.setState({deleteArray: helperArray2});
     this.props.setGardeManger(helperArray);
   }
+
+  /**
+   * Completely remove all selected items
+   */
   deleteSelectedGroupItems() {
     let helperArray = this.props.gardeManger;
     let helperArray2 = this.state.deleteArray;
@@ -125,69 +139,22 @@ const itemWidth =
     });
     this.props.setGardeManger(helperArray);
   }
+
+  /**
+   * Reduce all quantity from selected items by 1 and removes if quantity is 1
+   */
   deleteSelectedItems() {
     let helperArray = this.props.gardeManger;
     let helperArray2 = this.state.deleteArray;
-    //let item = cloneDeep(this.state.lastItemSelected);
-    //this.setState({allSelected: false});
     for (let i = helperArray2.length - 1; i >= 0; i--) {
       let item = helperArray.indexOf(helperArray2[i]);
       if (helperArray2[i].product_quantity <= 1) {
         helperArray.splice(item, 1);
         helperArray2.splice(i, 1);
       } else {
-        //let item2 = cloneDeep(helperArray.indexOf(helperArray2[i]));
-        //item2.product_quantity -= 1;
         helperArray2[i].product_quantity -= 1; // = item2;
       }
     }
-    /*
-    if (this.state.lastItemSelected.product_quantity > 1) {
-      let helperArray2 = cloneDeep(this.state.deleteArray);
-
-      let helperArray = cloneDeep(this.props.gardeManger);
-      for (let i = helperArray2.length - 1; i >= 0; i--) {
-        let item = helperArray.indexOf(helperArray2[i]);
-        helperArray.splice(item, 1);
-        helperArray2.splice(i, 1);
-      }
-      for (let k = 0; k < helperArray.length; k++) {
-        if (helperArray[k].id == item.id) {
-          if (helperArray[k].product_quantity == 0) {
-
-          } else {
-
-          }
-          //helperArray[k].product_quantity -= 1;
-          //this.setState({ deleteArray: cloneDeep(helperArray) });
-          //this.setState({ allSelected: false });
-
-        }
-        this.setState({
-          deleteArray: cloneDeep(helperArray2),
-          selectionMode: helperArray.length == 0 ? true : false,
-          allSelected: false,
-        });
-      }
-      this.props.setGardeManger(cloneDeep(helperArray));
-      
-    }
-    else {
-      let helperArray = this.props.gardeManger;
-      let helperArray2 = this.state.deleteArray;
-      for (let i = helperArray2.length - 1; i >= 0; i--) {
-        let item = helperArray.indexOf(helperArray2[i]);
-        helperArray.splice(item, 1);
-        helperArray2.splice(i, 1);
-      }
-      this.setState({
-        deleteArray: helperArray2,
-        selectionMode: helperArray.length == 0 ? true : false,
-        allSelected: false,
-      });
-      this.props.setGardeManger(helperArray);
-    }
-    */
     console.log('empty ? ' + helperArray2.length);
     console.log(helperArray2.length != 0);
     this.setState({
@@ -199,6 +166,9 @@ const itemWidth =
     console.log(this.state.selectionMode);
   }
 
+  /**
+   * Select all items in the garde manger
+   */
   selectAll() {
     let helperArray = [];
     this.props.gardeManger.map((data) => {
@@ -215,11 +185,15 @@ const itemWidth =
     });
   }
 
+  /**
+   * Helper function to add/remove an item to the selected items
+   * @param {Object} item
+   */
   selectItemLongPress(item) {
     this.setState({selectionMode: true});
     let helperArray = this.state.deleteArray;
     let itemIndex = helperArray.indexOf(item);
-    console.log('check : ' + helperArray.length); //x.id == item.id).length);
+    console.log('check : ' + helperArray.length);
     console.log('check2 : ' + item.id);
     if (helperArray.includes(item)) {
       helperArray.splice(itemIndex, 1);
@@ -237,15 +211,18 @@ const itemWidth =
     this.setState({deleteArray: helperArray});
   }
 
+  /**
+   * Wrapper component around Item to add Interactivity and press events and selection border
+   * @param {Object} Item
+   * @returns
+   */
   renderItem = ({item}) => (
     <TouchableOpacity
       onLongPress={() => {
         this.selectItemLongPress(item);
         this.setState({lastItemSelected: item});
-        //console.warn('last Item is: ', this.state.lastItemSelected);
       }}
       onPress={this.handlerClick}
-      //activeOpacity={0.6}
       style={{
         backgroundColor: '#F0F0F0',
         borderColor:
@@ -264,6 +241,9 @@ const itemWidth =
     </TouchableOpacity>
   );
 
+  /**
+   * Function to execute once scroll end reached
+   */
   handleLoadMore = () => {
     //console.log('asking for more : ');
   };
@@ -338,7 +318,6 @@ const itemWidth =
 
 const styles = StyleSheet.create({
   container: {
-    //paddingTop: navbarHeight,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
