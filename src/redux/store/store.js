@@ -2,6 +2,18 @@ import 'localstorage-polyfill';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from "redux-thunk"
 import rootReducer from '../reducers/index'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { persistStore, persistReducer } from 'redux-persist'
+
+
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+  export const store = createStore(persistedReducer);
+  export const persistor = persistStore(store);
 
 
 /**
@@ -42,7 +54,7 @@ export function loadFromLocalStorage() {
  * @param  {Objecct} rootReducer
  * @param  {Method} loadFromLocalStorage(
  */
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+//export const store = createStore(rootReducer, applyMiddleware(thunk));
 /*
 * This is a change listener. 
 * It will be called any time an action is dispatched

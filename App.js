@@ -10,6 +10,9 @@ import Loading from './src/screens/LoadingScreen'
 import 'localstorage-polyfill';
 import { AppRegistry, StyleSheet } from 'react-native';
 import { store } from './src/redux/store/store'
+import { persistor} from './src/redux/store/store'
+import { PersistGate } from 'redux-persist/integration/react'
+
 import RootNavigation from './src/navigation/RootNavigation'
 
 /**
@@ -79,7 +82,11 @@ class App extends Component {
       case true:
         return (
           <Provider store={store}>
-            <RootNavigation />
+                <PersistGate loading={null} persistor={persistor}>
+
+              <RootNavigation />
+                    </PersistGate>
+
           </Provider>);
 
       default:
