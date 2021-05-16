@@ -86,7 +86,7 @@ const itemWidth =
 
   deleteSelected = () => {
     //handler for Long Click
-    alert('supprimer la sélection');
+    //alert('supprimer la sélection');
   };
 
   // delete everything
