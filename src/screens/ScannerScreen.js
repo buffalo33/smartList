@@ -30,9 +30,13 @@ class ScannerScreen extends React.Component {
     lastProductSelected: {},
   };
 
+  /**
+   * Wait for the mounting of the component before asking for authorization
+   */
   async componentDidMount() {
     this.getPermissionsAsync();
   }
+
   /**
    * Get permissions from user
    */
@@ -41,6 +45,9 @@ class ScannerScreen extends React.Component {
     this.setState({hasCameraPermission: status === 'granted'});
   };
 
+  /**
+   * Alert a modal confirming the addition of the product and asking the user if he wants to come back to his current list.
+   */
   backToList = () => {
     Alert.alert(
       this.state.product.product_name + ' ajouté',
@@ -60,6 +67,10 @@ class ScannerScreen extends React.Component {
     );
   };
 
+
+  /**
+   * Alert a modal confirming the cancellation of the action and asking the user if he wants to come back to his current list.
+   */
   backToListNoAddition = () => {
     Alert.alert(
       'Action annulée',
@@ -156,20 +167,6 @@ class ScannerScreen extends React.Component {
     product['isUserProduct'] = false;
     await this.setState({product: product});
     this.setState({lastProductSelected: product, dialogIsVisible: true});
-    //this.props.addToCart(product, this.props.route.params.id_list,1);
-    /*Alert.alert(
-      "Produit détecté",
-      "Souhaitez-vous retourner dans la liste ?",
-      [
-        {
-          text: "Annuler",
-          onPress: () => this.setState({ scanned: false }),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => this.props.navigation.navigate('ListArticleScreen') }
-      ],
-      { cancelable: false }
-    )*/
   };
 }
 

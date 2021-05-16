@@ -16,7 +16,6 @@ import {
  * Class to change user settings, synchronyze with cloud and log out
  */
 class Settings extends React.Component {
-  // TODO: implement your navigationOptions
   state = {
     check: false,
     switch: true,
@@ -24,6 +23,10 @@ class Settings extends React.Component {
     isSetSync: false,
   };
 
+  /**
+   * Comes back to the main menu
+   * 
+   */
   _navigateToScreen = () => {
     const {navigation} = this.props;
     navigation.navigate('ShoppingList');
