@@ -35,6 +35,14 @@ import PanMoveHandler from '../components/PanMoveHandler';
 import colors from 'react-native-floating-action-button/lib/src/components/styles/colors';
 import cloneDeep from 'lodash/cloneDeep';
 
+/**
+ * Item list in the Flatlist of lists.
+ * @param {Object} item - Object containing a list item datas.
+ * @param {function} onPress - Action to execute when tapping the item without maintaining the touch. 
+ * @param {Object} style - Style informations concerning the PanMoveHandler component.
+ * @param {Object} props - All props inherited from the store and navigation.
+ * @param {function} setconfirmVisible - For displaying the confirmation modal when adding to the GardeManger compoenent.
+ */
 const Item = ({item, onPress, style, props, setconfirmVisible}) => (
   <PanMoveHandler
     transmit={style}
@@ -108,7 +116,7 @@ const Item = ({item, onPress, style, props, setconfirmVisible}) => (
  *
  *
  * @param {Object} props
- * @returns a list view
+ * @returns The lists view
  */
 const ListesScreen = (props) => {
   const [selectedId, setSelectedId] = useState(null);

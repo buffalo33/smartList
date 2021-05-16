@@ -10,8 +10,12 @@ import firebase from 'firebase'
 
 import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
 
+
+/**
+ * A class which is the settings screen of the app. 
+ *
+ */
 class Settings extends React.Component {
-  // TODO: implement your navigationOptions
   state = {
     check: false,
     switch: true,
@@ -19,6 +23,11 @@ class Settings extends React.Component {
     isSetSync: true,
 
   }
+
+  /**
+   * Comes back to the main menu
+   * 
+   */
   _navigateToScreen = () => {
     const { navigation } = this.props
     navigation.navigate('ShoppingList');

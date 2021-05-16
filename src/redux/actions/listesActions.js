@@ -9,6 +9,8 @@ export function mapStateToProps(state) {
     isRenameVisible: state.dialogRenameReducer.isRenameVisible,
   };
 }
+
+
 export function fetchUser() {
   return (dispatch) => {
     firebase
