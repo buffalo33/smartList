@@ -18,7 +18,6 @@ class AddButton extends Component {
 
   render() {
     LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
-    console.log(this.props.data.route.params.id_list);
     return (
       <View >
 

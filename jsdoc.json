@@ -8,8 +8,7 @@
   },
   "plugins": [
     "plugins/markdown",
-    "node_modules/better-docs/typescript",
-    "@zakkudo/jsdoc-redux-plugin"
+    "node_modules/better-docs/typescript"
   ],
   "templates": {
     "cleverLinks": true,
