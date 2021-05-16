@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { FAB } from 'react-native-paper';
+import { View } from 'react-native'
 import { LogBox } from 'react-native';
 import FloatingActionButton from "react-native-floating-action-button";
 
@@ -9,6 +8,10 @@ import FloatingActionButton from "react-native-floating-action-button";
  * 
  */
 class AddButton extends Component {
+  /**
+   * 
+   * @param {Object} props 
+   */
   constructor(props) {
     super(props);
   }

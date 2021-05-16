@@ -4,46 +4,27 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput,
-  TouchableWithoutFeedback,
   FlatList,
-  StatusBar,
   Image,
-  Animated,
 } from 'react-native';
-import firebase from 'firebase';
-import {Button, Searchbar} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
 import {
-  Container,
-  Content,
-  InputGroup,
-  Input,
-  Title,
-  Subtitle,
-  Header,
-  Body,
-  Footer,
-  FooterTab,
-  Segment,
-  CheckBox,
+  Container
 } from 'native-base';
 import {LogBox} from 'react-native';
 import {Component} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   mapStateToProps,
   mapDispatchToProps,
 } from '../redux/actions/listesActions';
 import {Dimensions} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import cloneDeep from 'lodash/cloneDeep';
 
 /**
  * Create a card for an item (json object) to show product name and image
  * @param {Object} item
- * @returns
+ * @returns void
  */
 const Item = ({item}) => (
   <View style={styles.item}>
@@ -81,18 +62,6 @@ const itemWidth =
       lastItemSelected: {},
     };
   }
-
-  componentDidMount() {}
-
-  handlerClick = () => {
-    //handler for Long Click
-    alert(' ' + this.state.selectionMode + ' ' + this.state.deleteArray.length);
-  };
-
-  deleteSelected = () => {
-    //handler for Long Click
-    //alert('supprimer la sélection');
-  };
 
   /**
    * Remove all elements from the garde_manger and deselect everything
@@ -155,15 +124,12 @@ const itemWidth =
         helperArray2[i].product_quantity -= 1; // = item2;
       }
     }
-    console.log('empty ? ' + helperArray2.length);
-    console.log(helperArray2.length != 0);
     this.setState({
       deleteArray: helperArray2,
       selectionMode: helperArray2.length != 0,
       allSelected: this.state.allSelected && helperArray2.length != 0,
     });
     this.props.setGardeManger(helperArray);
-    console.log(this.state.selectionMode);
   }
 
   /**
@@ -193,8 +159,6 @@ const itemWidth =
     this.setState({selectionMode: true});
     let helperArray = this.state.deleteArray;
     let itemIndex = helperArray.indexOf(item);
-    console.log('check : ' + helperArray.length);
-    console.log('check2 : ' + item.id);
     if (helperArray.includes(item)) {
       helperArray.splice(itemIndex, 1);
       this.setState({allSelected: false});
@@ -214,7 +178,7 @@ const itemWidth =
   /**
    * Wrapper component around Item to add Interactivity and press events and selection border
    * @param {Object} Item
-   * @returns
+   * @returns void
    */
   renderItem = ({item}) => (
     <TouchableOpacity
@@ -222,7 +186,6 @@ const itemWidth =
         this.selectItemLongPress(item);
         this.setState({lastItemSelected: item});
       }}
-      onPress={this.handlerClick}
       style={{
         backgroundColor: '#F0F0F0',
         borderColor:
@@ -241,12 +204,6 @@ const itemWidth =
     </TouchableOpacity>
   );
 
-  /**
-   * Function to execute once scroll end reached
-   */
-  handleLoadMore = () => {
-    //console.log('asking for more : ');
-  };
 
   render() {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
@@ -308,7 +265,6 @@ const itemWidth =
             keyExtractor={(item) => item._id}
             numColumns={numColumns}
             onEndReachedThreshold={0.5}
-            onEndReached={this.handleLoadMore}
           />
         </View>
       </Container>

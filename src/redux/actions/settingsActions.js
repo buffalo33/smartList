@@ -1,4 +1,4 @@
-import firebase, { firestore } from 'firebase'
+
 
 export function mapStateToPropsSettings(state) {
   return {

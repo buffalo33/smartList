@@ -1,20 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Alert,
   FlatList,
   SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   Modal,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import DialogInput from 'react-native-dialog-input';
 import {connect} from 'react-redux';
 import * as Random from 'expo-random';
-import firebase from 'firebase';
 import 'firebase/firestore';
 import {
   mapStateToProps,
@@ -28,11 +25,9 @@ import {
   MenuOption,
 } from 'react-native-popup-menu';
 import FloatingActionButton from 'react-native-floating-action-button';
-import NetInfo from '@react-native-community/netinfo';
 
-import {Container, Content, InputGroup, Input} from 'native-base';
+import {InputGroup} from 'native-base';
 import PanMoveHandler from '../components/PanMoveHandler';
-import colors from 'react-native-floating-action-button/lib/src/components/styles/colors';
 import cloneDeep from 'lodash/cloneDeep';
 
 /**
@@ -85,8 +80,6 @@ const Item = ({item, onPress, style, props, setconfirmVisible}) => (
               for (let i of props.lists.filter((x) => x.id == item.id)[0]
                 .cart) {
                 props.addToGardeManger(cloneDeep(i));
-                //props.setconfirmVisible(true);
-                //console.log(setconfirmVisible);
                 setconfirmVisible(true);
                 props.saveToCloudGm();
               }

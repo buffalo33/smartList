@@ -1,6 +1,5 @@
-//import liraries
 import React, { Component } from 'react';
-import firebase, { firestore } from 'firebase'
+import firebase from 'firebase'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Logo from '../../components/Logo'
 import DialogInput from 'react-native-dialog-input';
@@ -27,11 +26,13 @@ class SignInScreen extends Component {
     this.onRegister = this.onRegister.bind(this)
   }
 
+  /**
+   * Displays error alerts when bad input during login.
+   */
   onLoginPress = () => {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(this.onLoginSuccess)
       .catch(error => {
-        console.log(error);
         if (error.code == "auth/invalid-email"){
           Alert.alert("Erreur","Adresse mail invalide");
         }
@@ -47,6 +48,9 @@ class SignInScreen extends Component {
       })
   }
 
+  /**
+   * Reinitialises state when login succeeds.
+   */
   onLoginSuccess = () => {
     this.setState({
       error: '',
@@ -54,8 +58,11 @@ class SignInScreen extends Component {
     })
   }
 
+  /**
+   * Creates a new account or displays error alerts when bad input during register.
+   * @param {string} inputText - New password chosen by the user.
+   */
   async onRegister(inputText) {
-    //const { newEmail, newPassword } = this.state;
     const newEmail = this.state.newEmail;
     await this.setState({newPassword: inputText});
     var name = this.state.newEmail;
@@ -64,8 +71,6 @@ class SignInScreen extends Component {
       .then((result) => {
         firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).collection("User").doc("user").set({ name, newEmail })
       }).catch((error) => {
-        console.log("hey");
-        console.log(newPassword);
         if (error.code == 'auth/email-already-in-use'){
           Alert.alert("Erreur","Adresse mail déjà utilisée");
         }
@@ -197,7 +202,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 20,
-    //paddingBottom:19,
   },
   buttonTextRegister: {
     color: 'tomato',

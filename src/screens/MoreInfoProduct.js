@@ -30,7 +30,6 @@ class MoreInfoProduct extends Component {
         this.setState({ImageWidth: Width, ImageHeight: Height});
       },
       (errorMsg) => {
-        console.log(errorMsg);
       },
     );
   }

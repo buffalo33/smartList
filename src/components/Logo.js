@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, View, Image } from 'react-native'
 
-//const a = (Dimensions.get('window').width);
+
 
 /**
  * Main Logo of the app

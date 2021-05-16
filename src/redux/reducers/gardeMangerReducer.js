@@ -41,7 +41,6 @@ export default function gardeMangerReducer(state = initialState, action) {
 
 
     case 'SAVE_TO_CLOUD_GM': {
-      //console.warn(firebase.auth().currentUser.uid);
       firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
         .collection("User").doc("user").update({ gardeManger: [...state.gardeManger] });
       return {

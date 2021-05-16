@@ -5,31 +5,29 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  TouchableWithoutFeedback,
   FlatList,
-  StatusBar,
   Image,
   Modal,
   Animated,
 } from 'react-native';
 import DialogInput from 'react-native-dialog-input';
-import firebase from 'firebase';
-import { Button, Searchbar } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
-import { Container, Content, InputGroup, Input } from 'native-base';
+import {  InputGroup} from 'native-base';
 import { LogBox } from 'react-native';
 import { Component } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   mapStateToProps,
   mapDispatchToProps,
 } from '../../redux/actions/listesActions';
 import { Dimensions } from 'react-native';
 import AwesomeButton from 'react-native-really-awesome-button';
-import { ScrollView } from 'react-native-gesture-handler';
-import * as Random from 'expo-random';
 
+/**
+ * Create a card for an item (json object) to show product name and image
+ * @param {Object} object - product info
+ */
 const Item = ({ product_name, product_image }) => (
   <View style={styles.item}>
     <Image
@@ -99,6 +97,11 @@ class ArticleSearchPage extends Component {
     };
   }
 
+  /**
+   * Wrapper component around Item to add Interactivity and press events and selection border
+   * @param {Object} Item
+   * @returns void
+   */
   renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -131,7 +134,6 @@ class ArticleSearchPage extends Component {
       nextPage +
       '&search_terms=' +
       text;
-    // console.log(url);
     fetch(url)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -148,13 +150,17 @@ class ArticleSearchPage extends Component {
             dataSource: [...this.state.dataSource, ...responseJson.products], // appends new fetched data to the previous one
           });
         }
-        //console.warn(responseJson.products[0]["isSelected"])
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
+  /**
+   * Saves a user item.
+   * @param {string} userItemName 
+   * @param {string} userItemDesc 
+   */
   saveNewUserItem(userItemName, userItemDesc) {
     if (userItemName == '') {
       return;
@@ -167,10 +173,7 @@ class ArticleSearchPage extends Component {
       id: "user" + userItemName,//Random.getRandomBytes(8).toString(),
       image_front_thumb_url: '',
     };
-    //console.log('custom data : ' + JSON.stringify(customData));
-    //console.log('OFF data : ' + JSON.stringify(this.state.dataSource[0]));
 
-    //this.props.addToCart(customData, this.props.route.params.id_list);
     this.setState({ lastProductSelected: customData });
   }
 
@@ -185,34 +188,39 @@ class ArticleSearchPage extends Component {
     this.getNextPage({ text: text, pageCount: 0 });
   }
 
+  /**
+   * Actions on scroll end reached.
+   */
   handleLoadMore = () => {
-    /*console.log(
-      'asking for more : ' +
-        this.state.searchTerms +
-        ' ' +
-        this.state.pageCount,
-    );*/
     this.getNextPage({
       text: this.state.searchTerms,
       pageCount: this.state.pageCount,
     });
   };
 
+  /**
+   * helper function to detect end of scroll and make final action.
+   */
   _onScrollEndDrag = () => {
     this._scrollEndTimer = setTimeout(this._onMomentumScrollEnd, 250);
   };
 
+  /**
+   * helper function to detect beginning of scroll and make initial action.
+   */
   _onMomentumScrollBegin = () => {
     clearTimeout(this._scrollEndTimer);
   };
 
+  /**
+   * helper function called when the momentum scroll ends (scroll which occurs as the ScrollView glides to a stop).
+   */
   _onMomentumScrollEnd = () => {
     // Code to handle scroll end animation will go here.
   };
 
   render() {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-    // console.log(this.props.route.params.id_list)
     const { clampedScroll } = this.state;
 
     const navbarTranslate = clampedScroll.interpolate({
@@ -392,7 +400,6 @@ class ArticleSearchPage extends Component {
             if (inputText == NaN | inputText == undefined | inputText == "") {
               inputText = 1;
             }
-            // console.warn(inputText)
             this.props.addToCart(this.state.lastProductSelected, this.props.route.params.id_list, parseInt(inputText, 10));
             this.setState({ dialogIsVisible: false });
             this.setState({ confirmVisible: true });

@@ -2,14 +2,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Component } from 'react'
-import ListesScreen from '../screens/ListesScreen'
-import GardeMangerScreen from '../screens/GardeManger'
 import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
 import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
 import { connect } from 'react-redux'
 import InternNavigation from './InternNavigation'
-import {TouchableOpacity} from 'react-native';
 
+/**
+ * Create a Tab navigation component.
+ */
 const Tab = createBottomTabNavigator();
 
 /**
@@ -17,10 +17,10 @@ const Tab = createBottomTabNavigator();
  * 
  */
 class Tabs extends Component {
-  componentWillUnmount() {
-    //  this.props.saveToCloud();
 
-  }
+  /**
+   * Load the user lists datas from the cloud.
+   */
   componentDidMount() {
     if (this.props.isSetSync) {
        this.props.loadListsFromCloud();

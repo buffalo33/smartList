@@ -1,14 +1,16 @@
-import React, { useState, useEffect, setState, Component } from "react";
-import { View, Alert, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, PanResponder, Dimensions  } from "react-native";
-import { Icon } from 'react-native-elements'
-import { Button } from 'react-native'
-import DialogInput from 'react-native-dialog-input';
+import React, {  Component } from "react";
+import { View,  StyleSheet, PanResponder} from "react-native";
 import { connect } from 'react-redux'
-import * as Random from 'expo-random';
 import { mapStateToProps, mapDispatchToProps } from '../redux/actions/listesActions'
-import { MenuProvider, Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 
+/**
+ * Component that makes another one slide.
+ */
 class PanMoveHandler extends Component {
+/**
+ * 
+ * @param {Object} props 
+ */
 
     constructor(props) {
         super(props)
@@ -18,7 +20,9 @@ class PanMoveHandler extends Component {
         }
         
         var time0;
-
+        /**
+         * Define the move handler.
+         */
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (evt, gestureState) => { //Detection of event (touch interaction) enabled. 
                 return true;
@@ -44,21 +48,19 @@ class PanMoveHandler extends Component {
                     }
                 }
             },
-            onPanResponderEnd: (evt, gestureState) => {  ////To apply at the end of the interaction
-                var realHeight = this.itemDim.height + styles.item.marginVertical;
-                var semiHeight = realHeight/2;
-                var deltaAbs = Math.abs(gestureState.dy); //Absolute value of the distance run by the component compared to its original coordonate y0.
-                var nbIndex;
-
-                /**
+            /**
                  * Component has to run at least the half of its height to change index.
                  *If it is the case we add 1 to the index move and substract height/2 to the considered distance run.
                  * Then we computed the equivalent distance in terms of entire item height
                  * If this latter value is not an integer, we add the total found to the index move.
                  * Else, the total-1 .
                  */
+            onPanResponderEnd: (evt, gestureState) => {  ////To apply at the end of the interaction
+                var realHeight = this.itemDim.height + styles.item.marginVertical;
+                var semiHeight = realHeight/2;
+                var deltaAbs = Math.abs(gestureState.dy); //Absolute value of the distance run by the component compared to its original coordonate y0.
+                var nbIndex;
                 
-                //console.log(styles.item.marginVertical);
                 if (evt.timeStamp - this.time0 < 700) //Either the press lasted less than 700 ms. In this case we want to enter in the item. Otherwise, we want to move the item
                 {
                     setTimeout(

@@ -1,9 +1,7 @@
 import 'react-native'
 import React from 'react'
-import HomeScreen from '../src/screens/HomeScreen'
-import renderer from 'react-test-renderer'
 import SignInScreen from '../src/screens/Authentification/SignInScreen';
-import { fireEvent, waitFor, screen } from '@testing-library/react-native';
+import { fireEvent, waitFor} from '@testing-library/react-native';
 import { render } from 'react-native-testing-library';
 import { Alert } from 'react-native';
 import firebase from 'firebase'
@@ -27,7 +25,6 @@ if (!firebase.apps.length) {
 describe('SignInScreen tests', () => {
   it('should renders default elements', () => {
     const { getAllByText } = render(<SignInScreen />);
-    console.log(getAllByText("ShoppingList"));
 
   });
 
@@ -96,7 +93,6 @@ describe('SignInScreen tests', () => {
       jest.spyOn(Alert, 'alert');
       expect(Alert.alert).toHaveBeenCalledWith("The password is invalid or the user does not have a password.")
     })
-    console.log(passwordInput.props.value);
   });
 });
 

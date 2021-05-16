@@ -1,4 +1,4 @@
-import firebase, { firestore } from 'firebase';
+import firebase from 'firebase';
 
 export function mapStateToProps(state) {
   return {
@@ -22,12 +22,10 @@ export function fetchUser() {
       .get()
       .then((snapshot) => {
         if (snapshot.exists) {
-          console.log("dispaaaatching");
           dispatch({ type: 'LOAD_LISTS_CLOUD', payload: snapshot.data() });
           dispatch({ type: 'LOAD_LISTS_CLOUD_GM', payload: snapshot.data() });
 
         } else {
-          console.log('does not exist');
         }
       });
   };
@@ -65,31 +63,26 @@ export function mapDispatchToProps(dispatch) {
       dispatch({
         type: 'ADD_TO_CART',
         payload: { newItem, id_list, quantity },
-        //id_list: id_list
       }),
     deleteItemCart: (id, id_list) =>
       dispatch({
         type: 'DELETE_ITEM_CART',
         payload: { id, id_list },
-        //id_list: id_list
       }),
     addToGardeManger: (newItem) =>
       dispatch({
         type: 'ADD_TO_GARDEMANGER',
         payload: { newItem },
-        //id_list: id_list
       }),
     setGardeManger: (items) =>
       dispatch({
         type: 'SET_GARDEMANGER',
         payload: items,
-        //id_list: id_list
       }),
     deleteGardeManger: (id) =>
       dispatch({
         type: 'DELETE_GARDEMANGER',
         payload: { id },
-        //id_list: id_list
       }),
     setIdSelected: (id) =>
       dispatch({

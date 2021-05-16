@@ -51,4 +51,3 @@ export const store = createStore(rootReducer, applyMiddleware(thunk));
 store.subscribe(() => saveToLocalStorage(store.getState()));
 
 // this log is used to show the state of the store object
-//console.log(store.getState())

@@ -1,5 +1,5 @@
 
-import firebase, { firestore } from 'firebase'
+import firebase from 'firebase'
 
 const initialState = {
 
@@ -9,6 +9,10 @@ const initialState = {
 
 
 
+/**
+ * Application reducer.
+ * @param {Object} state
+ */
 export default function listReducer(state = initialState, action) {
 
   switch (action.type) {
@@ -21,7 +25,6 @@ export default function listReducer(state = initialState, action) {
 
     case 'ADD_TO_LISTS': {
 
-     // console.warn(firebase.auth().currentUser.uid);
       if (action.payload.title == NaN | action.payload.title == undefined | action.payload.title == "") {
         action.payload.title="Liste"
       }
@@ -41,7 +44,6 @@ export default function listReducer(state = initialState, action) {
       }
     }
     case 'SAVE_TO_CLOUD': {
-      //console.warn(firebase.auth().currentUser.uid);
       firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
         .collection("User").doc("user").update({ lists: [...state.lists] });
       return {
@@ -59,8 +61,6 @@ export default function listReducer(state = initialState, action) {
           Tmp.splice(i, 1);
         }
       }
-      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-      //.collection("User").doc("user").update({ lists: [...Tmp] });
 
       return {
         lists: [...Tmp],
@@ -75,8 +75,6 @@ export default function listReducer(state = initialState, action) {
           Tmp[i].title = action.payload;
         }
       }
-      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-      //.collection("User").doc("user").update({ lists: [...Tmp] });
 
       return {
         lists: [...Tmp],
@@ -85,7 +83,6 @@ export default function listReducer(state = initialState, action) {
       }
 
     case 'ADD_TO_CART':
-      console.log("quantity selected add to cart: ", action.payload.quantity);
 
       action.payload.newItem["product_quantity"] = action.payload.quantity;
       let found = 0;
@@ -106,7 +103,6 @@ export default function listReducer(state = initialState, action) {
           y.numberItems += 1;
 
         }
-        console.log("quantity entered", y.cart[0].product_quantity);
 
         return y;
       })
@@ -148,7 +144,6 @@ export default function listReducer(state = initialState, action) {
             }
           }
 
-         // Tmp[i].cart = Tmp[i].cart.filter(x => x.id != action.payload.id);
           Tmp[i].cart.numberItems -= 1;
 
 
@@ -198,9 +193,6 @@ export default function listReducer(state = initialState, action) {
     case 'SWAP_LISTS':
       var Tmp = [...state.lists];
       var index;
-      //console.log(index + action.payload);
-      //console.log((index + action.payload >= 0));
-      //console.log((index + action.payload <= Tmp.length));
       for (let i = 0; i < Tmp.length; i++) {
         if (Tmp[i].id == state.lastIdSelected) {
           index = i;
@@ -225,7 +217,6 @@ export default function listReducer(state = initialState, action) {
         }
       }
       Tmp[index + nbMove] = save;
-      //console.log(Tmp);
       return {
         lists: [...Tmp],
         lastIdSelected: state.lastIdSelected

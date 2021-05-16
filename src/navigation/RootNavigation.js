@@ -4,11 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Tabs from './TabsNavigation'
-import ArticleSearchPage from '../screens/search/ArticleSearchPage'
 import SignInScreen from '../screens/authentification/SignInScreen'
-import MoreInfoProduct from '../screens/MoreInfoProduct'
-import ListArticleScreen from '../screens/ListArticleScreen'
-import ScannerScreen from '../screens/ScannerScreen';
 import SettingsScreen from '../screens/SettingsScreen'
 
 
@@ -20,6 +16,10 @@ const Stack = createStackNavigator();
  * 
  */
 class RootNavigation extends Component {
+  /**
+   * 
+   * @param {Object} props 
+   */
   constructor(props) {
     super(props);
     this.state = {

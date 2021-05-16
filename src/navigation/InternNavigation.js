@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ArticleSearchPage from '../screens/search/ArticleSearchPage'
-import SignInScreen from '../screens/authentification/SignInScreen'
 import MoreInfoProduct from '../screens/MoreInfoProduct'
 import ListArticleScreen from '../screens/ListArticleScreen'
 import ScannerScreen from '../screens/ScannerScreen';
-import SettingsScreen from '../screens/SettingsScreen'
 import ListesScreen from '../screens/ListesScreen';
 import GardeMangerScreen from '../screens/GardeManger'
 import { connect } from 'react-redux'
@@ -20,16 +17,25 @@ import {
 const Stack = createStackNavigator();
 
 /**
- * Class that handles the navigation from the root 
+ * Class that handles the navigation inside a navigation branch.
  * 
  */
 class InternNavigation extends Component {
+  /**
+   * 
+   * @param {Object} props 
+   */
   constructor(props) {
     super(props);
     this.state = {
     };
   }
 
+  /**
+   * Defines which branch entry to use.
+   * @param {Object} navigation 
+   * @returns {Object}
+   */
   entryComponent = (navigation) => {
     if (this.props.entry == "Listes") {
       return(
@@ -43,10 +49,19 @@ class InternNavigation extends Component {
     }
   }
 
+/**
+ * Checks if the id of the list watched is the current id selected.
+ * @param {Object} list 
+ * @returns {Boolean}
+ */
   checkId = (list) => {
     return this.props.lastIdSelected == list.id;
   }
 
+  /**
+   * Displays the name of the current list for screen further in navigation.
+   * @returns {string}
+   */
   displayTitle = () => {
     if (this.props.lists.find(this.checkId) == null){
       return ""

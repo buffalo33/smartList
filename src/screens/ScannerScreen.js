@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Alert, Text, View, StyleSheet, Modal, Button} from 'react-native';
-import Constants from 'expo-constants';
+import {Alert, Text, View, StyleSheet, Modal} from 'react-native';
 import DialogInput from 'react-native-dialog-input';
 import * as Permissions from 'expo-permissions';
 import {OpenFoodFactsApi} from 'openfoodfac-ts';
@@ -10,7 +9,6 @@ import {
   mapDispatchToProps,
 } from '../redux/actions/listesActions';
 import {BarCodeScanner} from 'expo-barcode-scanner';
-import {Icon} from 'react-native-elements';
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
