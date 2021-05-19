@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Alert,
@@ -25,10 +25,12 @@ import {
   MenuOption,
 } from 'react-native-popup-menu';
 import FloatingActionButton from 'react-native-floating-action-button';
+import { mapStateToPropsSettings, mapDispatchToPropsSettings } from '../redux/actions/settingsActions'
 
 import {InputGroup} from 'native-base';
 import PanMoveHandler from '../components/PanMoveHandler';
 import cloneDeep from 'lodash/cloneDeep';
+import firebase from 'firebase'
 
 /**
  * Item list in the Flatlist of lists.
@@ -69,7 +71,9 @@ const Item = ({item, onPress, style, props, setconfirmVisible}) => (
             text="Supprimer"
             onSelect={() => {
               props.removeToLists(item.id);
-              props.saveToCloud();
+               if (props.isSetSync) {
+                 props.saveToCloud();
+               }
             }}
           />
 
@@ -81,7 +85,10 @@ const Item = ({item, onPress, style, props, setconfirmVisible}) => (
                 .cart) {
                 props.addToGardeManger(cloneDeep(i));
                 setconfirmVisible(true);
-                props.saveToCloudGm();
+                 if (props.isSetSync) {
+                  props.saveToCloudGm();
+                 }
+                
               }
             }}
           />
@@ -120,13 +127,12 @@ const ListesScreen = (props) => {
     // modify that to match the spec colors
 
     const backgroundColor = item.id === selectedId ? 'white' : 'white';
-
-    //props[setconfirmVisible] = setconfirmVisible();
-
+    
     return (
       <Item
         item={item}
         onPress={() => {
+          
           props.setIdSelected(item.id);
           props.navigation.navigate('ListArticleScreen', {id_list: item.id});
         }}
@@ -137,6 +143,23 @@ const ListesScreen = (props) => {
     );
   };
 
+
+  useEffect(() => {
+    if (props.isSetSync) {
+      props.loadListsFromCloud();
+    
+      const messagesListener = firebase.firestore().collection("users")
+        .doc(firebase.auth().currentUser.uid).collection('User').onSnapshot(querySnapshot => {
+          const messages = querySnapshot.docs.map(doc => {
+            const firebaseData = doc.data();
+            console.log(doc.data());
+          });
+          props.loadListsFromCloud();
+        });
+
+      return () => messagesListener();
+    }
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <InputGroup style={styles.groupContainer}>
@@ -164,7 +187,12 @@ const ListesScreen = (props) => {
               cart: [],
               numberItems: 0,
               numberChecked: 0,
-            }) && setIsDialogVisible(false);
+            });
+            setIsDialogVisible(false);
+            if (props.isSetSync) {
+               props.saveToCloud();
+
+            }
           }}
           closeDialog={() => setIsDialogVisible(false)}></DialogInput>
 
@@ -174,8 +202,12 @@ const ListesScreen = (props) => {
           message={'Entrer le nom de la liste'}
           hintInput={'Name'}
           submitInput={(inputText) => {
-            props.renameToLists(inputText) &&
-              props.setDialogRenameVisible(false);
+            props.renameToLists(inputText);
+            props.setDialogRenameVisible(false);
+            if (props.isSetSync) {
+                 props.saveToCloud();
+
+            }
           }}
           closeDialog={() => props.setDialogRenameVisible(false)}></DialogInput>
         <FloatingActionButton
@@ -284,4 +316,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListesScreen);
+export default connect(mapStateToProps, mapDispatchToProps)
+  (connect(mapStateToPropsSettings, mapDispatchToPropsSettings)(ListesScreen))
+
+

@@ -78,7 +78,7 @@ class PanMoveHandler extends Component {
                         var final = Math.pow(-1,(gestureState.dy <= 0))*nbIndex; //We compute the direction thank to the sign.
 
                         props.swapLists(final);
-                        
+                        props.saveToCloud();
                         this.setState({
                             topPosition: 0,
                             myColor: 'white',

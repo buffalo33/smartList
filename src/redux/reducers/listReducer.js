@@ -24,10 +24,10 @@ export default function listReducer(state = initialState, action) {
       }
 
     case 'ADD_TO_LISTS': {
-
       if (action.payload.title == NaN | action.payload.title == undefined | action.payload.title == "") {
         action.payload.title="Liste"
       }
+       
       return {
         lists: [action.payload, ...state.lists],
         lastIdSelected: state.lastIdSelected
@@ -61,6 +61,7 @@ export default function listReducer(state = initialState, action) {
           Tmp.splice(i, 1);
         }
       }
+ 
 
       return {
         lists: [...Tmp],
@@ -75,7 +76,6 @@ export default function listReducer(state = initialState, action) {
           Tmp[i].title = action.payload;
         }
       }
-
       return {
         lists: [...Tmp],
         lastIdSelected: state.lastIdSelected
@@ -217,6 +217,7 @@ export default function listReducer(state = initialState, action) {
         }
       }
       Tmp[index + nbMove] = save;
+
       return {
         lists: [...Tmp],
         lastIdSelected: state.lastIdSelected

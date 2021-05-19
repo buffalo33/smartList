@@ -45,7 +45,9 @@ const Item = ({
         <CheckBox
           value={isSelected}
           onValueChange={setSelection}
-          onChange={() => props.checkUncheckItem(item, isSelected)}
+          onChange={() => {
+            props.checkUncheckItem(item, isSelected);
+          }}
           style={styles.checkbox}
         />
       </View>
