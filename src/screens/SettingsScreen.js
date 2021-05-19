@@ -7,7 +7,10 @@ import ReactNativeSettingsPage, {
 } from 'react-native-settings-page';
 import {connect} from 'react-redux';
 import firebase from 'firebase';
-
+import {
+  mapStateToProps,
+  mapDispatchToProps,
+} from '../redux/actions/listesActions';
 import {
   mapStateToPropsSettings,
   mapDispatchToPropsSettings,
@@ -49,7 +52,12 @@ class Settings extends React.Component {
             text="Déconnexion"
             iconName="sign-out"
             width={100}
-            onPressCallback={() => firebase.auth().signOut()}
+            onPressCallback={() =>
+            {
+               this.props.saveToCloud();
+              firebase.auth().signOut();
+              }
+             }
           />
         </SectionRow>
       </ReactNativeSettingsPage>
@@ -58,9 +66,15 @@ class Settings extends React.Component {
 }
 
 export default connect(
-  mapStateToPropsSettings,
-  mapDispatchToPropsSettings,
-)(Settings);
+  mapStateToProps,
+  mapDispatchToProps,
+)(
+  connect(
+    mapStateToPropsSettings,
+    mapDispatchToPropsSettings,
+  )(Settings),
+);
+
 
 const styles = StyleSheet.create({
   container: {
