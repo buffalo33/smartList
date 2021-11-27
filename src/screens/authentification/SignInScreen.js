@@ -29,7 +29,7 @@ class SignInScreen extends Component {
   /**
    * Displays error alerts when bad input during login.
    */
-  onLoginPress = () => {
+  /*onLoginPress = () => {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(this.onLoginSuccess)
       .catch(error => {
@@ -46,7 +46,7 @@ class SignInScreen extends Component {
           Alert.alert("Erreur","Mot de passe incorrect");
         }
       })
-  }
+  }*/
 
   /**
    * Reinitialises state when login succeeds.
@@ -67,7 +67,7 @@ class SignInScreen extends Component {
     await this.setState({newPassword: inputText});
     var name = this.state.newEmail;
     var newPassword = this.state.newPassword;
-    firebase.auth().createUserWithEmailAndPassword(newEmail, newPassword)
+    /*firebase.auth().createUserWithEmailAndPassword(newEmail, newPassword)
       .then((result) => {
         firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).collection("User").doc("user").set({ name, newEmail })
       }).catch((error) => {
@@ -83,7 +83,7 @@ class SignInScreen extends Component {
         else if (error.code == "auth/weak-password"){
           Alert.alert("Erreur","Le mot de passe doit comporter au moins 6 caractères.");
         }
-      })
+      })*/
   }
 
 

@@ -55,7 +55,7 @@ class Settings extends React.Component {
             onPressCallback={() =>
             {
                this.props.saveToCloud();
-              firebase.auth().signOut();
+              //firebase.auth().signOut();
               }
              }
           />

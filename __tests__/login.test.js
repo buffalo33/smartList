@@ -17,9 +17,9 @@ const firebaseConfig = {
   measurementId: "G-F5XJDKGDKF"
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+//if (!firebase.apps.length) {
+//  firebase.initializeApp(firebaseConfig);
+//}
 
 
 describe('SignInScreen tests', () => {

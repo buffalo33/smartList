@@ -26,7 +26,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
+      loggedIn: true,
       loaded: false,
       store: {},
     }
@@ -36,14 +36,6 @@ class App extends Component {
    */
   componentDidMount() {
     const firebaseConfig = {
-      PersistenceEnabled: true,
-      apiKey: "AIzaSyAF_rY_VHwjw_sHV-XTwQtxyrx-L1r1XoE",
-      authDomain: "shoppinglist-6cc7b.firebaseapp.com",
-      projectId: "shoppinglist-6cc7b",
-      storageBucket: "shoppinglist-6cc7b.appspot.com",
-      messagingSenderId: "899980789044",
-      appId: "1:899980789044:web:437a9d1df1252be5abd161",
-      measurementId: "G-F5XJDKGDKF"
     };
     /**
      * if the instance of firebase is already intialized don't do it again
@@ -51,22 +43,26 @@ class App extends Component {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
+    this.setState({
+      loaded: true,
+    })
+
     /**
      * Manage the state of loggedIn and loaded depending on the authentification state of the user in the cloud
      */
-    firebase.auth().onAuthStateChanged(user => {
-      if (!user) {
-        this.setState({
-          loggedIn: false,
-          loaded: true,
-        })
-      } else {
-        this.setState({
-          loggedIn: true,
-          loaded: true,
-        })
-      }
-    })
+//    firebase.auth().onAuthStateChanged(user => {
+//      if (!user) {
+//        this.setState({
+//          loggedIn: true,
+//          loaded: true,
+//        })
+//      } else {
+//        this.setState({
+//          loggedIn: true,
+//          loaded: true,
+//        })
+//      }
+//    })
   }
   /**
    * render the app depending on the states.

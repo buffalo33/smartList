@@ -144,7 +144,7 @@ const ListesScreen = (props) => {
   };
 
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (props.isSetSync) {
       props.loadListsFromCloud();
     
@@ -159,7 +159,7 @@ const ListesScreen = (props) => {
 
       return () => messagesListener();
     }
-  }, []);
+  }, []);*/
   return (
     <SafeAreaView style={styles.container}>
       <InputGroup style={styles.groupContainer}>

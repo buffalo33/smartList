@@ -13,21 +13,21 @@ export function mapStateToProps(state) {
 
 export function fetchUser() {
   return (dispatch) => {
-    firebase
-      .firestore()
-      .collection('users')
-      .doc(firebase.auth().currentUser.uid)
-      .collection('User')
-      .doc('user')
-      .get()
-      .then((snapshot) => {
-        if (snapshot.exists) {
-          dispatch({ type: 'LOAD_LISTS_CLOUD', payload: snapshot.data() });
-          dispatch({ type: 'LOAD_LISTS_CLOUD_GM', payload: snapshot.data() });
-
-        } else {
-        }
-      });
+    //firebase
+    //  .firestore()
+    //  .collection('users')
+    //  .doc(firebase.auth().currentUser.uid)
+    //  .collection('User')
+    //  .doc('user')
+    //  .get()
+    //  .then((snapshot) => {
+    //    if (snapshot.exists) {
+    //      dispatch({ type: 'LOAD_LISTS_CLOUD', payload: snapshot.data() });
+    //      dispatch({ type: 'LOAD_LISTS_CLOUD_GM', payload: snapshot.data() });
+//
+    //    } else {
+    //    }
+    //  });
   };
 }
 

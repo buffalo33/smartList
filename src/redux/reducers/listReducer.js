@@ -44,8 +44,8 @@ export default function listReducer(state = initialState, action) {
       }
     }
     case 'SAVE_TO_CLOUD': {
-      firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
-        .collection("User").doc("user").update({ lists: [...state.lists] });
+      //firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+      //  .collection("User").doc("user").update({ lists: [...state.lists] });
       return {
         lists: [...state.lists],
         lastIdSelected: state.lastIdSelected
